@@ -14,7 +14,7 @@ router.route('/').get((req, res)=>{   //get all the users from the mongodb atlas
 // })
 
 
-router.route('/add').post((req, res)=>{   //POST Request and body has all the components
+router.post("/add" , async (req, res)=>{   //POST Request and body has all the components async bcz data is saved to mongo
     const name = req.body.name;
     const email = req.body.email;
     const bloodGroup = req.body.bloodGroup;
@@ -24,6 +24,20 @@ router.route('/add').post((req, res)=>{   //POST Request and body has all the co
     const address = req.body.address;
     const status = req.body.status;
     const type = req.body.type;
+
+    //validation
+    if(!name || !email || !contact || !address || !type){
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    }
+
+    if(name.length < 3 ){
+      return res.status(400).json({ msg: "The name needs to be at least 3 characters long." });
+    }
+
+    const existingUserEmail= await User.findOne({ email: email });  //check whether user with the same email existed or not as email should be unique
+    if (existingUserEmail)
+      return res.status(400).json({ msg: "An account with this email already exists." });
+
 
     const newUser = new User({
         name,

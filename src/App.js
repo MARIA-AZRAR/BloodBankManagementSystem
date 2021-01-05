@@ -3,21 +3,21 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //Blood Bank
-import BankHome from './components/BloodBank/BankHome.component';
-import BankNavbar from './components/BloodBank/BankNavbar.component';
-import BankDonor from './components/BloodBank/BankDonor.component';
-import BankReciever from './components/BloodBank/BankReciever.component';
-import BankRequest from './components/BloodBank/BankRequest.component';
-import BankStock from './components/BloodBank/BankStock.component';
-import Sidebar from './components/Sidebar.component';
+import BankHome from './Components/BloodBank/BankHome.component';
+import BankNavbar from './Components/BloodBank/BankNavbar.component';
+import BankDonor from './Components/BloodBank/BankDonor.component';
+import BankReciever from './Components/BloodBank/BankReciever.component';
+import BankRequest from './Components/BloodBank/BankRequest.component';
+import BankStock from './Components/BloodBank/BankStock.component';
+import Sidebar from './Components/Sidebar.component';
 
-import Login from './components/login-form.component';
-import LoginAdmin from './components/login-form-admin.component';
-import SignupBloodBank from './components/signup-form-bloodBank.component'
+import Login from './Components/login-form.component';
+import LoginAdmin from './Components/login-form-admin.component';
+import SignupBloodBank from './Components/signup-form-bloodBank.component';
 
-import Navbar from './components/navbar.component';
-import Header from './components/Header.component';
-import Footer from './components/Footer.component';
+import Navbar from './Components/navbar.component';
+import Header from './Components/Header.component';
+import Footer from './Components/Footer.component';
 
 
 
