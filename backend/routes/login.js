@@ -31,19 +31,61 @@ router.post("/addLogin", async (req, res) => {   //POST Request and body has all
       else{
           return res.status(400).json({msg: "Registeration coul not be completed. try Again"})
       }
+      const existingUsername = await Login.findOne({ username: username });  //check whether user with the same email existed or not as email should be unique
+      if (existingUsername)
+          return res.status(400).json({msg: "User with this username already exists"})
+
+      //Generate hash for password
+      const saltP = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(password , saltP);
 
       const newUserLogin = new Login({
         username,
-        password,
+        password: hashPassword,
         type,
         user_id,
       })
-      newUserLogin.save()  //save new user to database
-        .then(() => res.json('userLogin added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+     const savedLogin = await newUserLogin.save();  //save new user to database
+        res.json(savedLogin)
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
   });
+
+
+  router.post("/accountLogin", async (req, res) => {
+    try {
+      const { username , password } = req.body;
   
+      // Now We'll validate the credentials
+
+      if (!username || !password)
+        return res.status(400).json({ msg: "Enter All fields" });
+  
+      const checkUser = await Login.findOne({ username: username });
+      if (!checkUser)
+        return res.status(400).json({ msg: "No account with this username has been registered." });
+  
+      const passwordMatch = await bcrypt.compare(password, checkUser.password);
+      if (!isMatch)
+         return res.status(400).json({ msg: "Invalid password." });
+  
+      const token = jwt.sign({ id: checkUser._id , type: checkUser.type }, process.env.JWT_TOKEN_SECRET);  //token can be accssed by secret password
+      res.json({
+        token,
+        user: {
+          id: user._id,
+          username: checkUser.username,
+          type: checkUser.type
+        },
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  
+
+
+
 module.exports = router;
