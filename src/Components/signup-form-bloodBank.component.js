@@ -46,6 +46,10 @@ export default class SignupBloodBank extends Component {
                                             <label for="BloodBankPassword" >Password: </label>
                                             <input id="BloodBankPassword" type="password" className="form-control" required />
                                         </div>
+                                        <div className="input-group form-group">
+                                            <label for="BloodBankPassword" >Confirm Password: </label>
+                                            <input id="BloodBankPassword" type="password" className="form-control" required />
+                                        </div>
                                         <div className="form-group">
                                             <input type="submit" value="Sign up" className="btn float-right login_btn" />
                                         </div>

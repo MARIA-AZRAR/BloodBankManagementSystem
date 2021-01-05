@@ -23,7 +23,7 @@ const userRouter = require('./routes/user');
 const loginRouter = require('./routes/login');
 
 app.use('/user', userRouter);
-//app.use('./login', loginRouter);
+app.use('/login', loginRouter);
 
 app.listen(port, ()=>{
     console.log("running on 5000")
