@@ -6,9 +6,8 @@
 .pnp.js
 
 
-*.env
 
-E:\Study\ReactLearn\blood-bank-system\backend\.env
+/backend/.env/
 
 # testing
 /coverage
