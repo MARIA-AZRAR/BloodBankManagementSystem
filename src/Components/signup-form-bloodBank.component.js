@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Navbar from './navbar.component';
 import styled from 'styled-components';
 
-
+  
 export default class SignupBloodBank extends Component {
     render() {
         return (
