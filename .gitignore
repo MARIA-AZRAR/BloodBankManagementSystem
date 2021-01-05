@@ -8,6 +8,7 @@
 
 *.env
 
+E:\Study\ReactLearn\blood-bank-system\backend\.env
 
 # testing
 /coverage
