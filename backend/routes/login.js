@@ -90,39 +90,53 @@ router.post("/accountLogin", async (req, res) => {
 
 router.delete("/delete", authen, async (req, res) => {
     try {
-       //deletin user login info 
-      const deletedUserLogin = await Login.findByIdAndDelete(req.id);
+        //deletin user login info 
+        const deletedUserLogin = await Login.findByIdAndDelete(req.id);
 
-       //now we need to set user status to Disabled in the User table
-      User.findOneAndUpdate({_id: req.user_id}, {status:"Disabled"}, null, (err, docs) => { 
-        if (err)
-            res.status(500).json(err);
-        else
-            console.log("Original Doc : ",docs); 
-        }); 
+        //now we need to set user status to Disabled in the User table
+        User.findOneAndUpdate({ _id: req.user_id }, { status: "Disabled" }, null, (err, docs) => {
+            if (err)
+                res.status(500).json(err);
+            else
+                console.log("Original Doc : ", docs);
+        });
 
-      res.json(deletedUserLogin);
+        res.json(deletedUserLogin);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message });
     }
 })
 
-  //Just to check from frontEnd whether user is logged in or not
-  router.post("/IsValidToken", async (req, res) => {
+//Just to check from frontEnd whether user is logged in or not
+router.post("/IsValidToken", async (req, res) => {
     try {
-      const token = req.header("auth-token");
-      if (!token) return res.json(false);
-  
-      const verified = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-      if (!verified) return res.json(false);
-  
-      const userLogin = await Login.findById(verified.id);
-      if (!userLogin) return res.json(false);
-  
-      return res.json(true);
+        const token = req.header("auth-token");
+        if (!token) return res.json(false);
+
+        const verified = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+        if (!verified) return res.json(false);
+
+        const userLogin = await Login.findById(verified.id);
+        if (!userLogin) return res.json(false);
+
+        return res.json(true);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message });
     }
-  });
+});
+
+//To get a single user from front end to check if user is valid
+router.get("/", authen, async (req, res) => {
+    const userDetails = await User.findById(req.user_id); //getting user
+    const userLogin = await Login.findById(req.id); //getting userLogin
+    res.json({
+        id: userLogin._id,                         //returning info to front end incase if needed
+        name: userDetails.name,
+        email: userDetails.email,
+        status: userDetails.status,
+        type: userDetails.type,
+        user_id: userDetails._id
+    });
+});
 
 module.exports = router;
