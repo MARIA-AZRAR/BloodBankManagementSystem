@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    name: { type: String, required: true, trim: true,  minlength: 3 },
-    email: { type: String, required: true, unique: true},
+    name: { type: String, required: true, trim: true, minlength: 3 },
+    email: { type: String, required: true, unique: true },
     bloodGroup: { type: String },
     age: { type: String },
-    bloodBank: { type: String},
+    bloodBank: { type: String },
     contact: { type: String, required: true },
     address: { type: String, required: true },
     status: { type: String, default: 'Active' },
