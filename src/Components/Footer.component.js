@@ -50,11 +50,11 @@ class Footer extends Component {
   }
 }
 export default Footer;
-
+// #A72509;
 const FooterContainer = styled.div`
 .mainFooter{
   color:white;
-  background-color: #A72509;
+  background-color:#e02525;
   padding-top: 2em;
   bottom: 0;
   width:100%; 

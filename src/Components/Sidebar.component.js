@@ -17,10 +17,10 @@ function Sidebar() {
     <SidebarContainer>
     <>
       <IconContext.Provider value={{ color: ':#ce1d26' }}>
-        <div className='navbar'>
-          <Link to='#' className='menu-bars'>
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
+        <div className='sidebar'>
+         <Link to='#' className='menu-bars'>
+         <FaIcons.FaBars onClick={showSidebar} />
+         </Link>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
@@ -31,12 +31,14 @@ function Sidebar() {
             </li>
             {NavbarData.map((item, index) => {
               return (
+                <>
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
                     {item.icon}
                     <span>{item.title}</span>
                   </Link>
                 </li>
+                </>
               );
             })}
           </ul>
@@ -49,30 +51,25 @@ function Sidebar() {
 
 export default Sidebar;
 
-
+//#ce1d26; nav color
 const SidebarContainer = styled.div`
-.navbar {
-  background-color:##ffffff;
-  height: 80px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
- 
-}
+
 
 .menu-bars {
-  margin-left: 2rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
   font-size: 2rem;
   background: none;
-  color: #043f5a;
+  color: #ffffff;
+  float: left;
 }
 
 .nav-menu {
-  background-color: #ffffff;
+  background-color: #e02525;
   width: 250px;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   position: fixed;
   top: 0;
   left: -100%;
@@ -88,14 +85,13 @@ const SidebarContainer = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 8px 0px 8px 16px;
   list-style: none;
   height: 60px;
 }
 
 .nav-text a {
   text-decoration: none;
-  color:#ce1d26;
+  color: #f5f5f5; 
   font-size: 18px;
   width: 95%;
   height: 100%;
@@ -107,7 +103,7 @@ const SidebarContainer = styled.div`
 }
 
 .nav-text a:hover {
-  background-color: #f5f5f5;
+  background-color: #b91b1b;
 }
 
 .nav-menu-items {
@@ -115,7 +111,7 @@ const SidebarContainer = styled.div`
 }
 
 .navbar-toggle {
-  background-color: #ffffff;
+  background-color: #e02525;
   width: 100%;
   height: 80px;
   display: flex;

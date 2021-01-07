@@ -1,69 +1,102 @@
-import React, { Component } from 'react'
-import Navbar from './navbar.component';
+import React, { Component, useState , useContext } from 'react';
+import { useHistory } from "react-router-dom";   //after login we need to change the page
 import styled from 'styled-components';
+import UserContext from '../context/userDetailContext';  //to save data after registering
+import Axios from "axios"
 
-  
-export default class SignupBloodBank extends Component {
-    render() {
-        return (
-            <SignupContainer>
-                <div>
-                    <Navbar />
-                    <div className="container container-fluid">
-                        <div className="d-flex justify-content-center h-100">
-                            <div class="card signupCard">
-                                <div className="card-header">
-                                    <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
-                                        <button type="button" className="btn btn-rounded btn-info">BloodBank</button>
-                                        <button type="button" className="btn btn-rounded btn-info">Donor</button>
-                                        <button type="button" className="btn btn-rounded btn-info">Reciever</button>
+
+export default function SignupBloodBank() {
+
+    const [name, setName] = useState();
+    const [address, setAddress] = useState();
+    const [contact, setContact] = useState();
+    const [username, setUserName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [confirmPassword, setConfirmPassword] = useState();
+
+    const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
+    const history = useHistory();  //to store history
+
+    const submit = async (e) => {
+        e.preventDefault();
+    
+          const type = "BloodBank";
+          const newUser = {name, address, contact, username, email, type ,password, confirmPassword };
+          await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
+          await Axios.post("http://localhost:5000/login/addLogin", newUser);
+
+           //registred but to store id in context we need to login
+          const loginRes = await Axios.post("http://localhost:5000/login/accountLogin", {
+            username,
+            password,
+          });
+
+          setUserLoginData({
+            token: loginRes.data.token,
+            userData: loginRes.data.user,
+          });
+          
+          localStorage.setItem("auth-token", loginRes.data.token);
+          history.push("/BloodBank");
+      };
+
+    return (
+        <SignupContainer>
+            <div>
+                <div className="container container-fluid">
+                    <div className="d-flex justify-content-center h-100">
+                        <div class="card signupCard">
+                            <div className="card-header">
+                                <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
+                                    <button type="button" className="btn btn-rounded btn-info">BloodBank</button>
+                                    <button type="button" className="btn btn-rounded btn-info">Donor</button>
+                                    <button type="button" className="btn btn-rounded btn-info">Reciever</button>
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <h3>Registeration</h3>
+                                <form>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control" 
+                                        placeholder="Name" onChange={(e)=> setName(e.target.value)} />
                                     </div>
-                                </div>
-                                <div className="card-body">
-                                    <h3>Registeration</h3>
-                                    <form>
-                                        <div className="input-group form-group">
-                                            <label for="bloodBankName" >Name: </label>
-                                            <input id="bloodBankName" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankAddress" >Address: </label>
-                                            <input id="BloodBankAddress" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankContact" >Contact No: </label>
-                                            <input id="BloodBankContact" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankUsername" >Username: </label>
-                                            <input id="BloodBankUsername" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankEmail" >Email: </label>
-                                            <input id="BloodBankEmail" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankPassword" >Password: </label>
-                                            <input id="BloodBankPassword" type="password" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankPassword" >Confirm Password: </label>
-                                            <input id="BloodBankPassword" type="password" className="form-control" required />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="submit" value="Sign up" className="btn float-right login_btn" />
-                                        </div>
-                                    </form>
-                                </div>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control" 
+                                        placeholder="Address" onChange={(e)=> setAddress(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control" 
+                                        placeholder="Contact No" onChange={(e)=> setContact(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control" 
+                                        placeholder="Username" onChange={(e)=> setUserName(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="email" className="form-control" 
+                                        placeholder="Email" onChange={(e)=> setEmail(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="password" className="form-control" 
+                                        placeholder="Password" onChange={(e)=> setPassword(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="password" className="form-control" 
+                                        placeholder="Confirm Password" onChange={(e)=> setConfirmPassword(e.target.value)} />
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="submit" value="Sign up" className="btn float-right login_btn" onClick={submit}/>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </SignupContainer>
-        )
-    }
+            </div>
+        </SignupContainer>
+    )
 }
-
 
 const SignupContainer = styled.div`
 

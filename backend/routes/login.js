@@ -72,14 +72,14 @@ router.post("/accountLogin", async (req, res) => {
         if (!passwordMatch)
             return res.status(400).json({ msg: "Invalid password." });
 
-        const token = jwt.sign({ userID: checkUser.user_id, id: checkUser._id, type: checkUser.type }, process.env.JWT_TOKEN_SECRET);  //token can be accssed by secret password
+        const token = jwt.sign({ user_id: checkUser.user_id, id: checkUser._id, type: checkUser.type }, process.env.JWT_TOKEN_SECRET);  //token can be accssed by secret password
         res.json({
             token,
             user: {
                 id: checkUser._id,
                 username: checkUser.username,
                 type: checkUser.type,
-                userID: checkUser.user_id
+                user_id: checkUser.user_id
             },
         });
     } catch (err) {

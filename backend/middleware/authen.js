@@ -14,12 +14,10 @@ const authen = (req, res, next) => {  //next define what to do next
         if (!decrypt) {
             return res.status(401).json({ msg: "Token not verified , access denied" })
         }
-
-        console.log(decrypt);
         
         //Returning decrypted values to the del so that we can delete the user 
         req.id = decrypt.id;   //ID of login document
-        req.user_id = decrypt.userID; //ID of user document to update the status to disabled after deleting
+        req.user_id = decrypt.user_id; //ID of user document to update the status to disabled after deleting
         req.type = decrypt.type;
         next();
 
