@@ -12,6 +12,9 @@ export default function SignupBloodBank() {
     const [name, setName] = useState();
     const [address, setAddress] = useState();
     const [contact, setContact] = useState();
+    const [age, setAge] = useState();
+    const [bloodGroup, setBloodGroup] = useState();
+    const [bloodBank, setBloodBank] = useState();
     const [username, setUserName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -26,8 +29,8 @@ export default function SignupBloodBank() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            const type = "BloodBank";
-            const newUser = { name, address, contact, username, email, type, password, confirmPassword };
+            const type = "Donor";
+            const newUser = { name, address, contact,age,bloodGroup, bloodBank ,username, email, type, password, confirmPassword };
             await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
             await Axios.post("http://localhost:5000/login/addLogin", newUser);
 
@@ -43,13 +46,13 @@ export default function SignupBloodBank() {
             });
 
             localStorage.setItem("auth-token", loginRes.data.token);
-            history.push("/BloodBank");
+            history.push("/Donor");
         } catch (err) {
             err.response.data.msg && setError(err.response.data.msg);
         }
     };
 
-    const bloodBank = () =>{
+    const BloodBank = () =>{
         history.push("/signup")
     };
 
@@ -69,7 +72,7 @@ export default function SignupBloodBank() {
                         <div class="card signupCard">
                             <div className="card-header">
                                 <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
-                                    <button type="button" className="btn btn-rounded btn-info" onClick={bloodBank}>BloodBank</button>
+                                    <button type="button" className="btn btn-rounded btn-info" onClick={BloodBank}>BloodBank</button>
                                     <button type="button" className="btn btn-rounded btn-info"onClick={Donor}>Donor</button>
                                     <button type="button" className="btn btn-rounded btn-info"onClick={Recipient}>Reciever</button>
                                 </div>
@@ -87,6 +90,18 @@ export default function SignupBloodBank() {
                                     <div className="input-group form-group">
                                         <input type="text" className="form-control"
                                             placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control"
+                                            placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control"
+                                            placeholder="Blood Group" onChange={(e) => setBloodGroup(e.target.value)} />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <input type="text" className="form-control"
+                                            placeholder="BloodBank" onChange={(e) => setBloodBank(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
                                         <input type="text" className="form-control"
@@ -140,7 +155,7 @@ font-family: 'Righteous', cursive;
 }
 
 .signupCard{
-height: 610px;
+height: 765px;
 align-content: center;
 margin: auto;
 width: 500px;

@@ -1,8 +1,20 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext'
 
-class BankRequests extends Component {
-  render() {
+
+function BankRequests() {
+    //to prevent from loading if user is log out
+    const { userLoginData } = useContext(UserContext)
+    const history = useHistory();
+  
+    useEffect(() => {
+      if (!userLoginData.userData)
+        history.push('/')
+  
+    }, [userLoginData])
+  
     return (
       <BankContainer>
         <div class="body">
@@ -94,7 +106,7 @@ class BankRequests extends Component {
       </BankContainer>
     )
   }
-}
+
 export default BankRequests;
 
 const BankContainer = styled.div`

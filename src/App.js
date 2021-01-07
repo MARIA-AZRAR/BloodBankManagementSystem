@@ -7,7 +7,6 @@ import Axios from 'axios';
 
 //Blood Bank
 import BankHome from './Components/pages/BloodBank/BankHome.component';
-import BankNavbar from './Components/pages/BloodBank/BankNavbar.component';
 import BankDonor from './Components/pages/BloodBank/BankDonor.component';
 import BankReciever from './Components/pages/BloodBank/BankReciever.component';
 import BankRequest from './Components/pages/BloodBank/BankRequest.component';
@@ -17,6 +16,8 @@ import Sidebar from './Components/Sidebar.component';
 import Login from './Components/login-form.component';
 import LoginAdmin from './Components/login-form-admin.component';
 import SignupBloodBank from './Components/signup-form-bloodBank.component';
+import SignupDonor from './Components/signup-form-Donor.component';
+import SignupRecipinet from './Components/signup-form-Recipient.component';
 
 //import Navbar from './Components/navbar.component';
 import Header from './Components/Header.component';
@@ -78,6 +79,8 @@ function App() {
         <Router>
           <Navbar />
           <Route path="/signup" exact component={SignupBloodBank} />
+          <Route path="/signup-donor" exact component={SignupDonor} />
+          <Route path="/signup-recipient" exact component={SignupRecipinet} />
           <Route path="/Admin" exact component={LoginAdmin} />
           <Route path="/signin" exact component={Login} />
           <Route path="/BloodBank" exact component={BankHome} />

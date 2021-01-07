@@ -1,8 +1,20 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext'
 
-class BankStock extends Component {
-  render() {
+
+function BankStock() {
+    //to prevent from loading if user is log out
+    const { userLoginData } = useContext(UserContext)
+    const history = useHistory();
+  
+    useEffect(() => {
+      if (!userLoginData.userData)
+        history.push('/')
+  
+    }, [userLoginData])
+  
     return (
       <BankContainer>
         <div class="body">
@@ -76,7 +88,7 @@ class BankStock extends Component {
       </BankContainer>
     )
   }
-}
+
 export default BankStock;
 
 const BankContainer = styled.div`

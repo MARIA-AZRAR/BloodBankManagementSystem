@@ -48,13 +48,6 @@ export default function Login() {
                 <div className="container container-fluid">
                     <div className="d-flex justify-content-center h-100">
                         <div class="card loginCard">
-                            <div className="card-header">
-                                <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
-                                    <button type="button" className="btn btn-rounded btn-info">BloodBank</button>
-                                    <button type="button" className="btn btn-rounded btn-info">Donor</button>
-                                    <button type="button" className="btn btn-rounded btn-info">Reciever</button>
-                                </div>
-                            </div>
                             <div className="card-body">
                                 <h3>Sign In</h3>
                                 {error && (
@@ -101,16 +94,14 @@ font-family: 'Righteous', cursive;
 }
 
 .loginCard{
-height: 382px;
+height: 330px;
 align-content: center;
 margin: auto;
 width: 370px;
 background-color: rgba(15, 74, 92, 0.473) ;
 }
 
-.card-header {
-    background-color: white;
-}
+
 .card-body h3{
 color: white;
 }
@@ -136,9 +127,6 @@ margin-left: 5px;
     color: white;
 }
 
-.ButtonGroup {
-    margin: auto;
-    justify-content: center;
-}
+
 
 `

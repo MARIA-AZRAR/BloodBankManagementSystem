@@ -1,8 +1,20 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext'
 
-class BankReciever extends Component {
-  render() {
+
+function BankReciever() {
+    //to prevent from loading if user is log out
+    const { userLoginData } = useContext(UserContext)
+    const history = useHistory();
+  
+    useEffect(() => {
+      if (!userLoginData.userData)
+        history.push('/')
+  
+    }, [userLoginData])
+  
     return (
       <BankContainer>
         <div class="body">
@@ -105,7 +117,7 @@ class BankReciever extends Component {
       </BankContainer>
     )
   }
-}
+
 export default BankReciever;
 
 const BankContainer = styled.div`
