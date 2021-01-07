@@ -3,6 +3,8 @@ import React, { Component, useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";   //after login we need to change the page
 import styled from 'styled-components';
 import UserContext from '../context/userDetailContext';  //to save data after registering
+import ErrorNotice from './misc/ErrorNotice'
+
 import Axios from "axios"
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,29 +15,31 @@ export default function Login() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
 
+    //for error
+    const [error, setError] = useState();
+
     const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
     const submit = async (e) => {
         e.preventDefault();
+        try {
+            const loggedUser = { username, password };
+            //to login
+            const loginRes = await Axios.post("http://localhost:5000/login/accountLogin", loggedUser);
 
-        const newUser = { username, password };
-        await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
-        await Axios.post("http://localhost:5000/login/addLogin", newUser);
+            setUserLoginData({
+                token: loginRes.data.token,
+                userData: loginRes.data.user,
+            });
 
-        //registred but to store id in context we need to login
-        const loginRes = await Axios.post("http://localhost:5000/login/accountLogin", {
-            username,
-            password,
-        });
+            localStorage.setItem("auth-token", loginRes.data.token);
+            const type = loginRes.data.user.type;
+            history.push(`/${type}`);
+        } catch (err) {
 
-        setUserLoginData({
-            token: loginRes.data.token,
-            userData: loginRes.data.user,
-        });
-
-        localStorage.setItem("auth-token", loginRes.data.token);
-        history.push("/BloodBank");
+            err.response.data.msg && setError(err.response.data.msg);
+        }
     };
 
     return (
@@ -53,15 +57,18 @@ export default function Login() {
                             </div>
                             <div className="card-body">
                                 <h3>Sign In</h3>
+                                {error && (
+                                    <ErrorNotice message={error} clearError={() => setError(undefined)} />
+                                )}
                                 <form>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control" placeholder="username" required />
+                                        <input type="text" className="form-control" placeholder="username" onChange={(e) => { setUserName(e.target.value) }} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="password" className="form-control" placeholder="password" required />
+                                        <input type="password" className="form-control" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
                                     </div>
                                     <div className="form-group">
-                                        <input type="submit" value="Login" className="btn float-right login_btn" />
+                                        <input type="submit" value="Login" className="btn float-right login_btn" onClick={submit} />
                                     </div>
                                 </form>
                             </div>
@@ -94,7 +101,7 @@ font-family: 'Righteous', cursive;
 }
 
 .loginCard{
-height: 340px;
+height: 382px;
 align-content: center;
 margin: auto;
 width: 370px;

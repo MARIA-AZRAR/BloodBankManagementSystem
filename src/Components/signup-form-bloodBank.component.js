@@ -1,8 +1,10 @@
-import React, { Component, useState , useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";   //after login we need to change the page
-import styled from 'styled-components';
-import UserContext from '../context/userDetailContext';  //to save data after registering
 import Axios from "axios"
+import styled from 'styled-components';
+
+import UserContext from '../context/userDetailContext';  //to save data after registering
+import ErrorNotice from './misc/ErrorNotice'
 
 
 export default function SignupBloodBank() {
@@ -15,31 +17,38 @@ export default function SignupBloodBank() {
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
 
+    //for error
+    const [error, setError] = useState();
+
     const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
     const submit = async (e) => {
         e.preventDefault();
-    
-          const type = "BloodBank";
-          const newUser = {name, address, contact, username, email, type ,password, confirmPassword };
-          await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
-          await Axios.post("http://localhost:5000/login/addLogin", newUser);
+        try {
+            const type = "BloodBank";
+            const newUser = { name, address, contact, username, email, type, password, confirmPassword };
+            await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
+            await Axios.post("http://localhost:5000/login/addLogin", newUser);
 
-           //registred but to store id in context we need to login
-          const loginRes = await Axios.post("http://localhost:5000/login/accountLogin", {
-            username,
-            password,
-          });
+            //registred but to store id in context we need to login
+            const loginRes = await Axios.post("http://localhost:5000/login/accountLogin", {
+                username,
+                password,
+            });
 
-          setUserLoginData({
-            token: loginRes.data.token,
-            userData: loginRes.data.user,
-          });
-          
-          localStorage.setItem("auth-token", loginRes.data.token);
-          history.push("/BloodBank");
-      };
+            setUserLoginData({
+                token: loginRes.data.token,
+                userData: loginRes.data.user,
+            });
+
+            localStorage.setItem("auth-token", loginRes.data.token);
+            history.push("/BloodBank");
+        } catch (err) {
+            err.response.data.msg && setError(err.response.data.msg);
+        }
+    };
+
 
     return (
         <SignupContainer>
@@ -56,37 +65,40 @@ export default function SignupBloodBank() {
                             </div>
                             <div className="card-body">
                                 <h3>Registeration</h3>
+                                {error && (
+                                    <ErrorNotice message={error} clearError={() => setError(undefined)} />
+                                )}
                                 <form>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control" 
-                                        placeholder="Name" onChange={(e)=> setName(e.target.value)} />
+                                        <input type="text" className="form-control"
+                                            placeholder="Name" onChange={(e) => setName(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control" 
-                                        placeholder="Address" onChange={(e)=> setAddress(e.target.value)} />
+                                        <input type="text" className="form-control"
+                                            placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control" 
-                                        placeholder="Contact No" onChange={(e)=> setContact(e.target.value)} />
+                                        <input type="text" className="form-control"
+                                            placeholder="Contact No" onChange={(e) => setContact(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control" 
-                                        placeholder="Username" onChange={(e)=> setUserName(e.target.value)} />
+                                        <input type="text" className="form-control"
+                                            placeholder="Username" onChange={(e) => setUserName(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="email" className="form-control" 
-                                        placeholder="Email" onChange={(e)=> setEmail(e.target.value)} />
+                                        <input type="email" className="form-control"
+                                            placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="password" className="form-control" 
-                                        placeholder="Password" onChange={(e)=> setPassword(e.target.value)} />
+                                        <input type="password" className="form-control"
+                                            placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="password" className="form-control" 
-                                        placeholder="Confirm Password" onChange={(e)=> setConfirmPassword(e.target.value)} />
+                                        <input type="password" className="form-control"
+                                            placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
                                     </div>
                                     <div className="form-group">
-                                        <input type="submit" value="Sign up" className="btn float-right login_btn" onClick={submit}/>
+                                        <input type="submit" value="Sign up" className="btn float-right login_btn" onClick={submit} />
                                     </div>
                                 </form>
                             </div>
@@ -117,7 +129,7 @@ font-family: 'Righteous', cursive;
 }
 
 .signupCard{
-height: 550px;
+height: 610px;
 align-content: center;
 margin: auto;
 width: 500px;
