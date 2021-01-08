@@ -14,6 +14,9 @@ function BankHome() {
     if (!userLoginData.userData)
       history.push('/')
 
+    if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+      history.push(`/${userLoginData.userData.type}`)
+
   }, [userLoginData])
 
   return (

@@ -11,17 +11,16 @@ import BankDonor from './Components/pages/BloodBank/BankDonor.component';
 import BankReciever from './Components/pages/BloodBank/BankReciever.component';
 import BankRequest from './Components/pages/BloodBank/BankRequest.component';
 import BankStock from './Components/pages/BloodBank/BankStock.component';
-import Sidebar from './Components/Sidebar.component';
 
-import Login from './Components/login-form.component';
-import LoginAdmin from './Components/login-form-admin.component';
-import SignupBloodBank from './Components/signup-form-bloodBank.component';
-import SignupDonor from './Components/signup-form-Donor.component';
-import SignupRecipinet from './Components/signup-form-Recipient.component';
+import Login from './Components/auth/login-form.component';
+import LoginAdmin from './Components/auth/login-form-admin.component';
+import SignupBloodBank from './Components/auth/signup-form-bloodBank.component';
+import SignupDonor from './Components/auth/signup-form-Donor.component';
+import SignupRecipinet from './Components/auth/signup-form-Recipient.component';
 
 //import Navbar from './Components/navbar.component';
-import Header from './Components/Header.component';
-import Footer from './Components/Footer.component';
+import Header from './Components/layout/Header.component';
+import Footer from './Components/layout/Footer.component';
 import Navbar from './Components/layout/Navbar'
 
 //extras
@@ -90,7 +89,6 @@ function App() {
           <Route path="/BloodBank/Stock" exact component={BankStock} />
         </Router>
       </UserContext.Provider>
-      <Footer />
     </>
   );
 }

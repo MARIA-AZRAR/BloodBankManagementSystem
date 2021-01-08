@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../context/userDetailContext";
-import Sidebar from '../Sidebar.component';
+import Sidebar from '../layout/Sidebar.component';
 
 export default function AuthButtonOptions() {
 

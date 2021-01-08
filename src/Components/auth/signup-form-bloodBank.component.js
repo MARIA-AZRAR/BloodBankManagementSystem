@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";   //after login we need to change
 import Axios from "axios"
 import styled from 'styled-components';
 
-import UserContext from '../context/userDetailContext';  //to save data after registering
-import ErrorNotice from './misc/ErrorNotice'
+import UserContext from '../../context/userDetailContext';  //to save data after registering
+import ErrorNotice from '../misc/ErrorNotice'
 
 
 export default function SignupBloodBank() {

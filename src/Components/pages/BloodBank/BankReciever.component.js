@@ -5,118 +5,122 @@ import UserContext from '../../../context/userDetailContext'
 
 
 function BankReciever() {
-    //to prevent from loading if user is log out
-    const { userLoginData } = useContext(UserContext)
-    const history = useHistory();
-  
-    useEffect(() => {
-      if (!userLoginData.userData)
-        history.push('/')
-  
-    }, [userLoginData])
-  
-    return (
-      <BankContainer>
-        <div class="body">
-          <h1>Recipients</h1>
-          <table class="table table-striped">
-            <thead class="thead">
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">NAME</th>
-                <th scope="col">AGE</th>
-                <th scope="col">BLOOD GROUP</th>
-                <th scope="col">ADDRESS</th>
-                <th scope="col">CONTACT NO</th>
-                <th scope="col">DATE</th>
-                <th scope="col">QUANTITY</th>
-                <th scope="col">STATUS</th>
-                <th scope="col">ACTION</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>abc</td>
-                <td>20</td>
-                <td>A+</td>
-                <td>22 Street House No 1</td>
-                <td>12345678901</td>
-                <td>20/11/2020</td>
-                <td>1</td>
-                <td>Active</td>
-                <td>
-                  <button type="button" class="btn btn-primary">Update</button>
-                  <br />
-                  <button type="button" class="btn btn-danger">Delete</button></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>xyz</td>
-                <td>21</td>
-                <td>B+</td>
-                <td>22 Stree
+  //to prevent from loading if user is log out
+  const { userLoginData } = useContext(UserContext)
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!userLoginData.userData)  //to prevent accessing while logged out
+      history.push('/')
+
+    if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+      history.push(`/${userLoginData.userData.type}`)
+
+
+  }, [userLoginData])
+
+  return (
+    <BankContainer>
+      <div class="body">
+        <h1>Recipients</h1>
+        <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">NAME</th>
+              <th scope="col">AGE</th>
+              <th scope="col">BLOOD GROUP</th>
+              <th scope="col">ADDRESS</th>
+              <th scope="col">CONTACT NO</th>
+              <th scope="col">DATE</th>
+              <th scope="col">QUANTITY</th>
+              <th scope="col">STATUS</th>
+              <th scope="col">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>abc</td>
+              <td>20</td>
+              <td>A+</td>
+              <td>22 Street House No 1</td>
+              <td>12345678901</td>
+              <td>20/11/2020</td>
+              <td>1</td>
+              <td>Active</td>
+              <td>
+                <button type="button" class="btn btn-primary">Update</button>
+                <br />
+                <button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>xyz</td>
+              <td>21</td>
+              <td>B+</td>
+              <td>22 Stree
           t House No 2</td>
-                <td>12345678900</td>
-                <td>20/12/2020</td>
-                <td>2</td>
-                <td>Active</td>
-                <td>
-                  <button type="button" class="btn btn-primary">Update</button>
-                  <br />
-                  <button type="button" class="btn btn-danger">Delete</button></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>mln</td>
-                <td>22</td>
-                <td>A-</td>
-                <td>22 Street House No 3</td>
-                <td>12345678908</td>
-                <td>21/12/2020</td>
-                <td>2</td>
-                <td>Active</td>
-                <td>
-                  <button type="button" class="btn btn-primary">Update</button>
-                  <br />
-                  <button type="button" class="btn btn-danger">Delete</button></td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>123</td>
-                <td>25</td>
-                <td>B-</td>
-                <td>22 Street House No 4</td>
-                <td>12345678909</td>
-                <td>23/11/2020</td>
-                <td>2</td>
-                <td>Active</td>
-                <td>
-                  <button type="button" class="btn btn-primary">Update</button>
-                  <br />
-                  <button type="button" class="btn btn-danger">Delete</button></td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>jkl</td>
-                <td>23</td>
-                <td>AB+</td>
-                <td>22 Street House No 5</td>
-                <td>12345678905</td>
-                <td>20/11/2020</td>
-                <td>1</td>
-                <td>Active</td>
-                <td>
-                  <button type="button" class="btn btn-primary">Update</button>
-                  <br />
-                  <button type="button" class="btn btn-danger">Delete</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </BankContainer>
-    )
-  }
+              <td>12345678900</td>
+              <td>20/12/2020</td>
+              <td>2</td>
+              <td>Active</td>
+              <td>
+                <button type="button" class="btn btn-primary">Update</button>
+                <br />
+                <button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>mln</td>
+              <td>22</td>
+              <td>A-</td>
+              <td>22 Street House No 3</td>
+              <td>12345678908</td>
+              <td>21/12/2020</td>
+              <td>2</td>
+              <td>Active</td>
+              <td>
+                <button type="button" class="btn btn-primary">Update</button>
+                <br />
+                <button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>123</td>
+              <td>25</td>
+              <td>B-</td>
+              <td>22 Street House No 4</td>
+              <td>12345678909</td>
+              <td>23/11/2020</td>
+              <td>2</td>
+              <td>Active</td>
+              <td>
+                <button type="button" class="btn btn-primary">Update</button>
+                <br />
+                <button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>jkl</td>
+              <td>23</td>
+              <td>AB+</td>
+              <td>22 Street House No 5</td>
+              <td>12345678905</td>
+              <td>20/11/2020</td>
+              <td>1</td>
+              <td>Active</td>
+              <td>
+                <button type="button" class="btn btn-primary">Update</button>
+                <br />
+                <button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </BankContainer>
+  )
+}
 
 export default BankReciever;
 

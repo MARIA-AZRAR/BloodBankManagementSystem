@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";   //after login we need to change
 import Axios from "axios"
 import styled from 'styled-components';
 
-import UserContext from '../context/userDetailContext';  //to save data after registering
-import ErrorNotice from './misc/ErrorNotice'
+import UserContext from '../../context/userDetailContext';  //to save data after registering
+import ErrorNotice from '../misc/ErrorNotice'
 
 
 export default function SignupBloodBank() {
@@ -29,7 +29,7 @@ export default function SignupBloodBank() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            const type = "Donor";
+            const type = "Recipient";
             const newUser = { name, address, contact,age,bloodGroup, bloodBank ,username, email, type, password, confirmPassword };
             await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
             await Axios.post("http://localhost:5000/login/addLogin", newUser);
@@ -46,7 +46,7 @@ export default function SignupBloodBank() {
             });
 
             localStorage.setItem("auth-token", loginRes.data.token);
-            history.push("/Donor");
+            history.push("/Recipient");
         } catch (err) {
             err.response.data.msg && setError(err.response.data.msg);
         }

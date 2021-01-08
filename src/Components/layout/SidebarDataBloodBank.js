@@ -5,7 +5,7 @@ import * as RiIcons from "react-icons/ri"
 import * as ImIcons from "react-icons/im"
 
 
-export const NavbarData = [
+export const NavbarDataB = [
     {
         title: 'Home',
         path: '/BloodBank',
