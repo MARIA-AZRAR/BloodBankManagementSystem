@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-class Navbar extends Component {
+class RecipientNavbar extends Component {
     render() {
         return (
             <NavbarContainer>
                 <nav className="navbar navbar-expand-lg navbar-light px-5 py-0">
                     <img src="../../images/navBarLogoT.png" alt="logo" height="45px" width="45px" />
-                    <a class="navbar-brand" href="/"> Home</a>
+                    <a class="navbar-brand" href="/"> Recipient</a>
 
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -15,11 +15,11 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="/signin">SignIn<span class="sr-only">(current)</span></a>
+                                <a className="nav-link" href="/Recipient/SendRequest">Home<span class="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
                                 <div class="vl">
-                                    <a className="nav-link" href="/signup">Join Now </a>
+                                    <a className="nav-link" href="/">Signout </a>
                                 </div>
                             </li>
                         </ul>
@@ -29,7 +29,7 @@ class Navbar extends Component {
         )
     }
 }
-export default Navbar;
+export default RecipientNavbar;
 
 const NavbarContainer = styled.div`
 background: #D13616;
