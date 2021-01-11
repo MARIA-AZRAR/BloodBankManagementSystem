@@ -37,7 +37,7 @@ router.post("/addLogin", async (req, res) => {   //POST Request and body has all
         if (existingUsername)
             return res.status(400).json({ msg: "User with this username already exists" })
 
-        //Generate hash for password
+        //Generate hash for passwordk2
         const saltP = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(password, saltP);
 

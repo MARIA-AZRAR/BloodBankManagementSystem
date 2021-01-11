@@ -11,11 +11,14 @@ function BankDonor() {
 
   useEffect(() => {
     if (!userLoginData.userData)
-      history.push('/')
-
+      
+    try{
     if (userLoginData.userData.type !== "BloodBank")
       history.push(`/${userLoginData.userData.type}`)
-
+    }
+    catch{
+      history.push('/')
+    }
   }, [userLoginData])
 
   return (

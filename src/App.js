@@ -26,6 +26,13 @@ import Navbar from './Components/layout/Navbar'
 //extras
 import UserContext from './context/userDetailContext';
 
+//Donor
+
+import DonorDonations from './Components/pages/Donor/DonorDonations.component';
+import DonorRequests from './Components/pages/Donor/DonorRequests.component';
+import DonorMakeDonations from './Components/pages/Donor/DonorMakeDonations.component';
+import DonorProfile from './Components/pages/Donor/DonorProfile.component';
+
 function App() {
 
   const [userLoginData, setUserLoginData] = useState({  //this state will store the user data needed in all app like id
@@ -87,6 +94,12 @@ function App() {
           <Route path="/BloodBank/Reciever" exact component={BankReciever} />
           <Route path="/BloodBank/Request" exact component={BankRequest} />
           <Route path="/BloodBank/Stock" exact component={BankStock} />
+
+    
+          <Route path="/Donor" exact component={DonorDonations} />
+          <Route path="/Donor/Requests" exact component={DonorRequests} />
+          <Route path="/Donor/MakeDonations" exact component={DonorMakeDonations} />
+          <Route path="/Donor/Profile" exact component={DonorProfile} />
         </Router>
       </UserContext.Provider>
     </>

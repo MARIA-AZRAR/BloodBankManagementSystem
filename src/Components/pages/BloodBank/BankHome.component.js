@@ -12,11 +12,14 @@ function BankHome() {
 
   useEffect(() => {
     if (!userLoginData.userData)
-      history.push('/')
-
+      
+    try{
     if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
       history.push(`/${userLoginData.userData.type}`)
-
+    }
+    catch{
+      history.push('/')
+    }
   }, [userLoginData])
 
   return (

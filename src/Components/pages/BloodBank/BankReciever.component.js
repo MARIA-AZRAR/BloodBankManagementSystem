@@ -11,11 +11,14 @@ function BankReciever() {
 
   useEffect(() => {
     if (!userLoginData.userData)  //to prevent accessing while logged out
-      history.push('/')
-
+    try{
     if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
       history.push(`/${userLoginData.userData.type}`)
+    }
+    catch{
+      history.push('/')
 
+    }
 
   }, [userLoginData])
 
