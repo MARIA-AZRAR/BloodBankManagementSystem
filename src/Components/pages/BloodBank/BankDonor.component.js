@@ -13,8 +13,12 @@ function BankDonor() {
     if (!userLoginData.userData)
       history.push('/')
 
-    if (userLoginData.userData.type !== "BloodBank")
-      history.push(`/${userLoginData.userData.type}`)
+    try {
+      if (userLoginData.userData.type !== "BloodBank")
+        history.push(`/${userLoginData.userData.type}`)
+    } catch {
+      history.push('/')
+    }
 
   }, [userLoginData])
 
