@@ -8,31 +8,31 @@ import * as ImIcons from "react-icons/im"
 export const NavbarDataR = [
     {
         title: 'Home',
-        path: '/Recipient',
-        icon: <FaIcons.FaEnvelopeOpenText />,
+        path: '/Recipient/SendRequest',
+        icon: <FaIcons.FaHome />,
         cName: 'nav-text'
     },
     {
         title: 'Send Request',
-        path: '/Recipient/Request',
-        icon: <RiIcons.RiUserSearchLine />,
+        path: '/Recipient/SendRequest',
+        icon: <FaIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Search Donors',
+        path: '/Recipient/SearchDonor',
+icon: <RiIcons.RiUserSearchLine />,
         cName: 'nav-text'
     },
     {
         title: 'View Requests',
-        path: '/BloodBank/Request',
-        icon: <IoIcons.IoIosPaper />,
+        path: '/Recipient/Request',
+icon: <IoIcons.IoIosPaper />,
         cName: 'nav-text'
     },
     {
-        title: 'Manage Donors',
-        path: '/BloodBank/Donor',
-        icon: <ImIcons.ImProfile />,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Manage Reciever',
-        path: '/BloodBank/Reciever',
+        title: 'Profile',
+        path: '/Recipient/profile',
         icon: <ImIcons.ImProfile />,
         cName: 'nav-text'
     }

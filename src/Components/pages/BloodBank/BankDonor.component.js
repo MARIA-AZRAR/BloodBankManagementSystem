@@ -11,15 +11,14 @@ function BankDonor() {
 
   useEffect(() => {
     if (!userLoginData.userData)
-      history.push('/')
-
-    try {
-      if (userLoginData.userData.type !== "BloodBank")
-        history.push(`/${userLoginData.userData.type}`)
-    } catch {
+      
+    try{
+    if (userLoginData.userData.type !== "BloodBank")
+      history.push(`/${userLoginData.userData.type}`)
+    }
+    catch{
       history.push('/')
     }
-
   }, [userLoginData])
 
   return (
@@ -142,4 +141,22 @@ const BankContainer = styled.div`
     padding-right:10%;
     padding-top:3%;
 }
+
+.btn,
+btn-primary
+ {
+    margin-top: 10px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.btn-primary{
+    left: 0px;
+    margin-left: 100px;
+}
+.btn-danger {
+    left: 0px;
+    margin-top: -90px;
+}
+
 `;

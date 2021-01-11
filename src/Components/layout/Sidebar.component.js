@@ -28,7 +28,7 @@ function Sidebar() {
         if(userLoginData.userData.type === "BloodBank") data = NavbarDataB;
     }
 
-  return (
+  return ( 
     <SidebarContainer>
       <>
         <IconContext.Provider value={{ color: ':#ce1d26' }}>
@@ -57,7 +57,7 @@ function Sidebar() {
                 );
               })}
             </ul>
-          </nav>
+          </nav> 
         </IconContext.Provider>
       </>
     </SidebarContainer>
