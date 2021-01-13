@@ -30,10 +30,10 @@ class Footer extends Component {
                 <hr className="light" />
                 <h5>Connect</h5>
                 <hr className="light" />
-                  <a ><i className="fab fa-facebook"></i></a>
-                  <a ><i className="fab fa-twitter"></i></a>
-                  <a ><i className="fab fa-instagram"></i></a>
-                  <a ><i className="fab fa-youtube"></i></a>
+                  <i className="fab fa-facebook"></i>
+                  <i className="fab fa-twitter"></i>
+                  <i className="fab fa-instagram"></i>
+                  <i className="fab fa-youtube"></i>
               </div>
               <div className="col-12">
                 <hr className="light-100" />
@@ -92,7 +92,7 @@ margin-top:  .8rem;
 margin-bottom: 1rem;
 }
 
-footer a {
+footer i {
 padding:.5rem;
 color: #d5d5d5;
 }

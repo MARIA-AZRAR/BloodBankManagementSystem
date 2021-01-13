@@ -11,12 +11,12 @@ function BankRequests() {
 
   useEffect(() => {
     if (!userLoginData.userData)
-     
-    try{
-    if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
-      history.push(`/${userLoginData.userData.type}`)
+      history.push('/')
+    try {
+      if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+        history.push(`/${userLoginData.userData.type}`)
     }
-    catch{
+    catch {
       history.push('/')
     }
 

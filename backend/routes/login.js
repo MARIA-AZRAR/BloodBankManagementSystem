@@ -59,8 +59,6 @@ router.post("/accountLogin", async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        // Now We'll validate the credentials
-
         if (!username || !password)
             return res.status(400).json({ msg: "Enter All fields" });
 
@@ -72,6 +70,14 @@ router.post("/accountLogin", async (req, res) => {
         if (!passwordMatch)
             return res.status(400).json({ msg: "Invalid password." });
 
+
+        //converting bloodbank name to id so that it can be retuened to front end for donation
+        const existingUser = await User.findById(checkUser.user_id);
+
+        let bloodBank = "";
+        if (existingUser.bloodBank) {
+            bloodBank = await User.findOne({ name: existingUser.bloodBank }) //to find bloodBank id
+        }
         const token = jwt.sign({ user_id: checkUser.user_id, id: checkUser._id, type: checkUser.type }, process.env.JWT_TOKEN_SECRET);  //token can be accssed by secret password
         res.json({
             token,
@@ -79,14 +85,15 @@ router.post("/accountLogin", async (req, res) => {
                 id: checkUser._id,
                 username: checkUser.username,
                 type: checkUser.type,
-                user_id: checkUser.user_id
+                user_id: checkUser.user_id,
+                bloodBank_id: bloodBank._id
             },
         });
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
-
 
 router.delete("/delete", authen, async (req, res) => {
     try {

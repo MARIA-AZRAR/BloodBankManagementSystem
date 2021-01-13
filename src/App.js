@@ -117,6 +117,7 @@ function App() {
           <Route path="/Recipient/SearchDonor" exact component={SearchDonor} />
           <Route path="/Recipient/Profile" exact component={RecipientProfile} />
         </Router>
+        <Footer />
       </UserContext.Provider>
     </>
   );

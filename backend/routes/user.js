@@ -7,6 +7,22 @@ router.route('/').get((req, res) => {   //get all the users from the mongodb atl
     .catch(err => res.status(400).json('Erorr: ' + err));
 });
 
+//to get blood banks list for dropdown
+router.route('/banksDropDown').get((req, res) => {   //get all the users from the mongodb atlas
+  User.find({}, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      let banks = []
+      result.map(function (item) {
+        if (item.type === "BloodBank")
+          banks.push(item.name);
+      });
+      res.send(banks);
+    }
+  })
+});
+
 // router.route('/:age').get((req, res)=>{
 //     User.find({age: req.params.age})
 //       .then(users => res.json(users))
@@ -34,7 +50,6 @@ router.post("/addUser", async (req, res) => {   //POST Request and body has all 
     if (name.length < 3) {
       return res.status(400).json({ msg: "The name needs to be at least 3 characters long." });
     }
-
     const existingUserEmail = await User.findOne({ email: email });  //check whether user with the same email existed or not as email should be unique
     if (existingUserEmail)
       return res.status(400).json({ msg: "An account with this email already exists." });
@@ -93,4 +108,3 @@ router.route('/update/:id').post((req, res) => {
 
 
 module.exports = router;
-

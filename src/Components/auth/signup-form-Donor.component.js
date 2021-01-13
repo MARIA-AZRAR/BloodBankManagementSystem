@@ -26,6 +26,8 @@ export default function SignupBloodBank() {
     const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
+    
+
     const submit = async (e) => {
         e.preventDefault();
         try {
