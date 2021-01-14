@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from "react-router-dom";   //after login we need to change the page
 import Axios from "axios"
 import styled from 'styled-components';
@@ -20,19 +20,30 @@ export default function SignupBloodBank() {
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
 
+    //for drop down
+    const [dropDownItems, setDropDownItems] = useState();
+
     //for error
     const [error, setError] = useState();
 
     const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
-    
+
+    // const getDropdownData = async () => {
+    //     let items = await Axios.get("http://localhost:5000/user/banksDropDown"); //get all blood banks 
+    //     setDropDownItems(items.data);
+    //     console.log(items.data);
+    // }
+
+    // getDropdownData();
+
 
     const submit = async (e) => {
         e.preventDefault();
         try {
             const type = "Donor";
-            const newUser = { name, address, contact,age,bloodGroup, bloodBank ,username, email, type, password, confirmPassword };
+            const newUser = { name, address, contact, age, bloodGroup, bloodBank, username, email, type, password, confirmPassword };
             await Axios.post("http://localhost:5000/user/addUser", newUser);  //user and its login data in diff tables
             await Axios.post("http://localhost:5000/login/addLogin", newUser);
 
@@ -54,15 +65,15 @@ export default function SignupBloodBank() {
         }
     };
 
-    const BloodBank = () =>{
+    const BloodBank = () => {
         history.push("/signup")
     };
 
-    const Donor = () =>{
+    const Donor = () => {
         history.push("/signup-donor")
     };
 
-    const Recipient = () =>{
+    const Recipient = () => {
         history.push("/signup-recipient")
     };
 
@@ -75,8 +86,8 @@ export default function SignupBloodBank() {
                             <div className="card-header">
                                 <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
                                     <button type="button" className="btn btn-rounded btn-info" onClick={BloodBank}>BloodBank</button>
-                                    <button type="button" className="btn btn-rounded btn-info"onClick={Donor}>Donor</button>
-                                    <button type="button" className="btn btn-rounded btn-info"onClick={Recipient}>Reciever</button>
+                                    <button type="button" className="btn btn-rounded btn-info" onClick={Donor}>Donor</button>
+                                    <button type="button" className="btn btn-rounded btn-info" onClick={Recipient}>Reciever</button>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -103,7 +114,7 @@ export default function SignupBloodBank() {
                                     </div>
                                     <div className="input-group form-group">
                                         <input type="text" className="form-control"
-                                            placeholder="BloodBank" onChange={(e) => setBloodBank(e.target.value)} />
+                                            placeholder="Blood Bank" onChange={(e) => setBloodBank(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
                                         <input type="text" className="form-control"
@@ -137,6 +148,17 @@ export default function SignupBloodBank() {
         </SignupContainer>
     )
 }
+
+
+{/* <div className="input-group form-group">
+                                        <select onChange={(e) => setBloodBank(e.target.value)}>
+                                            {dropDownItems.map(item => {
+                                                return (
+                                                    <option value={item}> {item} </option>
+                                                )
+                                            })}
+                                        </select>
+                                    </div> */}
 
 const SignupContainer = styled.div`
 
