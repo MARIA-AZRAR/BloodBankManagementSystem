@@ -22,6 +22,7 @@ import SignupRecipinet from './Components/auth/signup-form-Recipient.component';
 import Header from './Components/layout/Header.component';
 import Footer from './Components/layout/Footer.component';
 import Navbar from './Components/layout/Navbar'
+import AboutUs from './Components/layout/OurVision.component';
 
 //extras
 import UserContext from './context/userDetailContext';
@@ -95,6 +96,7 @@ function App() {
       <UserContext.Provider value={{ userLoginData, setUserLoginData }}>
         <Router>
           <Navbar />
+          <Route path="/" exact component={AboutUs} />
           <Route path="/signup" exact component={SignupBloodBank} />
           <Route path="/signup-donor" exact component={SignupDonor} />
           <Route path="/signup-recipient" exact component={SignupRecipinet} />
@@ -113,7 +115,8 @@ function App() {
           <Route path="/Donor/Profile" exact component={DonorProfile} />
 
           <Route path="/Recipient" exact component={RecipientSendRequest} />
-          <Route path="/Recipient/Requests" exact component={RecipientRequests} />
+          <Route path="/Recipient/SendRequest" exact component={RecipientSendRequest} />
+          <Route path="/Recipient/Request" exact component={RecipientRequests} />
           <Route path="/Recipient/SearchDonor" exact component={SearchDonor} />
           <Route path="/Recipient/Profile" exact component={RecipientProfile} />
         </Router>

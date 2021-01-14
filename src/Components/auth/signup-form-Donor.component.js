@@ -26,7 +26,7 @@ export default function SignupBloodBank() {
     //for error
     const [error, setError] = useState();
 
-    const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
+    const {setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
 

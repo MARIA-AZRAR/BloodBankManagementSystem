@@ -79,23 +79,7 @@ router.post("/accountLogin", async (req, res) => {
         let dropdownBank = [];
         if (existingUser.bloodBank) {
             bloodBank = await User.findOne({ name: existingUser.bloodBank }) //to find bloodBank id
-            //returning bloodBank names for dropdown
         }
-
-        // User.find({}, function (err, result) {
-        //     if (err) {
-        //         res.send(err);
-        //     } else {
-        //         result.map(function (item) {
-        //             if (item.type === "BloodBank")
-        //                 dropdownBank.push(item.name);
-        //         });
-        //     }
-        // });
-
-
-        // let u = User.find({});
-        // console.log(u);
 
         const token = jwt.sign({ user_id: checkUser.user_id, id: checkUser._id, type: checkUser.type }, process.env.JWT_TOKEN_SECRET);  //token can be accssed by secret password
         res.json({

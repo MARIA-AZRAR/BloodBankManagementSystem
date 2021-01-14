@@ -8,7 +8,7 @@ import * as ImIcons from "react-icons/im"
 export const NavbarDataR = [
     {
         title: 'Home',
-        path: '/Recipient/SendRequest',
+        path: '/Recipient',
         icon: <FaIcons.FaHome />,
         cName: 'nav-text'
     },
