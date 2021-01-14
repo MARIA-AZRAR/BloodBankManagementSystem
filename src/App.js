@@ -50,6 +50,7 @@ function App() {
   const [userLoginData, setUserLoginData] = useState({  //this state will store the user data needed in all app like id
     token: undefined,
     userData: undefined,
+    banksData: undefined
   });
 
   //now we need to get the token from the session if any and check if its valid or not to login the user

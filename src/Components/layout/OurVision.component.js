@@ -1,28 +1,47 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+
+import Axios from 'axios';
+import UserContext from '../../context/userDetailContext';  //to save data after registering
 
 
 const AboutUs = () => {
+
+    const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
+
+    //get the bloodbanks data for drop down
+
+    const getDropDownData = async () => {
+        const dropDownBank = await Axios.get("http://localhost:5000/user/banksDropDown")
+        setUserLoginData({
+            banksData: dropDownBank.data
+        });
+    
+    }
+    getDropDownData();
+
+
+
     return (
         <VisionContainer>
-        <div class="container about">
-        <div class="about-content-left">
-        <h2 class="welcome-text">Our Vision</h2>
-        <p>This Blood Bank Management System aims to serve for human welfare. 
-        The Blood Bank Management System is designed to provide the
-        and blood banks manage their stocks. 
-        This system is used by blood banks and hospitals to manage
-        their blood stocks and routine blood transfusion. 
-        Moreover, this Blood Bank Management System (BBMS) 
-        highly aims to provide transparency in making the process of 
+            <div class="container about">
+                <div class="about-content-left">
+                    <h2 class="welcome-text">Our Vision</h2>
+                    <p>This Blood Bank Management System aims to serve for human welfare.
+                    The Blood Bank Management System is designed to provide the
+                    and blood banks manage their stocks.
+                    This system is used by blood banks and hospitals to manage
+                    their blood stocks and routine blood transfusion.
+                    Moreover, this Blood Bank Management System (BBMS)
+                    highly aims to provide transparency in making the process of
          obtaining blood from a blood bank hassle free and corruption free and make the system of blood bank management effective.</p>
-        </div>
-        <div class="about-content-right"> 
-        <h4>“Donate your blood for a reason, let the reason to be life”</h4>
-       <br/>
-        </div>
-        </div>
-         </VisionContainer>
+                </div>
+                <div class="about-content-right">
+                    <h4>“Donate your blood for a reason, let the reason to be life”</h4>
+                    <br />
+                </div>
+            </div>
+        </VisionContainer>
     );
 
 }

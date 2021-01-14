@@ -26,7 +26,7 @@ export default function SignupBloodBank() {
     //for error
     const [error, setError] = useState();
 
-    const {setUserLoginData } = useContext(UserContext);  //to save user_id for later use
+    const { userLoginData, setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
 
@@ -113,6 +113,15 @@ export default function SignupBloodBank() {
                                             placeholder="Blood Group" onChange={(e) => setBloodGroup(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
+                                        <select onChange={(e) => setBloodBank(e.target.value)}>
+                                            {userLoginData.banksData.map(item => {
+                                                return (
+                                                    <option value={item}> {item} </option>
+                                                )
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div className="input-group form-group">
                                         <input type="text" className="form-control"
                                             placeholder="Blood Bank" onChange={(e) => setBloodBank(e.target.value)} />
                                     </div>
@@ -150,15 +159,6 @@ export default function SignupBloodBank() {
 }
 
 
-{/* <div className="input-group form-group">
-                                        <select onChange={(e) => setBloodBank(e.target.value)}>
-                                            {dropDownItems.map(item => {
-                                                return (
-                                                    <option value={item}> {item} </option>
-                                                )
-                                            })}
-                                        </select>
-                                    </div> */}
 
 const SignupContainer = styled.div`
 
