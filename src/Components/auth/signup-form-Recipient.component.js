@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import UserContext from '../../context/userDetailContext';  //to save data after registering
 import ErrorNotice from '../misc/ErrorNotice'
+import {bloodGroups} from '../../context/BloodGroupsList';
+
 
 
 export default function SignupBloodBank() {
@@ -23,7 +25,7 @@ export default function SignupBloodBank() {
     //for error
     const [error, setError] = useState();
 
-    const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
+    const {userLoginData, setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
     const submit = async (e) => {
@@ -43,6 +45,7 @@ export default function SignupBloodBank() {
             setUserLoginData({
                 token: loginRes.data.token,
                 userData: loginRes.data.user,
+                banksData: []
             });
 
             localStorage.setItem("auth-token", loginRes.data.token);
@@ -96,12 +99,22 @@ export default function SignupBloodBank() {
                                             placeholder="Age" onChange={(e) => setAge(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Blood Group" onChange={(e) => setBloodGroup(e.target.value)} />
+                                        <select className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
+                                            {bloodGroups.map(item => {
+                                                return (
+                                                    <option value={item}> {item} </option>
+                                                )
+                                            })}
+                                        </select>
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="BloodBank" onChange={(e) => setBloodBank(e.target.value)} />
+                                        <select className="form-control" onChange={(e) => setBloodBank(e.target.value)}>
+                                            {userLoginData.banksData.map(item => {
+                                                return (
+                                                    <option value={item}> {item} </option>
+                                                )
+                                            })}
+                                        </select>
                                     </div>
                                     <div className="input-group form-group">
                                         <input type="text" className="form-control"

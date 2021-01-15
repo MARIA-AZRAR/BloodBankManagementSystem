@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";   //after login we need to change the page
 import Axios from "axios"
 import styled from 'styled-components';
 
 import UserContext from '../../context/userDetailContext';  //to save data after registering
-import ErrorNotice from '../misc/ErrorNotice'
-
+import ErrorNotice from '../misc/ErrorNotice';
+import {bloodGroups} from '../../context/BloodGroupsList';
 
 export default function SignupBloodBank() {
 
@@ -20,24 +20,12 @@ export default function SignupBloodBank() {
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
 
-    //for drop down
-    const [dropDownItems, setDropDownItems] = useState();
 
     //for error
     const [error, setError] = useState();
 
     const { userLoginData, setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
-
-
-    // const getDropdownData = async () => {
-    //     let items = await Axios.get("http://localhost:5000/user/banksDropDown"); //get all blood banks 
-    //     setDropDownItems(items.data);
-    //     console.log(items.data);
-    // }
-
-    // getDropdownData();
-
 
     const submit = async (e) => {
         e.preventDefault();
@@ -56,6 +44,7 @@ export default function SignupBloodBank() {
             setUserLoginData({
                 token: loginRes.data.token,
                 userData: loginRes.data.user,
+                banksData: []
             });
 
             localStorage.setItem("auth-token", loginRes.data.token);
@@ -109,12 +98,8 @@ export default function SignupBloodBank() {
                                             placeholder="Age" onChange={(e) => setAge(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Blood Group" onChange={(e) => setBloodGroup(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <select onChange={(e) => setBloodBank(e.target.value)}>
-                                            {userLoginData.banksData.map(item => {
+                                        <select className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
+                                            {bloodGroups.map(item => {
                                                 return (
                                                     <option value={item}> {item} </option>
                                                 )
@@ -122,8 +107,13 @@ export default function SignupBloodBank() {
                                         </select>
                                     </div>
                                     <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Blood Bank" onChange={(e) => setBloodBank(e.target.value)} />
+                                        <select className="form-control" onChange={(e) => setBloodBank(e.target.value)}>
+                                            {userLoginData.banksData.map(item => {
+                                                return (
+                                                    <option value={item}> {item} </option>
+                                                )
+                                            })}
+                                        </select>
                                     </div>
                                     <div className="input-group form-group">
                                         <input type="text" className="form-control"

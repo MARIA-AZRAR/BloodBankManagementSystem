@@ -76,7 +76,6 @@ router.post("/accountLogin", async (req, res) => {
         const existingUser = await User.findById(checkUser.user_id);
 
         let bloodBank = "";
-        let dropdownBank = [];
         if (existingUser.bloodBank) {
             bloodBank = await User.findOne({ name: existingUser.bloodBank }) //to find bloodBank id
         }
@@ -89,7 +88,8 @@ router.post("/accountLogin", async (req, res) => {
                 username: checkUser.username,
                 type: checkUser.type,
                 user_id: checkUser.user_id,
-                bloodBank_id: bloodBank._id
+                bloodBank_id: bloodBank._id,
+                bloodGroup:existingUser.bloodGroup
             },
         });
 

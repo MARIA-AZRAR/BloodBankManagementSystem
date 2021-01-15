@@ -78,6 +78,7 @@ function App() {
         setUserLoginData({
           sessionToken,
           userData: userResponse.data,
+          banksData:[]
         });
       }
     }
