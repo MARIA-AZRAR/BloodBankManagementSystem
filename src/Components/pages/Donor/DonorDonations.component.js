@@ -1,12 +1,40 @@
 import React, { Component } from 'react';
+import { useState,useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext';
+import Axios from "axios";
+function DonorDonations (){
+  const { userLoginData } = useContext(UserContext)
+  const history = useHistory();
+  let [data,setData]=useState([]);
+  const fetchData = React.useCallback(() => {
+    Axios.get(`http://localhost:5000/donation/${userLoginData.userData._id}`)
+    .then((response) => {
+      setData(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }, [])
+  useEffect(() => {
+    if (!userLoginData.userData)
+      history.push('/')
+    try {
+      if (userLoginData.userData.type !== "Donor")
+        history.push(`/${userLoginData.userData.type}`)
+      fetchData()   
+    }
+    catch {
+      history.push('/')
+    }
 
-class DonorDonations extends Component {
-  render() {
+  }, [userLoginData,fetchData])
     return (
       <DonorDonationsContainer>
         <div class="body">
           <h1>Your Donations</h1>
+         
           <table class="table table-striped">
             <thead class="thead">
               <tr>
@@ -16,10 +44,10 @@ class DonorDonations extends Component {
                 <th scope="col">QUANTITY</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody> 
               <tr>
                 <th scope="row">1</th>
-                <td>abc</td>
+                <td>{data.quantity}</td>
                 <td>10/11/2020</td>
                 <td>1</td>
               </tr>
@@ -53,7 +81,6 @@ class DonorDonations extends Component {
         </div>
       </DonorDonationsContainer>
     )
-  }
 }
 export default DonorDonations;
 

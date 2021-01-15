@@ -1,9 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext'
 
   
-export default class DonorProfile extends Component {
-    render() {
+function DonorProfile() {
+    const { userLoginData } = useContext(UserContext)
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!userLoginData.userData)
+      history.push('/')
+    try {
+      if (userLoginData.userData.type !== "Donor")
+        history.push(`/${userLoginData.userData.type}`)
+    }
+    catch {
+      history.push('/')
+    }
+
+  }, [userLoginData])
         return (
             <DonorProfileContainer>
                 <div>
@@ -68,9 +85,8 @@ export default class DonorProfile extends Component {
                 </div>
             </DonorProfileContainer>
         )
-    }
 }
-
+export default DonorProfile;
 
 const DonorProfileContainer = styled.div`
 

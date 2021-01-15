@@ -1,78 +1,72 @@
-import React, { useState, useContext } from 'react';
-import Swal from 'sweetalert2'
-
-import Axios from "axios"
+import React, { Component } from 'react';
+import { useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import UserContext from '../../../context/userDetailContext';  //to save data after registering
-import ErrorNotice from '../../misc/ErrorNotice'
+import UserContext from '../../../context/userDetailContext'
 
 
-export default function DonorMakeDonations() {
+function DonorMakeDonations () {
+    const { userLoginData } = useContext(UserContext)
+  const history = useHistory();
 
-    const [quantity, setQuantity] = useState();
+  useEffect(() => {
+    if (!userLoginData.userData)
+      history.push('/')
+    try {
+      if (userLoginData.userData.type !== "Donor")
+        history.push(`/${userLoginData.userData.type}`)
+    }
+    catch {
+      history.push('/')
+    }
 
-
-    //for error
-    const [error, setError] = useState();
-
-    const {userLoginData , } = useContext(UserContext);  //to save user_id for later use
-
-    const submit = async (e) => {
-        e.preventDefault();
-        try {
-            const user_id = userLoginData.userData.user_id;
-            const bloodGroup = userLoginData.userData.bloodGroup;
-            const bloodBank_id = userLoginData.userData.bloodBank_id;
-
-            const newDonation = { user_id, quantity, bloodGroup};
-            const newBlodBag = {bloodBank_id, quantity, bloodGroup};
-            await Axios.post("http://localhost:5000/donation/addDonation", newDonation);  //user and its login data in diff tables
-            await Axios.post("http://localhost:5000/bloodBag/addBloodBag", newBlodBag);  //user and its login data in diff tables
-
-            Swal.fire(
-                'Good job!',
-                'You Donated Blood Successfully',
-                'success'
-              )
-
-        } catch (err) {
-            err.response.data.msg && setError(err.response.data.msg);
-        }
-    };
-
-    return (
-        <DonorMakeDonationsContainer>
-            <div>
-                <div className="container container-fluid">
-                    <div className="d-flex justify-content-center h-100 ">
-                        <div class="card signupCard">
-                            <div className="card-body">
-                                <h3>Make Donations</h3>
-                                {error && (
-                                    <ErrorNotice message={error} clearError={() => setError(undefined)} />
-                                )}
-                                <form>
-                                    <div className="input-group form-group">
-                                        <label className="col-sm-4" for="bloodQuantity" >Blood Group: </label>
-                                        <p>{userLoginData.userData.bloodGroup}</p>
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <label className="col-sm-4" for="bloodQuantity" >Quantity: </label>
-                                        <input id="BloodQuantity" type="text" className="form-control"  onChange={(e) => setQuantity(e.target.value)}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="submit" value="Donate" className="btn float-right login_btn" onClick={submit}/>
-                                    </div>
-                                </form>
+  }, [userLoginData])
+        return (
+            <DonorMakeDonationsContainer>
+                <div>
+                <h1 className="heading">Donate Blood:</h1>
+                    <div className="container container-fluid">
+                        <div className="d-flex justify-content-center h-100">
+                            <div class="card signupCard">
+        
+                                <div className="card-body">
+                                    <h3>Make Donations</h3>
+                                    <form>
+                                        <div className="input-group form-group">
+                                            <label for="bloodGroup" >Blood Group: </label>
+                                            <select  id="BloodGroup" name="bloodGroup">
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="O-">O-</option>
+            </select>
+                                        </div>
+                                        <div className="input-group form-group">
+                                            <label for="bloodQuantity" >Quantity: </label>
+                                            <input id="BloodQuantity" type="text" className="form-control" required />
+                                        </div>
+                                        <div className="input-group form-group">
+                                            <label for="dueDate" >Date: </label>
+                                            <input id="BloodDonatedDate" type="text" className="form-control" required />
+                                        </div>
+                                        <div className="input-group form-group">
+                                            <label for="bloodBank" >Blood Bank: </label>
+                                            <input id="BloodBankUsername" type="text" className="form-control" required />
+                                        </div>
+                    
+                                        <div className="form-group">
+                                            <input type="submit" value="Donate" className="btn float-right login_btn" />
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </DonorMakeDonationsContainer>
-    )
+            </DonorMakeDonationsContainer>
+        )
 }
-
+export default DonorMakeDonations;
 
 const DonorMakeDonationsContainer = styled.div`
 
@@ -94,7 +88,7 @@ font-family: 'Righteous', cursive;
 }
 
 .signupCard{
-height: 300px;
+height: 370px;
 align-content: center;
 margin: auto;
 width: 500px;
@@ -129,20 +123,6 @@ background-color: white;
 .heading{
     padding-top:5%;
     padding-left:30%
-}
-
-@media (max-width: 635px) {
-    .signupCard
-    {
-        height: 380px;
-    }
-}
-
-@media (max-width: 325px) {
-    .signupCard
-    {
-        height: 420px;
-    }
 }
 
 `

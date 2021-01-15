@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
+import { useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext'
 
-class DonorRequests extends Component {
-  render() {
+function DonorRequests() {
+
+  const { userLoginData } = useContext(UserContext)
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!userLoginData.userData)
+      history.push('/')
+    try {
+      if (userLoginData.userData.type !== "Donor")
+        history.push(`/${userLoginData.userData.type}`)
+    }
+    catch {
+      history.push('/')
+    }
+
+  }, [userLoginData])
     return (
       <DonorRequestsContainer>
         <div class="body">
@@ -64,7 +82,6 @@ class DonorRequests extends Component {
         </div>
       </DonorRequestsContainer>
     )
-  }
 }
 export default DonorRequests;
 
