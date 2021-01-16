@@ -8,6 +8,13 @@ router.route('/').get((req, res) => {   //get all the users from the mongodb atl
     .catch(err => res.status(400).json('Erorr: ' + err));
 });
 let banks = [];
+let bloodBanks=[];
+router.route('/blood/:id').get((req, res) => {
+  User.findById(req.params.id)
+    .then(user => res.json({bank:user.name}))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 router.route('/:id').get((req, res) => {   //get all the users from the mongodb atlas
   Donation.find({donation_id:req.params.id}, function (err, result) {
     if (err) {
@@ -15,13 +22,14 @@ router.route('/:id').get((req, res) => {   //get all the users from the mongodb 
     } else {
       banks=[];
       result.map(function (item) {
+         console.log(item.created_at.toLocaleString().split(',')[0]);
           banks.push(item);
       });
-      banks.forEach(function(item){
-        console.log(item.bloodGroup)})
-      res.json({
-        quantity:banks[0].quantity,
-        bloodGroup:banks[0].bloodGroup
+     
+      //toLocaleString().split(',')[0]
+      res.json({banks
+       // quantity:banks.quantity,
+        //date:banks.created_at
       });
     }
   })

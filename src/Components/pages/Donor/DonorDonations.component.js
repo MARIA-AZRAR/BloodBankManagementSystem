@@ -4,78 +4,65 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext';
 import Axios from "axios";
+
 function DonorDonations (){
   const { userLoginData } = useContext(UserContext)
+  const [isLoading,setLoading]=useState(true);
   const history = useHistory();
-  let [data,setData]=useState([]);
-  const fetchData = React.useCallback(() => {
-    Axios.get(`http://localhost:5000/donation/${userLoginData.userData._id}`)
-    .then((response) => {
-      setData(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }, [])
+  const [data,setData]=useState([]);
+ const [bloodBank,setBloodBank]=useState("");
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
     try {
       if (userLoginData.userData.type !== "Donor")
         history.push(`/${userLoginData.userData.type}`)
-      fetchData()   
+      Axios.get(`http://localhost:5000/donation/blood/${userLoginData.userData.bloodBank_id}`)
+      .then((response) => {
+         setBloodBank(response.data);
+      })
+      Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+         
     }
     catch {
       history.push('/')
     }
 
-  }, [userLoginData,fetchData])
+  }, [userLoginData])
+  if(isLoading)
+  {
+    return <div>Wait</div>
+  }
     return (
       <DonorDonationsContainer>
         <div class="body">
           <h1>Your Donations</h1>
          
-          <table class="table table-striped">
+          <table cklass="table table-striped">
             <thead class="thead">
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">BLOOD BANK</th>
+                <th scope="col">BANK</th>
                 <th scope="col">DATE</th>
                 <th scope="col">QUANTITY</th>
               </tr>
             </thead>
-            <tbody> 
+            <tbody>
+              
               <tr>
                 <th scope="row">1</th>
-                <td>{data.quantity}</td>
-                <td>10/11/2020</td>
-                <td>1</td>
+                <td>{bloodBank.bank} </td>
+                <td>{data.banks[0].created_at}</td>
+                <td>{data.banks[0].quantity}</td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>xyz</td>
-                <td>09/11/2020</td>
-                <td>2</td>
-                </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>mln</td>
-                <td>12/11/2020</td>
-                <td>1</td>
-                  </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>abc</td>
-                <td>01/03/2020</td>
-                <td>2</td>
-                    </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>jkl</td>
-                <td>03/05/2020</td>
-                <td>3</td>
-                
-                    </tr>
+            
             </tbody>
           </table>
         </div>
