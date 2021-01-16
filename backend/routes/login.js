@@ -137,16 +137,47 @@ router.post("/IsValidToken", async (req, res) => {
 
 //To get a single user from front end to check if user is valid
 router.get("/", authen, async (req, res) => {
+
     const userDetails = await User.findById(req.user_id); //getting user
-    const userLogin = await Login.findById(req.id); //getting userLogin
+    const userLogin = await Login.findById(req.id); //getting userLogin    
+
+
+    let bloodBank = "";
+    if (userDetails.bloodBank) {
+        bloodBank = await User.findOne({ name: userDetails.bloodBank }) //to find bloodBank id
+    }
+
     res.json({
         id: userLogin._id,                         //returning info to front end incase if needed
         name: userDetails.name,
         email: userDetails.email,
         status: userDetails.status,
         type: userDetails.type,
+        user_id: userDetails._id,
+        bloodGroup: userDetails.bloodGroup,
+        bloodBank_id:bloodBank._id 
+    });
+});
+
+router.get("/profile", authen, async (req, res) => {
+    const userDetails = await User.findById(req.user_id); //getting user
+    const userLogin = await Login.findById(req.id); //getting userLogin
+    res.json({
+        id: userLogin._id,                         //returning info to front end incase if needed
+        name: userDetails.name,
+        email: userDetails.email,
+        bloodGroup: userDetails.bloodGroup,
+        age: userDetails.age,
+        bloodBank:userDetails.bloodBank,
+        contact:userDetails.contact,
+        status: userDetails.status,
+        address: userDetails.address,
+        type: userDetails.type,
+        username: userLogin.username,
         user_id: userDetails._id
     });
 });
+
+
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext , useEffect} from 'react';
 import { useHistory } from "react-router-dom";   //after login we need to change the page
 import Axios from "axios"
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import {bloodGroups} from '../../context/BloodGroupsList';
 
 
 
-export default function SignupBloodBank() {
+function ChildSignupRecipient(props) {
 
     const [name, setName] = useState();
     const [address, setAddress] = useState();
@@ -25,7 +25,7 @@ export default function SignupBloodBank() {
     //for error
     const [error, setError] = useState();
 
-    const {userLoginData, setUserLoginData } = useContext(UserContext);  //to save user_id for later use
+    const {setUserLoginData } = useContext(UserContext);  //to save user_id for later use
     const history = useHistory();  //to store history
 
     const submit = async (e) => {
@@ -44,8 +44,7 @@ export default function SignupBloodBank() {
 
             setUserLoginData({
                 token: loginRes.data.token,
-                userData: loginRes.data.user,
-                banksData: []
+                userData: loginRes.data.user
             });
 
             localStorage.setItem("auth-token", loginRes.data.token);
@@ -109,7 +108,7 @@ export default function SignupBloodBank() {
                                     </div>
                                     <div className="input-group form-group">
                                         <select className="form-control" onChange={(e) => setBloodBank(e.target.value)}>
-                                            {userLoginData.banksData.map(item => {
+                                            {props.banksList.map(item => {
                                                 return (
                                                     <option value={item}> {item} </option>
                                                 )
@@ -148,6 +147,29 @@ export default function SignupBloodBank() {
         </SignupContainer>
     )
 }
+
+
+function SignupRecipinet() {
+
+    const [dropItem, setDropItem] = useState();
+    useEffect(() => {
+        // //get Blooddropdowndata to pass as props
+
+        const drop = async () => {
+            const items = await Axios.get("http://localhost:5000/user/banksDropDown")
+            setDropItem(items.data);
+        }
+        drop();
+    }, [])
+
+    return (
+        <>
+        {dropItem && <ChildSignupRecipient banksList= {dropItem} />}
+        </>
+    )
+}
+
+export {SignupRecipinet , ChildSignupRecipient}
 
 const SignupContainer = styled.div`
 

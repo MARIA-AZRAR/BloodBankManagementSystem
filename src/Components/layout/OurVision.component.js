@@ -1,53 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-import Axios from 'axios';
-import UserContext from '../../context/userDetailContext';  //to save data after registering
 
 
 const AboutUs = () => {
-
-    const { setUserLoginData } = useContext(UserContext);  //to save user_id for later use
-
-
-    //get the bloodbanks data for drop down
-
-    const getDropDownData = async () => {
-
-        //calculating all over again bcz if user is on home page then its token shouldn't be set to null
-
-        let sessionToken = localStorage.getItem("auth-token"); //if no key with this name w'll get a null in session token
-        if (sessionToken === null) {  //a null session token can erase error at the backend 
-            localStorage.setItem("auth-token", "")  //adding key in local storage & value will be given later
-            sessionToken = ""   //so assigning it the empty string
-        }
-        //now checkiing if user is logged in by giving a post request to if token is valid
-        const tokenResponse = await Axios.post(
-            "http://localhost:5000/login/IsValidToken",
-            null,
-            {
-                headers: { "auth-token": sessionToken }
-            });  //data is null but it has a header which will have a token
-
-        let userResponse = ''
-        if (tokenResponse.data) {  //true if user logged in
-            userResponse = await Axios.get("http://localhost:5000/login/", {
-                headers: { "auth-token": sessionToken }
-            });
-        }
-
-        const dropDownBank = await Axios.get("http://localhost:5000/user/banksDropDown")
-        setUserLoginData({
-            sessionToken,
-            userData: userResponse.data,
-            banksData: dropDownBank.data
-        });
-
-    }
-    getDropDownData();
-
-
-
     return (
         <VisionContainer>
             <div class="container about">

@@ -1,92 +1,118 @@
-import React, { Component } from 'react';
-import { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState  } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
+import Axios from 'axios'
 
-  
-function DonorProfile() {
+function ChildProfile(props) {
     const { userLoginData } = useContext(UserContext)
-  const history = useHistory();
+    const history = useHistory();
 
-  useEffect(() => {
-    if (!userLoginData.userData)
-      history.push('/')
-    try {
-      if (userLoginData.userData.type !== "Donor")
-        history.push(`/${userLoginData.userData.type}`)
-    }
-    catch {
-      history.push('/')
-    }
+    useEffect(() => {
+        if (!userLoginData.userData)
+            history.push('/')
+        try {
+            if (userLoginData.userData.type !== "Donor")
+                history.push(`/${userLoginData.userData.type}`)
+        }
+        catch {
+            history.push('/')
+        }
 
-  }, [userLoginData])
-        return (
-            <DonorProfileContainer>
-                <div>
+    }, [userLoginData])
+    return (
+        <DonorProfileContainer>
+            <div>
                 <h1 className="heading">Update Profile:</h1>
-                    <div className="container container-fluid">
-                    
-                        <div className="d-flex justify-content-center h-100">
-                            <div class="card signupCard">
-
-                                <div className="card-body">
-                                    <h3>Profile</h3>
-                                    <form>
-                                        <div className="input-group form-group">
-                                            <label for="bloodBankName" >Name: </label>
-                                            <input id="bloodBankName" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="bloodBankName" >Blood Group: </label>
-                                            <select  id="blood" name="bloodGroup">
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="O-">O-</option>
-            </select>
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankAddress" >Address: </label>
-                                            <input id="BloodBankAddress" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankContact" >Contact No: </label>
-                                            <input id="BloodBankContact" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankUsername" >Username: </label>
-                                            <input id="BloodBankUsername" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankEmail" >Email: </label>
-                                            <input id="BloodBankEmail" type="text" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankPassword" >Password: </label>
-                                            <input id="BloodBankPassword" type="password" className="form-control" required />
-                                        </div>
-                                        <div className="input-group form-group">
-                                            <label for="BloodBankPassword" >Blood Bank: </label>
-                                            <input id="BloodBankPassword" type="password" className="form-control" required />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <input type="submit" value="Unregister" className="btn float-right login_btn" />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="submit" value="Update" className="btn float-right login_btn" />
-                                        </div>
-                                    </form>
-                                </div>
+                <div className="container container-fluid">
+                    <div className="d-flex justify-content-center h-100">
+                        <div class="card signupCard">
+                            <div className="card-body">
+                                <h3>Profile</h3>
+                                <form>
+                                    <div className="input-group form-group">
+                                        <label for="bloodBankName" >Name: </label>
+                                        <input id="bloodBankName" type="text" value = { props.profile.name} className="form-control" required />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="bloodBankName" >Blood Group: </label>
+                                        <select id="blood" name="bloodGroup">
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="O-">O-</option>
+                                        </select>
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="BloodBankAddress" >Address: </label>
+                                        <input id="BloodBankAddress" type="text" className="form-control" required />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="BloodBankContact" >Contact No: </label>
+                                        <input id="BloodBankContact" type="text" className="form-control" required />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="BloodBankUsername" >Username: </label>
+                                        <input id="BloodBankUsername" type="text" className="form-control" required />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="BloodBankEmail" >Email: </label>
+                                        <input id="BloodBankEmail" type="text" className="form-control" required />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="BloodBankPassword" >Password: </label>
+                                        <input id="BloodBankPassword" type="password" className="form-control" required />
+                                    </div>
+                                    <div className="input-group form-group">
+                                        <label for="BloodBankPassword" >Blood Bank: </label>
+                                        <input id="BloodBankPassword" type="password" className="form-control" required />
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="submit" value="Unregister" className="btn float-right login_btn" />
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="submit" value="Update" className="btn float-right login_btn" />
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </DonorProfileContainer>
-        )
+            </div>
+        </DonorProfileContainer>
+    )
 }
-export default DonorProfile;
+
+
+//this will take data and will not render until data is not fetch
+function DonorProfile() {
+
+    let [profileData, setProfileData] = useState();
+    const { userLoginData } = useContext(UserContext)
+
+    useEffect(() => {
+        const getData = async () =>{
+
+            const userResponse = await Axios.get("http://localhost:5000/login/profile", {
+                headers: { "auth-token": userLoginData.token }
+            });
+    
+            setProfileData(userResponse.data)
+        }
+        getData();
+    
+    }, [])
+    
+    return(
+        <>
+          {profileData && <ChildProfile profile={profileData}/>} 
+        </>
+    )
+}
+
+
+
+export { DonorProfile , ChildProfile};
 
 const DonorProfileContainer = styled.div`
 

@@ -20,6 +20,8 @@ export default function DonorMakeDonations() {
     const submit = async (e) => {
         e.preventDefault();
         try {
+            console.log(userLoginData.userData);
+            
             const user_id = userLoginData.userData.user_id;
             const bloodGroup = userLoginData.userData.bloodGroup;
             const bloodBank_id = userLoginData.userData.bloodBank_id;
@@ -54,7 +56,9 @@ export default function DonorMakeDonations() {
                                 <form>
                                     <div className="input-group form-group">
                                         <label className="col-sm-4" for="bloodQuantity" >Blood Group: </label>
-                                        <p>{userLoginData.userData.bloodGroup}</p>
+                                        {userLoginData.userData ? 
+                                         <p>{userLoginData.userData.bloodGroup}</p> : <p></p>
+                                        }   
                                     </div>
                                     <div className="input-group form-group">
                                         <label className="col-sm-4" for="bloodQuantity" >Quantity: </label>

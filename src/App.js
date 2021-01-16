@@ -15,8 +15,8 @@ import BankStock from './Components/pages/BloodBank/BankStock.component';
 import Login from './Components/auth/login-form.component';
 import LoginAdmin from './Components/auth/login-form-admin.component';
 import SignupBloodBank from './Components/auth/signup-form-bloodBank.component';
-import SignupDonor from './Components/auth/signup-form-Donor.component';
-import SignupRecipinet from './Components/auth/signup-form-Recipient.component';
+import {SignupDonor} from './Components/auth/signup-form-Donor.component';
+import {SignupRecipinet} from './Components/auth/signup-form-Recipient.component';
 
 //import Navbar from './Components/navbar.component';
 import Header from './Components/layout/Header.component';
@@ -32,7 +32,7 @@ import UserContext from './context/userDetailContext';
 import DonorDonations from './Components/pages/Donor/DonorDonations.component';
 import DonorRequests from './Components/pages/Donor/DonorRequests.component';
 import DonorMakeDonations from './Components/pages/Donor/DonorMakeDonations.component';
-import DonorProfile from './Components/pages/Donor/DonorProfile.component';
+import {DonorProfile } from './Components/pages/Donor/DonorProfile.component';
 
 
 //Recipient
@@ -47,10 +47,10 @@ import RecipientProfile from './Components/pages/Recipient/RecipientProfile.comp
 
 function App() {
 
+  const [dropItem , setDropItem] = useState();
   const [userLoginData, setUserLoginData] = useState({  //this state will store the user data needed in all app like id
     token: undefined,
-    userData: undefined,
-    banksData: undefined
+    userData: undefined
   });
 
   //now we need to get the token from the session if any and check if its valid or not to login the user
@@ -76,21 +76,13 @@ function App() {
         });
 
         setUserLoginData({
-          sessionToken,
-          userData: userResponse.data,
-          banksData:[]
+          token: sessionToken,
+          userData: userResponse.data
         });
       }
     }
-
     checkUserLogin();
-  }, []) //[] empty array means this useEffect will run exactly one time
-
-  //          <Route path="/" component={Sidebar} />
-  //          <Route path="/BloodBank" component={BankNavbar} />
-  //          <Route path="/" exact component={Navbar} />
-
-
+  }, []) 
 
   return (
     <>
@@ -100,10 +92,11 @@ function App() {
           <Navbar />
           <Route path="/" exact component={AboutUs} />
           <Route path="/signup" exact component={SignupBloodBank} />
-          <Route path="/signup-donor" exact component={SignupDonor} />
-          <Route path="/signup-recipient" exact component={SignupRecipinet} />
+
           <Route path="/Admin" exact component={LoginAdmin} />
           <Route path="/signin" exact component={Login} />
+          <Route path="/signup-donor" exact component = {SignupDonor} />
+          <Route path="/signup-recipient" exact component = {SignupRecipinet}/>
           <Route path="/BloodBank" exact component={BankHome} />
           <Route path="/BloodBank/Donor" exact component={BankDonor} />
           <Route path="/BloodBank/Reciever" exact component={BankReciever} />
