@@ -26,16 +26,6 @@ function DonorDonations() {
         })
 
       Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
-<<<<<<< HEAD
-        .then((response) => {
-          setData(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-
-=======
       .then((response) => {
         setData(response.data);
 
@@ -45,46 +35,12 @@ function DonorDonations() {
         console.log(error)
       })
 
->>>>>>> ec999ccc784f1f6b8a42e6c05a31912e669ef13d
     }
     catch {
       history.push('/')
     }
 
   }, [userLoginData])
-<<<<<<< HEAD
-  if (isLoading) {
-    return <div>Wait</div>
-  }
-  return (
-    <DonorDonationsContainer>
-      <div class="body">
-        <h1>Your Donations</h1>
-
-        <table cklass="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">BANK</th>
-              <th scope="col">DATE</th>
-              <th scope="col">QUANTITY</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <th scope="row">1</th>
-              <td>{bloodBank.bank} </td>
-              <td>{data.banks[0].created_at}</td>
-              <td>{data.banks[0].quantity}</td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-    </DonorDonationsContainer>
-  )
-=======
 
   if(isLoading)
   {
@@ -134,7 +90,6 @@ function DonorDonations() {
 
       </DonorDonationsContainer>
     )
->>>>>>> ec999ccc784f1f6b8a42e6c05a31912e669ef13d
 }
 export default DonorDonations;
 const DonorDonationsContainer = styled.div`
