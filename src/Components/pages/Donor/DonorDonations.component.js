@@ -11,6 +11,7 @@ function DonorDonations() {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [bloodBank, setBloodBank] = useState("");
+
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
@@ -23,8 +24,9 @@ function DonorDonations() {
         .then((response) => {
           setBloodBank(response.data);
         })
-        
+
       Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
+<<<<<<< HEAD
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -33,12 +35,24 @@ function DonorDonations() {
           console.log(error)
         })
 
+=======
+      .then((response) => {
+        setData(response.data);
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+>>>>>>> ec999ccc784f1f6b8a42e6c05a31912e669ef13d
     }
     catch {
       history.push('/')
     }
 
   }, [userLoginData])
+<<<<<<< HEAD
   if (isLoading) {
     return <div>Wait</div>
   }
@@ -70,9 +84,59 @@ function DonorDonations() {
       </div>
     </DonorDonationsContainer>
   )
+=======
+
+  if(isLoading)
+  {
+    return (
+
+    <div class="d-flex justify-content-center">
+    <div class="spinner-border text-danger" role="status" >
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+)
+  }
+    return (
+      <DonorDonationsContainer>
+        <div class="body">
+          <h1>Your Donations</h1>
+
+          <table class="table table-striped">
+            <thead class="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">BANK</th>
+                <th scope="col">DATE</th>
+                <th scope="col">QUANTITY</th>
+              </tr>
+            </thead>
+            <tbody>
+            {data.banks.map((result,index) => {
+
+            return (
+
+                 <tr>
+                   <td>{index+1}</td>
+                   <td>{bloodBank.bank}</td>
+                  <td>{(new Date(result.created_at)).toLocaleString().split(',')[0]}</td>
+                  <td>{result.quantity}</td>
+                </tr>
+
+            )
+          })}
+            </tbody>
+          </table>
+
+        </div>
+
+
+      </DonorDonationsContainer>
+    )
+>>>>>>> ec999ccc784f1f6b8a42e6c05a31912e669ef13d
 }
 export default DonorDonations;
-
 const DonorDonationsContainer = styled.div`
 .thead{
     background-color:Black;

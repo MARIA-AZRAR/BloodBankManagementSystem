@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 let bloodRequest = require('../models/bloodRequest.model');
-
+let Users=require('../models/user.model');
 router.route('/').get((req, res) => {   //get all the users from the mongodb atlas
     User.find()   //find all users mongoose mthod it returns a promise
         .then(users => res.json(users))
@@ -37,6 +37,26 @@ router.post("/addBloodRequest", async (req, res) => {   //POST Request and body 
         return res.status(500).json({ error: err.message });
     }
 });
+
+router.get("/getAllRec", async (req, res) => {
+const userDetails = await bloodRequest.find(); //getting user
+//const userLogin = await Login.findById(req.id); //getting userLogin
+let request=[];    
+let recipient = [];
+for(var i=0;i<userDetails.length;i++){
+       // userDetails[0].status="Disable";
+        if(userDetails[i].status=="Active"){
+        request.push(userDetails[i]);
+        recipient.push( await Users.findOne({_id:userDetails[i].recipient_id}))
+    } //to find bloodBank id
+    }
+      
+    res.json({
+        request,
+        recipient
+    });
+});
+
 
 module.exports = router;
 
