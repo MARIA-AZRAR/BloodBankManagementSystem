@@ -11,6 +11,7 @@ function DonorDonations (){
   const history = useHistory();
   const [data,setData]=useState([]);
  const [bloodBank,setBloodBank]=useState("");
+       
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
@@ -24,6 +25,7 @@ function DonorDonations (){
       Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
       .then((response) => {
         setData(response.data);
+       
         setLoading(false);
       })
       .catch((error) => {
@@ -36,16 +38,25 @@ function DonorDonations (){
     }
 
   }, [userLoginData])
+ 
   if(isLoading)
   {
-    return <div>Wait</div>
+    return (
+     
+    <div class="d-flex justify-content-center">
+    <div class="spinner-border text-danger" role="status" >
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+)
   }
     return (
       <DonorDonationsContainer>
         <div class="body">
           <h1>Your Donations</h1>
          
-          <table cklass="table table-striped">
+          <table class="table table-striped">
             <thead class="thead">
               <tr>
                 <th scope="col">ID</th>
@@ -55,22 +66,29 @@ function DonorDonations (){
               </tr>
             </thead>
             <tbody>
-              
-              <tr>
-                <th scope="row">1</th>
-                <td>{bloodBank.bank} </td>
-                <td>{data.banks[0].created_at}</td>
-                <td>{data.banks[0].quantity}</td>
-              </tr>
+            {data.banks.map((result,index) => {
             
+            return (
+             
+                 <tr>
+                   <td>{index+1}</td>
+                   <td>{bloodBank.bank}</td>
+                  <td>{(new Date(result.created_at)).toLocaleString().split(',')[0]}</td>
+                  <td>{result.quantity}</td>
+                </tr>
+               
+            )
+          })}
             </tbody>
           </table>
+          
         </div>
+      
+      
       </DonorDonationsContainer>
     )
 }
 export default DonorDonations;
-
 const DonorDonationsContainer = styled.div`
 .thead{
     background-color:Black;

@@ -1,26 +1,43 @@
 import React, { Component } from 'react';
-import { useEffect, useContext } from "react";
+import { useState,useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
-
+import Axios from 'axios';
 function DonorRequests() {
 
   const { userLoginData } = useContext(UserContext)
   const history = useHistory();
-
+  const[data,setData]=useState([]);
+  const [isLoading,setLoading]=useState(true);
+//  let recData=[];
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
     try {
       if (userLoginData.userData.type !== "Donor")
         history.push(`/${userLoginData.userData.type}`)
+      Axios.get("http://localhost:5000/bloodRequest/getAllRec")
+        .then((response) => {
+          setData(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
     catch {
       history.push('/')
     }
 
   }, [userLoginData])
+  if(isLoading){
+    return (<div class="text-center">
+    <div class="spinner-border text-danger"  role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>)
+  }
     return (
       <DonorRequestsContainer>
         <div class="body">
@@ -37,46 +54,20 @@ function DonorRequests() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>abc</td>
-                <td>A+</td>
-                <td>01/10/2020</td>
-                <td>12345678901</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>xyz</td>
-                <td>A-</td>
-                <td>02/11/2020</td>
-                <td>12345678991</td>
-                <td>2</td>
+            {data.request.map((result,index) => {
+            return (
+             
+                 <tr>
+                   <td>{index+1}</td>
+                   <td>{data.recipient[index].name}</td>
+                  <td>{result.bloodGroup}</td>
+                  <td>{(new Date(result.due_date)).toLocaleString().split(',')[0]}</td>
+                  <td>{data.recipient[index].contact}</td>
+                  <td>{result.quantity}</td>
                 </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>nml</td>
-                <td>B+</td>
-                <td>05/10/2020</td>
-                <td>12345678881</td>
-                <td>3</td>
-                  </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>jkl</td>
-                <td>AB+</td>
-                <td>10/11/2020</td>
-                <td>12345678976</td>
-                <td>2</td>
-                    </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>lmn</td>
-                <td>O-</td>
-                <td>22/10/2020</td>
-                <td>12345678921</td>
-                <td>3</td>
-                    </tr>
+               
+            )
+          })}
             </tbody>
           </table>
         </div>
@@ -101,4 +92,5 @@ const DonorRequestsContainer = styled.div`
     padding-right:10%;
     padding-top:3%;
 }
+
 `;
