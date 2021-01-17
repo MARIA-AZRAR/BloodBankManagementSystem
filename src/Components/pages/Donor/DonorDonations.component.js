@@ -1,73 +1,75 @@
 import React, { Component } from 'react';
-import { useState,useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext';
 import Axios from "axios";
 
-function DonorDonations (){
+function DonorDonations() {
   const { userLoginData } = useContext(UserContext)
-  const [isLoading,setLoading]=useState(true);
+  const [isLoading, setLoading] = useState(true);
   const history = useHistory();
-  const [data,setData]=useState([]);
- const [bloodBank,setBloodBank]=useState("");
+  const [data, setData] = useState([]);
+  const [bloodBank, setBloodBank] = useState("");
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
     try {
       if (userLoginData.userData.type !== "Donor")
         history.push(`/${userLoginData.userData.type}`)
+
+
       Axios.get(`http://localhost:5000/donation/blood/${userLoginData.userData.bloodBank_id}`)
-      .then((response) => {
-         setBloodBank(response.data);
-      })
+        .then((response) => {
+          setBloodBank(response.data);
+        })
+        
       Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-         
+        .then((response) => {
+          setData(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
     }
     catch {
       history.push('/')
     }
 
   }, [userLoginData])
-  if(isLoading)
-  {
+  if (isLoading) {
     return <div>Wait</div>
   }
-    return (
-      <DonorDonationsContainer>
-        <div class="body">
-          <h1>Your Donations</h1>
-         
-          <table cklass="table table-striped">
-            <thead class="thead">
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">BANK</th>
-                <th scope="col">DATE</th>
-                <th scope="col">QUANTITY</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-              <tr>
-                <th scope="row">1</th>
-                <td>{bloodBank.bank} </td>
-                <td>{data.banks[0].created_at}</td>
-                <td>{data.banks[0].quantity}</td>
-              </tr>
-            
-            </tbody>
-          </table>
-        </div>
-      </DonorDonationsContainer>
-    )
+  return (
+    <DonorDonationsContainer>
+      <div class="body">
+        <h1>Your Donations</h1>
+
+        <table cklass="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">BANK</th>
+              <th scope="col">DATE</th>
+              <th scope="col">QUANTITY</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <th scope="row">1</th>
+              <td>{bloodBank.bank} </td>
+              <td>{data.banks[0].created_at}</td>
+              <td>{data.banks[0].quantity}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </DonorDonationsContainer>
+  )
 }
 export default DonorDonations;
 

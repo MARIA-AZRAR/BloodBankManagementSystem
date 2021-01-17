@@ -89,7 +89,7 @@ router.post("/accountLogin", async (req, res) => {
                 type: checkUser.type,
                 user_id: checkUser.user_id,
                 bloodBank_id: bloodBank._id,
-                bloodGroup:existingUser.bloodGroup
+                bloodGroup: existingUser.bloodGroup
             },
         });
 
@@ -155,7 +155,7 @@ router.get("/", authen, async (req, res) => {
         type: userDetails.type,
         user_id: userDetails._id,
         bloodGroup: userDetails.bloodGroup,
-        bloodBank_id:bloodBank._id 
+        bloodBank_id: bloodBank._id
     });
 });
 
@@ -168,8 +168,8 @@ router.get("/profile", authen, async (req, res) => {
         email: userDetails.email,
         bloodGroup: userDetails.bloodGroup,
         age: userDetails.age,
-        bloodBank:userDetails.bloodBank,
-        contact:userDetails.contact,
+        bloodBank: userDetails.bloodBank,
+        contact: userDetails.contact,
         status: userDetails.status,
         address: userDetails.address,
         type: userDetails.type,
@@ -178,6 +178,21 @@ router.get("/profile", authen, async (req, res) => {
     });
 });
 
+router.post('/update/:id', async (req, res) => {
+    //Generate hash for passwordk2
+    const saltP = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(req.body.password, saltP);
 
+    Login.findById(req.params.id)
+        .then(users => {
+            users.username = req.body.username;
+            users.password = hashPassword;
+
+            users.save()  //save new user to database
+                .then(() => res.json('user Updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;

@@ -93,11 +93,9 @@ router.route('/update/:id').post((req, res) => {
       users.email = req.body.email;
       users.bloodGroup = req.body.bloodGroup;
       users.age = req.body.age;
-      users.bloodBank = req.body.bloodBank;
       users.contact = req.body.contact;
       users.address = req.body.address;
       users.status = req.body.status;
-      users.type = req.body.type;
 
       users.save()  //save new user to database
         .then(() => res.json('user Updated!'))

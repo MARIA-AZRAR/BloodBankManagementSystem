@@ -32,7 +32,7 @@ import UserContext from './context/userDetailContext';
 import DonorDonations from './Components/pages/Donor/DonorDonations.component';
 import DonorRequests from './Components/pages/Donor/DonorRequests.component';
 import DonorMakeDonations from './Components/pages/Donor/DonorMakeDonations.component';
-import {DonorProfile } from './Components/pages/Donor/DonorProfile.component';
+import DonorProfile from './Components/pages/Donor/DonorProfile.component';
 
 
 //Recipient
