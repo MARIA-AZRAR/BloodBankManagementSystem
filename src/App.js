@@ -47,7 +47,6 @@ import RecipientProfile from './Components/pages/Recipient/RecipientProfile.comp
 
 function App() {
 
-  const [dropItem , setDropItem] = useState();
   const [userLoginData, setUserLoginData] = useState({  //this state will store the user data needed in all app like id
     token: undefined,
     userData: undefined

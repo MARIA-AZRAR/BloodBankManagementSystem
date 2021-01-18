@@ -179,6 +179,19 @@ router.get("/profile", authen, async (req, res) => {
 });
 
 router.post('/update/:id', async (req, res) => {
+    const password = req.body.password;
+    if(!password){
+        Login.findById(req.params.id)
+        .then(users => {
+            users.username = req.body.username;
+
+            users.save()  //save new user to database
+                .then(() => res.json('user Updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+
+    }else {
     //Generate hash for passwordk2
     const saltP = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(req.body.password, saltP);
@@ -193,6 +206,9 @@ router.post('/update/:id', async (req, res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
+    }
+
+   
 });
 
 module.exports = router;

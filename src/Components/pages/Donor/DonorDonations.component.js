@@ -26,14 +26,14 @@ function DonorDonations() {
         })
 
       Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
-      .then((response) => {
-        setData(response.data);
+        .then((response) => {
+          setData(response.data);
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
 
     }
     catch {
@@ -42,57 +42,67 @@ function DonorDonations() {
 
   }, [userLoginData])
 
-  if(isLoading)
-  {
+  if (isLoading) {
     return (
 
-    <div class="d-flex justify-content-center">
-    <div class="spinner-border text-danger" role="status" >
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
-
-)
-  }
-    return (
       <DonorDonationsContainer>
-        <div class="body">
-          <h1>Your Donations</h1>
+        <div class="d-flex justify-content-center">
+          <div className="spinnerl">
+            <div class="spinner-border text-danger" role="status" >
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </DonorDonationsContainer>
 
-          <table class="table table-striped">
-            <thead class="thead">
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">BANK</th>
-                <th scope="col">DATE</th>
-                <th scope="col">QUANTITY</th>
-              </tr>
-            </thead>
-            <tbody>
-            {data.banks.map((result,index) => {
+    )
+  }
+  return (
+    <DonorDonationsContainer>
+      <div class="body">
+        <h1>Your Donations</h1>
 
-            return (
+        <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">BANK</th>
+              <th scope="col">DATE</th>
+              <th scope="col">QUANTITY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.banks.map((result, index) => {
 
-                 <tr>
-                   <td>{index+1}</td>
-                   <td>{bloodBank.bank}</td>
+              return (
+
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{bloodBank.bank}</td>
                   <td>{(new Date(result.created_at)).toLocaleString().split(',')[0]}</td>
                   <td>{result.quantity}</td>
                 </tr>
 
-            )
-          })}
-            </tbody>
-          </table>
+              )
+            })}
+          </tbody>
+        </table>
 
-        </div>
+      </div>
 
 
-      </DonorDonationsContainer>
-    )
+    </DonorDonationsContainer>
+  )
 }
 export default DonorDonations;
 const DonorDonationsContainer = styled.div`
+
+.spinnerl{
+  padding-top:150px;
+  padding-bottom:150px;
+  
+}
+
 .thead{
     background-color:Black;
     color:white;

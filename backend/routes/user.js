@@ -86,22 +86,37 @@ router.route('/:id').delete((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/update/:id').post((req, res) => {
-  User.findById(req.params.id)
-    .then(users => {
-      users.name = req.body.name;
-      users.email = req.body.email;
-      users.bloodGroup = req.body.bloodGroup;
-      users.age = req.body.age;
-      users.contact = req.body.contact;
-      users.address = req.body.address;
-      users.status = req.body.status;
+router.post("/update/:id", async (req, res) => {
+  try {
+    //validation
 
-      users.save()  //save new user to database
-        .then(() => res.json('user Updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
+    if (!req.body.name || !req.body.email || !req.body.contact || !req.body.address) {
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    }
+
+    if ((req.body.name).length < 3) {
+      return res.status(400).json({ msg: "The name needs to be at least 3 characters long." });
+    }
+
+    User.findById(req.params.id)
+      .then(users => {
+        users.name = req.body.name;
+        users.email = req.body.email;
+        users.bloodGroup = req.body.bloodGroup;
+        users.age = req.body.age;
+        users.contact = req.body.contact;
+        users.address = req.body.address;
+        users.status = req.body.status;
+
+        users.save()  //save new user to database
+          .then(() => res.json('user Updated!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  } catch (err) {
+    return res.status(500).json({ error: err.message })
+  }
+
 });
 
 

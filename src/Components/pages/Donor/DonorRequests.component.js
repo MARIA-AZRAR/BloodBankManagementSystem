@@ -32,11 +32,17 @@ function DonorRequests() {
 
   }, [userLoginData])
   if(isLoading){
-    return (<div class="text-center">
-    <div class="spinner-border text-danger"  role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>)
+    return (
+      <DonorRequestsContainer>
+      <div class="d-flex justify-content-center">
+        <div className="spinnerl">
+          <div class="spinner-border text-danger" role="status" >
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </DonorRequestsContainer>
+  )
   }
     return (
       <DonorRequestsContainer>
@@ -77,6 +83,13 @@ function DonorRequests() {
 export default DonorRequests;
 
 const DonorRequestsContainer = styled.div`
+
+.spinnerl{
+  padding-top:150px;
+  padding-bottom:150px;
+  
+}
+
 .thead{
     background-color:Black;
     color:white;
