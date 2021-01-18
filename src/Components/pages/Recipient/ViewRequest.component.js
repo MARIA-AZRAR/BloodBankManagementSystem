@@ -1,8 +1,46 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext, useState  } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import UserContext from '../../../context/userDetailContext'
+import Axios from 'axios'
+function RecipientRequests(){
+  const { userLoginData } = useContext(UserContext)
+  const [isLoading,setLoading]=useState(true);
+  const history = useHistory();
+  const [data,setData]=useState([]);
+  useEffect(() => {
+    if (!userLoginData.userData)
+      history.push('/')
+    try {
+      if (userLoginData.userData.type !== "Recipient")
+        history.push(`/${userLoginData.userData.type}`)
 
-class RecipientRequests extends Component {
-  render() {
+      Axios.get(`http://localhost:5000/bloodRequest/viewRequests/${userLoginData.userData.user_id}`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+         
+    }
+    catch {
+      history.push('/')
+    }
+
+  },[userLoginData])
+  if(isLoading)
+  {
+    return (
+     
+    <div class="d-flex justify-content-center">
+    <div class="spinner-border text-danger" role="status" >
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+)}
     return (
       <RecipientContainer>
         <div class="body">
@@ -16,75 +54,34 @@ class RecipientRequests extends Component {
                 <th scope="col">AGE</th>
                 <th scope="col">BLOOD GROUP</th>
                 <th scope="col">ADDRESS</th>
-                <th scope="col">CONTACT NO</th>
                 <th scope="col">BLOOD BANK</th>
                 <th scope="col">QUANTITY</th>
                 <th scope="col">STATUS</th>
+                <th scope="col">DUE DATE</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>xyz</td>
-                <td>20</td>
-                <td>A-</td>
-                <td>22 Street House No 1</td>
-                <td>12345678909</td>
-                <td>H Bank</td>
-                <td>1</td>
-                <td>Pending</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>abc</td>
-                <td>21</td>
-                <td>B-</td>
-                <td>22 Street House No 2</td>
-                <td>12345678906</td>
-                <td>B Bank</td>
-                <td>2</td>
-                <td>Pending</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>123</td>
-                <td>25</td>
-                <td>A+</td>
-                <td>22 Street House No 3</td>
-                <td>12345678907</td>
-                <td>C Bank</td>
-                <td>1</td>
-                <td>Complete</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>mln</td>
-                <td>26</td>
-                <td>AB+</td>
-                <td>22 Street House No 4</td>
-                <td>12345678989</td>
-                <td>C Bank</td>
-                <td>1</td>
-                <td>Complete</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>jkl</td>
-                <td>20</td>
-                <td>A-</td>
-                <td>22 Street House No 5</td>
-                <td>12345677709</td>
-                <td>D Bank</td>
-                <td>1</td>
-                <td>Pending</td>
-              </tr>
+            {data.userDetails.map((result,index) => {
+            return (
+                 <tr>
+                   <td>{index+1}</td>
+                   <td>{data.recipient[0].name}</td>
+                   <td>{data.recipient[0].age}</td>
+                  <td>{result.bloodGroup}</td>
+                  <td>{result.address}</td>
+                  <td>{data.recipient[0].bloodBank}</td>
+                  <td>{result.quantity}</td>
+                  <td>{data.status[index]}</td>
+                  <td>{(new Date(result.due_date)).toLocaleString().split(',')[0]}</td>
+                </tr>  
+            )
+          })}
             </tbody>
           </table>
         </div>
       </RecipientContainer>
     )
   }
-}
 export default RecipientRequests;
 
 const RecipientContainer = styled.div`
