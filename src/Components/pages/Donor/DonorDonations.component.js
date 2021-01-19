@@ -28,7 +28,6 @@ function DonorDonations() {
       Axios.get(`http://localhost:5000/donation/${userLoginData.userData.user_id}`)
         .then((response) => {
           setData(response.data);
-
           setLoading(false);
         })
         .catch((error) => {

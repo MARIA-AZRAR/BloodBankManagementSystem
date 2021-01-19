@@ -32,7 +32,7 @@ icon: <IoIcons.IoIosPaper />,
     },
     {
         title: 'Profile',
-        path: '/Recipient/profile',
+        path: '/Recipient/Profile',
         icon: <ImIcons.ImProfile />,
         cName: 'nav-text'
     }
