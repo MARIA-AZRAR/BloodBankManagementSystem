@@ -15,7 +15,7 @@ router.post("/addBloodRequest", async (req, res) => {   //POST Request and body 
         const quantity = req.body.quantity;
         const bloodGroup = req.body.bloodGroup;
         const address = req.body.address;
-        const due_date = req.body.due_date;
+        const due_date = req.body.date;
 
         //validation
         if (!quantity || !bloodGroup || !due_date || !address) {

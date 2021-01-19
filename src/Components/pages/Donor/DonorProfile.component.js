@@ -69,7 +69,7 @@ function DonorProfile() {
             const updatedUser = { name, address, contact, age, bloodGroup, email };
             await Axios.post(`http://localhost:5000/user/update/${userLoginData.userData.user_id}`, updatedUser);  //user and its login data in diff tables
             const UpdatedLogin = { username, password }
-            const res = await Axios.post(`http://localhost:5000/login/update/${userLoginData.userData.id}`, UpdatedLogin);  //user and its login data in diff tables
+            await Axios.post(`http://localhost:5000/login/update/${userLoginData.userData.id}`, UpdatedLogin);  //user and its login data in diff tables
 
             Swal.fire(
                 'Good job!',
@@ -88,7 +88,7 @@ function DonorProfile() {
     const unregister = async (e) => {
         e.preventDefault();
         try {
-            const res = await Axios.delete(` http://localhost:5000/login/delete`,
+                await Axios.delete(` http://localhost:5000/login/delete`,
                 {
                     headers: { "auth-token": userLoginData.token }
                 });  //user and its login data in diff tables
