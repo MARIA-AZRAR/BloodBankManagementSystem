@@ -8,29 +8,7 @@ function SearchDonor(){
   const [isLoading,setLoading]=useState(true);
   const history = useHistory();
   const [data,setData]=useState([]);
-  //const [search,setSearch]=useState('');
-  //const [filterData,setFilterData]=useState([]);
-//  function Search(){
-    
-    //var input=document.getElementById("blood");
-   /* var input="B+";
-    var filter = input;
-    var table=document.getElementById("myTable");
-    var  tr = table.getElementsByTagName("tr");
-    for(var i=0;i<tr.length;i++)
-    {
-      var td=tr[i].getElementsByTagName("td")[3];
-      if(td)
-      {
-        var txt=td.textContent||td.innerText;
-        if (txt.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }*/
-  //}
+  const [search,setSearch]=useState('');
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
@@ -53,13 +31,6 @@ function SearchDonor(){
     }
 
   },[userLoginData])
- /*useEffect(()=>{
-setFilterData(
-  data.donor.filter(data=>{ return data.donor.bloodGroup.toLowerCase().
-    includes(search.toLowerCase())})
-)
-
- },[search,data])*/
   if(isLoading)
   {
     return (
@@ -77,8 +48,8 @@ setFilterData(
           <h1>Search Donors</h1>
 <div className="search-donor">
             <h5>SearchDonor Blood Group:     
-            <select id="blood" name="bloodGroup" >
-            <option selected disabled>Choose here</option>
+            <select id="blood" name="bloodGroup" onChange={(event)=>{setSearch(event.target.value)}} >
+            <option selected disabled>Choose </option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="B+">B+</option>
@@ -105,7 +76,17 @@ setFilterData(
               </tr>
             </thead>
             <tbody>
-            {data.donor.map((result,index) => {
+            {data.donor.filter((val)=>{
+              if(search=="")
+              {
+                return val;
+              }else{
+    
+               if(val.bloodGroup==search)
+              { 
+                return val;
+              }}
+            }).map((result,index) => {
             
             return (
                  <tr>
