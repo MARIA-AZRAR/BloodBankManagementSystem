@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
 import Axios from 'axios'
-import { bloodGroups } from '../../../context/BloodGroupsList';
 import ErrorNotice from '../../misc/ErrorNotice';
 import Swal from 'sweetalert2'
 
@@ -14,8 +13,6 @@ function BankProfile() {
     const [name, setName] = useState();
     const [address, setAddress] = useState();
     const [contact, setContact] = useState();
-    const [age, setAge] = useState();
-    const [bloodGroup, setBloodGroup] = useState();
     const [username, setUserName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -24,17 +21,17 @@ function BankProfile() {
     const [error, setError] = useState();
 
 
-    const { userLoginData, setUserLoginData } = useContext(UserContext)
-    const history = useHistory();
+     const { userLoginData, setUserLoginData } = useContext(UserContext)
+     const history = useHistory();
 
     const [isLoading, setLoading] = useState(true);  //for 1st loading data
     let [profileData, setProfileData] = useState();
 
-    useEffect(() => {
-        if (!userLoginData.userData)
+     useEffect(() => {
+         if (!userLoginData.userData)
             history.push('/')
-        try {
-            if (userLoginData.userData.type !== "Donor")
+      try {
+           if (userLoginData.userData.type !== "BloodBank")
                 history.push(`/${userLoginData.userData.type}`)
 
             const getData = async () => {
@@ -45,8 +42,6 @@ function BankProfile() {
                 setName(userResponse.data.name);
                 setAddress(userResponse.data.address)
                 setContact(userResponse.data.contact)
-                setAge(userResponse.data.age)
-                setBloodGroup(userResponse.data.bloodGroup)
                 setEmail(userResponse.data.email)
                 setUserName(userResponse.data.username)
 
@@ -66,7 +61,7 @@ function BankProfile() {
         e.preventDefault();
         try {
 
-            const updatedUser = { name, address, contact, age, bloodGroup, email };
+            const updatedUser = { name, address, contact,email };
             await Axios.post(`http://localhost:5000/user/update/${userLoginData.userData.user_id}`, updatedUser);  //user and its login data in diff tables
             const UpdatedLogin = { username, password }
             await Axios.post(`http://localhost:5000/login/update/${userLoginData.userData.id}`, UpdatedLogin);  //user and its login data in diff tables
@@ -113,7 +108,7 @@ function BankProfile() {
 
     if (isLoading) {
         return (
-            <DonorProfileContainer>
+            <BankProfileContainer>
                 <div class="box">
                     <div class="loader">
                         <span class="back">
@@ -127,14 +122,14 @@ function BankProfile() {
                         </span>
                     </div>
                 </div>
-            </DonorProfileContainer>
+            </BankProfileContainer>
 
         )
     }
 
 
     return (
-        <DonorProfileContainer>
+        <BankProfileContainer>
             <div>
                 <h1 className="heading">Update Profile:</h1>
                 <div className="container container-fluid">
@@ -149,59 +144,38 @@ function BankProfile() {
                                     <div className="input-group form-group">
                                         <label for="bloodBankName" >Name: </label>
                                         <input id="bloodBankName" type="text" value={name} className="form-control"
-                                            onChange={(e) => setName(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <label for="bloodGroup" >Blood Group: </label>
-                                        <select value={bloodGroup} id="bloodGroup" className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
-                                            {bloodGroups.map(item => {
-                                                return (
-                                                    <option value={item}> {item} </option>
-                                                )
-                                            })}
-                                        </select>
+                                          onChange={(e) => setName(e.target.value)}    />
                                     </div>
                                     <div className="input-group form-group">
                                         <label for="BloodBankAddress" >Address: </label>
-                                        <input id="BloodBankAddress" value={address} type="text" className="form-control"
-                                            onChange={(e) => setAddress(e.target.value)} />
+                                        <input id="BloodBankAddress"  value={address}  type="text" className="form-control"
+                                           onChange={(e) => setAddress(e.target.value)}  />
                                     </div>
                                     <div className="input-group form-group">
                                         <label for="BloodBankContact" >Contact No: </label>
-                                        <input id="BloodBankContact" type="text" className="form-control"
-                                            value={contact} onChange={(e) => setContact(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <label for="age" >Age: </label>
-                                        <input id="age" type="text" className="form-control"
-                                            value={age} onChange={(e) => setAge(e.target.value)} />
+                                        <input id="BloodBankContact"  value={contact}  type="text" className="form-control"
+                                          onChange={(e) => setContact(e.target.value)}   />
                                     </div>
                                     <div className="input-group form-group">
                                         <label for="BloodBankUsername" >Username: </label>
-                                        <input id="BloodBankUsername" type="text" className="form-control"
-                                            value={username} onChange={(e) => setUserName(e.target.value)} />
+                                        <input id="BloodBankUsername"  value={username}  type="text" className="form-control"
+                                          onChange={(e) => setUserName(e.target.value)}  />
                                     </div>
                                     <div className="input-group form-group">
                                         <label for="BloodBankEmail" >Email: </label>
-                                        <input id="BloodBankEmail" type="text" className="form-control"
-                                            value={email} onChange={(e) => setEmail(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <label for="BloodBankPassword" >Blood Bank: </label>
-                                        <input id="BloodBankPassword" type="text" className="form-control"
-                                            value={profileData.bloodBank} readonly />
+                                        <input id="BloodBankEmail"  value={email}  type="text" className="form-control"
+                                         onChange={(e) => setEmail(e.target.value)}    />
                                     </div>
                                     <div className="input-group form-group">
                                         <label for="BloodBankPassword" >Password: </label>
-                                        <input id="BloodBankPassword" type="password" className="form-control"
-                                            onChange={(e) => setPassword(e.target.value)} />
+                                        <input id="BloodBankPassword"  type="password" className="form-control"
+                                         onChange={(e) => setPassword(e.target.value)}   />
                                     </div>
-
                                     <div className="form-group">
                                         <input type="submit" value="Unregister" className="btn float-right unregister_btn" onClick={unregister} />
                                     </div>
                                     <div className="form-group">
-                                        <input type="submit" value="Update" className="btn float-right update_btn" onClick={update} />
+                                        <input type="submit" value="Update" className="btn float-right update_btn" onClick={update}  />
                                     </div>
                                 </form>
                             </div>
@@ -209,14 +183,14 @@ function BankProfile() {
                     </div>
                 </div>
             </div>
-        </DonorProfileContainer>
+        </BankProfileContainer>
     )
 
 }
 
 export default BankProfile;
 
-const DonorProfileContainer = styled.div`
+const BankProfileContainer = styled.div`
 
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
@@ -241,7 +215,7 @@ font-family: 'Righteous', cursive;
 }
 
 .signupCard{
-height: 650px;
+height: 500px;
 align-content: center;
 margin: auto;
 width: 500px;
