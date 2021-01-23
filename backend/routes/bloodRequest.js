@@ -65,6 +65,18 @@ router.get("/getDonorsForBloodBank/:id", async (req, res) => {
 });
 
 
+router.get("/getRecipientsForBloodBank/:id", async (req, res) => {
+
+    //get name of blood bank from the id provided
+    const bloodB = await Users.findById(req.params.id);
+
+    const donors = await Users.find({ type: "Recipient" , bloodBank: bloodB.name});
+
+    res.json(donors);
+});
+
+
+
 
 
 router.get("/getAllRec", async (req, res) => {

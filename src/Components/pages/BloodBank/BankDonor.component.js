@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
-import UpdateProfile from "./updateProfile";
 
 
 
@@ -31,7 +30,7 @@ function DonorRow(props) {
   const history = useHistory();
 
   const deleteDonor = async () => {
-    await Axios.delete(`http://localhost:5000/login//deleteBloodBank/${props.donor_id}`)
+    await Axios.delete(`http://localhost:5000/login/deleteBloodBank/${props.donor_id}`)
     console.log("deleted");
     Swal.fire(
       'Deleted',

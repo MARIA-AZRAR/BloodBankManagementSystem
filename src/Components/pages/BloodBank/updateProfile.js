@@ -17,6 +17,7 @@ function UpdateProfile(props) {
     const [age, setAge] = useState("");
     const [bloodGroup, setBloodGroup] = useState("");
     const [email, setEmail] = useState("");
+    const [type, setType] = useState("")
 
     //for error
     const [error, setError] = useState();
@@ -41,6 +42,7 @@ function UpdateProfile(props) {
                     setBloodGroup(response.data.bloodGroup);
                     setAge(response.data.age);
                     setContact(response.data.contact);
+                    setType(response.data.type)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -54,7 +56,11 @@ function UpdateProfile(props) {
 
     const back = async (e) => {
         e.preventDefault();
-        history.push('/BloodBank/Donor')
+
+        if(type === "Donor")
+           history.push('/BloodBank/Donor')
+        else
+        history.push('/BloodBank/Reciever')
     }
 
     const update = async (e) => {

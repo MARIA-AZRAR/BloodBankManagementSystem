@@ -23,12 +23,6 @@ router.route('/banksDropDown').get((req, res) => {   //get all the users from th
   })
 });
 
-router.route('/:id').get((req, res)=>{
-    User.findOne({_id: req.params.id})
-      .then(users => res.json(users))
-      .catch(err => res.status(400).json('Error: ' + err));
-})
-
 
 router.post("/addUser", async (req, res) => {   //POST Request and body has all the components async bcz data is saved to mongo
   try {
