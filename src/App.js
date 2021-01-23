@@ -12,7 +12,7 @@ import BankReciever from './Components/pages/BloodBank/BankReciever.component';
 import BankRequest from './Components/pages/BloodBank/BankRequest.component';
 import BankStock from './Components/pages/BloodBank/BankStock.component';
 import UpdateProfile from './Components/pages/BloodBank/updateProfile';
-
+import BankProfile from './Components/pages/BloodBank/BankProfile.component';
 
 
 import Login from './Components/auth/login-form.component';
