@@ -35,5 +35,11 @@ export const NavbarDataB = [
         path: '/BloodBank/Reciever',
         icon: <ImIcons.ImProfile />,
         cName: 'nav-text'
+    },
+    {
+        title: 'Profile',
+        path: '/BloodBank/Profile',
+        icon: <ImIcons.ImProfile />,
+        cName: 'nav-text'
     }
 ]
