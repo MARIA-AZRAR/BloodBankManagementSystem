@@ -9,129 +9,71 @@ import Swal from 'sweetalert2';
 
 
 
-function RecipientProfile() {
+function UpdateProfile(props) {
 
-    const [name, setName] = useState();
-    const [address, setAddress] = useState();
-    const [contact, setContact] = useState();
-    const [age, setAge] = useState();
-    const [bloodGroup, setBloodGroup] = useState();
-    const [username, setUserName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [contact, setContact] = useState("");
+    const [age, setAge] = useState("");
+    const [bloodGroup, setBloodGroup] = useState("");
+    const [email, setEmail] = useState("");
 
     //for error
     const [error, setError] = useState();
 
 
-    const { userLoginData, setUserLoginData } = useContext(UserContext)
+    const { userLoginData } = useContext(UserContext)
     const history = useHistory();
-
-    const [isLoading, setLoading] = useState(true);  //for 1st loading data
-    let [profileData, setProfileData] = useState();
 
     useEffect(() => {
         if (!userLoginData.userData)
             history.push('/')
         try {
-            if (userLoginData.userData.type !== "Recipient")
+            if (userLoginData.userData.type !== "BloodBank")
                 history.push(`/${userLoginData.userData.type}`)
 
-            const getData = async () => {
-                const userResponse = await Axios.get("http://localhost:5000/login/profile", {
-                    headers: { "auth-token": userLoginData.token }
-                });
-                setProfileData(userResponse.data)
-                setName(userResponse.data.name);
-                setAddress(userResponse.data.address)
-                setContact(userResponse.data.contact)
-                setAge(userResponse.data.age)
-                setBloodGroup(userResponse.data.bloodGroup)
-                setEmail(userResponse.data.email)
-                setUserName(userResponse.data.username)
+            Axios.get('http://localhost:5000/user/' + props.match.params.id)
+                .then(response => {
 
-                setLoading(false);
-            }
-            getData();
-
+                    setName(response.data.name);
+                    setAddress(response.data.address);
+                    setEmail(response.data.email);
+                    setBloodGroup(response.data.bloodGroup);
+                    setAge(response.data.age);
+                    setContact(response.data.contact);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
         catch {
             history.push('/')
         }
-
     }, [userLoginData])
 
+
+    const back = async (e) => {
+        e.preventDefault();
+        history.push('/BloodBank/Donor')
+    }
 
     const update = async (e) => {
         e.preventDefault();
         try {
 
             const updatedUser = { name, address, contact, age, bloodGroup, email };
-            await Axios.post(`http://localhost:5000/user/update/${userLoginData.userData.user_id}`, updatedUser);  //user and its login data in diff tables
-            const UpdatedLogin = { username, password }
-            await Axios.post(`http://localhost:5000/login/update/${userLoginData.userData.id}`, UpdatedLogin);  //user and its login data in diff tables
+            await Axios.post(`http://localhost:5000/user/update/${props.match.params.id}`, updatedUser);  //user and its login data in diff tables
 
             Swal.fire(
                 'Good job!',
-                'Your Profile Updated Successfully',
+                'Profile Updated Successfully',
                 'success'
-            ) //user and its login data in diff tables
-
-
+            )
 
         } catch (err) {
             err.response.data.msg && setError(err.response.data.msg);
         }
     };
-
-
-    const unregister = async (e) => {
-        e.preventDefault();
-        try {
-            await Axios.delete(`http://localhost:5000/login/delete`,
-                {
-                    headers: { "auth-token": userLoginData.token }
-                });  //user and its login data in diff tables
-
-            Swal.fire(
-                'Deleted',
-                'Awww! Sad to See You Go.',
-                'success'
-            ) //user and its login data in diff tables
-
-            setUserLoginData({
-                token: undefined,
-                userData: undefined,
-            });
-            localStorage.setItem("auth-token", "");
-            history.push("/")
-
-        } catch (err) {
-            err.response.data.msg && setError(err.response.data.msg);
-        }
-    }
-
-    if (isLoading) {
-        return (
-            <RecipientProfileContainer>
-                <div class="box">
-                    <div class="loader">
-                        <span class="back">
-                            <span>L</span>
-                            <span>O</span>
-                            <span>A</span>
-                            <span>D</span>
-                            <span>I</span>
-                            <span>N</span>
-                            <span>G</span>
-                        </span>
-                    </div>
-                </div>
-            </RecipientProfileContainer>
-
-        )
-    }
-
 
     return (
         <RecipientProfileContainer>
@@ -177,28 +119,12 @@ function RecipientProfile() {
                                             value={age} onChange={(e) => setAge(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankUsername" >Username: </label>
-                                        <input id="BloodBankUsername" type="text" className="form-control"
-                                            value={username} onChange={(e) => setUserName(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
                                         <label for="BloodBankEmail" >Email: </label>
                                         <input id="BloodBankEmail" type="text" className="form-control"
                                             value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
-                                    <div className="input-group form-group">
-                                        <label for="BloodBankPassword" >Blood Bank: </label>
-                                        <input id="BloodBankPassword" type="text" className="form-control"
-                                            value={profileData.bloodBank} readonly />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <label for="BloodBankPassword" >Password: </label>
-                                        <input id="BloodBankPassword" type="password" className="form-control"
-                                            onChange={(e) => setPassword(e.target.value)} />
-                                    </div>
-
                                     <div className="form-group">
-                                        <input type="submit" value="Unregister" className="btn float-right unregister_btn" onClick={unregister} />
+                                        <input type="submit" value="Back" className="btn float-right back_btn" onClick={back} />
                                     </div>
                                     <div className="form-group">
                                         <input type="submit" value="Update" className="btn float-right update_btn" onClick={update} />
@@ -214,7 +140,7 @@ function RecipientProfile() {
 
 }
 
-export default RecipientProfile;
+export default UpdateProfile;
 
 const RecipientProfileContainer = styled.div`
 
@@ -273,14 +199,14 @@ color: black;
 background-color: white;
 }
 
-.unregister_btn{
+.back_btn{
     color: white;
     background-color: #e02525;
     width: 100px;
     margin: 0 40px;
 }
     
-.unregister_btn:hover{
+.back_btn:hover{
 color: black;
 background-color: white;
 }
@@ -293,69 +219,5 @@ background-color: white;
     padding-top:5%;
     padding-left:30%
 }
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
- 
-.box{
-    background: none;
-    margin-top: 200px;
-	padding-top:300px;
-}
-
-.loader{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}​
-	.back {
-		margin:1em auto;
-	}
-	.back span {
-		font-size:3em;
-		color:#F2C640;;
-		background: #e02525;
-		display:table-cell;
-		box-shadow:inset 0 0 5px rgba(0,0,0,0.3), 0 5px 0 #ccc;
-		padding: 0 15px;
-		line-height: 100px;
-		animation:jumb 2s infinite;
-	}
-	@keyframes jumb {
-		0% {
-			transform:translateY(0px)
-		}
-		50% {
-			transform:translateY(-30px);
-			box-shadow:0 15px 0 #F2C640;
-		}
-		100% {
-			transform:translateY(0px)	
-		}
-	}
-	.back span:nth-child(1) {
-		animation-delay:0s;
-	}
-	.back span:nth-child(2) {
-		animation-delay:.1s;	
-	}
-	.back span:nth-child(3) {
-		animation-delay:.2s;
-	}
-	.back span:nth-child(4) {
-		animation-delay:.3s;	
-	}
-	.back span:nth-child(5) {
-		animation-delay:.4s;
-	}
-	.back span:nth-child(6) {
-		animation-delay:.5s;	
-	}
-	.back span:nth-child(7) {
-		animation-delay:.6s;
-	}
-
 `
 

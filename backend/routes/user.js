@@ -23,11 +23,11 @@ router.route('/banksDropDown').get((req, res) => {   //get all the users from th
   })
 });
 
-// router.route('/:age').get((req, res)=>{
-//     User.find({age: req.params.age})
-//       .then(users => res.json(users))
-//       .catch(err => res.status(400).json('Error: ' + err));
-// })
+router.route('/:id').get((req, res)=>{
+    User.findOne({_id: req.params.id})
+      .then(users => res.json(users))
+      .catch(err => res.status(400).json('Error: ' + err));
+})
 
 
 router.post("/addUser", async (req, res) => {   //POST Request and body has all the components async bcz data is saved to mongo
@@ -41,11 +41,22 @@ router.post("/addUser", async (req, res) => {   //POST Request and body has all 
     const address = req.body.address;
     const status = req.body.status;
     const type = req.body.type;
+    const username = req.body.username;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
 
     //validation
-    if (!name || !email || !contact || !address || !type) {
+    if (!name || !email || !contact || !address || !type || !password || !confirmPassword ||!username) {
       return res.status(400).json({ msg: "Not all fields have been entered." });
     }
+
+    if (username.length < 5) {
+      return res.status(400).json({ msg: "The username needs to be at least 5 characters long." });
+  }
+
+  if (password !== confirmPassword) {
+      return res.status(400).json({ msg: "Enter the same password twice for verification." });
+  }
 
     if (name.length < 3) {
       return res.status(400).json({ msg: "The name needs to be at least 3 characters long." });
