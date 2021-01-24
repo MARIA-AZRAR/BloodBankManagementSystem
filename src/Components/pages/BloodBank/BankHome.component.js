@@ -22,38 +22,29 @@ try{
          Axios.get("http://localhost:5000/bloodBag/getBags")
         .then((response) => {
           setData(response.data);
+         // setLoading(false);
+        })
+        Axios.get(`http://localhost:5000/bloodBag/Alerts/${userLoginData.userData.user_id}`)
+       .then((response) => {
+          setData(response.data);
           setLoading(false);
         })
         .catch((error) => {
           console.log(error)
         })
+
     }
     catch {
       history.push('/')
       //get data
-      const getData = async () => {
-        const requestResponse = await Axios.get(`http://localhost:5000/bloodBag/Alerts/${userLoginData.userData.user_id}`);
-        setData(requestResponse.data);
-        setLoading(false);
-      }
-      getData();
+    //     const getData = async () => {
+    //     const requestResponse = await 
+    //   }
+    //   getData();
+    // }
     }
   }, [userLoginData])
-   if (isLoading) {
-    return (
 
-      <HomeContainer >
-        <div class="d-flex justify-content-center">
-          <div className="spinnerl">
-            <div class="spinner-border text-danger" role="status" >
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
-      </HomeContainer >
-
-    )
-   }
 
   const alerts = () => {
     return (
@@ -85,7 +76,6 @@ try{
 
     )
   }
-
   return (
     <HomeContainer>
       <div class="body">
@@ -101,7 +91,7 @@ try{
             </tr>
           </thead>
           <tbody>
-                {data.bag.map((result, index) => {
+                {/* {data.bag.map((result, index) => {
           return (
           <tr>
            <td>{index + 1}</td>
@@ -110,7 +100,7 @@ try{
           <td>{(new Date(result.expiry_date).toLocaleString().split(',')[0])}</td>
          </tr>
 )
-})}
+})} */}
           </tbody>
         </table>
       </div>
@@ -199,7 +189,6 @@ const HomeContainer = styled.div`
 	.back span:nth-child(7) {
 		animation-delay:.6s;
 	}
-
 
 
 `;

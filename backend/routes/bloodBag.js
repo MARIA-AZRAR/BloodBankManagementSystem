@@ -10,18 +10,6 @@ router.route('/').get((req, res) => {   //get all the users from the mongodb atl
         .catch(err => res.status(400).json('Erorr: ' + err));
 });
 
-// let banks = [];
-// let bloodBanks=[];
-// router.route('/blood/:id').get((req, res) => {
-//   User.findById(req.params.id)
-//     .then(user => res.json({bank:user.name}))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// })
-
-
-
-
-
 router.post("/addBloodBag", async (req, res) => {   //POST Request and body has all the components async bcz data is saved to mongo
     try {
         const bloodBank_id = req.body.bloodBank_id;
@@ -55,25 +43,6 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
         return res.status(500).json({ error: err.message });
     }
 });
-
-//getting expired stock
-router.get("/getBags", async (req, res) => {
-  const bloodB = await bloodBag.find();
-  let bag=[];
-  let bags=[];
-
-  for(var i=0;i<bloodB.length;i++)
-  { 
-     if(bloodB[i].created_at.getTime()===bloodB[i].expiry_date.getTime()){
-        bag.push(bloodB[i]);
-        bags.push( await bloodBag.findOne({_id:bloodB[i].bloodBank_id})) 
-    }   
-  }
-res.json({
-  bag,
-      });
-  });
-
 
 
 //***************************************Maria's Code****************************
@@ -218,6 +187,25 @@ router.post("/CompleteDonation/:id", async (req, res) => {
 
 
 })
+
+
+//getting expired stock
+// router.get("/getBags", async (req, res) => {
+//   const bloodB = await bloodBag.find();
+//   let bag=[];
+//   let bags=[];
+
+//   for(var i=0;i<bloodB.length;i++)
+//   { 
+//      if(bloodB[i].created_at.getTime()===bloodB[i].expiry_date.getTime()){
+//         bag.push(bloodB[i]);
+//         bags.push( await bloodBag.findOne({_id:bloodB[i].bloodBank_id})) 
+//     }   
+//   }
+// res.json({
+//   bag,
+//       });
+//   });
 
 module.exports = router;
 
