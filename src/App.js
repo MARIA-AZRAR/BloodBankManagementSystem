@@ -11,7 +11,9 @@ import BankDonor from './Components/pages/BloodBank/BankDonor.component';
 import BankReciever from './Components/pages/BloodBank/BankReciever.component';
 import BankRequest from './Components/pages/BloodBank/BankRequest.component';
 import BankStock from './Components/pages/BloodBank/BankStock.component';
+import UpdateProfile from './Components/pages/BloodBank/updateProfile';
 import BankProfile from './Components/pages/BloodBank/BankProfile.component';
+
 
 import Login from './Components/auth/login-form.component';
 import LoginAdmin from './Components/auth/login-form-admin.component';
@@ -99,6 +101,7 @@ function App() {
           <Route path="/signup-recipient" exact component = {SignupRecipinet}/>
           <Route path="/BloodBank" exact component={BankHome} />
           <Route path="/BloodBank/Donor" exact component={BankDonor} />
+          <Route path="/BloodBank/ProfileEdit/:id" exact component = {UpdateProfile} />
           <Route path="/BloodBank/Reciever" exact component={BankReciever} />
           <Route path="/BloodBank/Request" exact component={BankRequest} />
           <Route path="/BloodBank/Stock" exact component={BankStock} />

@@ -117,6 +117,33 @@ router.delete("/delete", authen, async (req, res) => {
     }
 })
 
+//delete for bloodGroup and admin we'll not pass token but id
+
+router.delete("/deleteBloodBank/:id", async (req, res) => {
+    try {
+
+        //id here passed is id of userTable
+
+        //deletin user login info 
+        const loginInfo = await Login.findOne({ user_id: req.params.id }) //to find bloodBank id
+
+        const deletedUserLogin = await Login.findByIdAndDelete(loginInfo._id);
+
+        //now we need to set user status to Disabled in the User table
+        User.findOneAndUpdate({ _id: req.params.id }, { status: "Disabled" }, null, (err, docs) => {
+            if (err)
+                res.status(500).json(err);
+            else
+                console.log("Original Doc : ", docs);
+        });
+
+        res.json(deletedUserLogin);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+})
+
+
 //Just to check from frontEnd whether user is logged in or not
 router.post("/IsValidToken", async (req, res) => {
     try {

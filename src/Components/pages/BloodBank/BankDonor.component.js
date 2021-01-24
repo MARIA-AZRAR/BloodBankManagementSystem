@@ -1,7 +1,64 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
-import UserContext from '../../../context/userDetailContext'
+import UserContext from '../../../context/userDetailContext';
+import Axios from 'axios';
+import Swal from 'sweetalert2';
+
+
+
+function RenderButtons(props) {
+  if (props.status === 'Active') {
+    return (
+      <td>
+        <button type="button" class="btn btn-primary" onClick = {props.updateD}>Update</button>
+        <br />
+        <button type="button" class="btn btn-danger" onClick= {props.deleteD}>Delete</button>
+      </td>
+    )
+  }
+  
+  return (
+    <td>
+    </td>
+  )
+}
+
+
+function DonorRow(props) {
+
+  const history = useHistory();
+
+  const deleteDonor = async () => {
+    await Axios.delete(`http://localhost:5000/login/deleteBloodBank/${props.donor_id}`)
+    console.log("deleted");
+    Swal.fire(
+      'Deleted',
+      'Awww! Sad to See You Go.',
+      'success'
+  ) 
+    props.update();
+  }
+
+  const updateDonor = (e) => {
+    e.preventDefault();
+    history.push('/BloodBank/ProfileEdit/'+props.donor_id);
+  }
+
+  return (
+    <tr>
+      <th scope="row">{props.index}</th>
+      <td>{props.donor.name}</td>
+      <td>{props.donor.age} </td>
+      <td>{props.donor.bloodGroup}</td>
+      <td>{props.donor.address}</td>
+      <td>{props.donor.contact}</td>
+      <td>{props.donor.email}</td>
+      <td>{props.donor.status}</td>
+      <RenderButtons status = {props.donor.status} deleteD = {deleteDonor} updateD ={updateDonor} />
+    </tr>
+  )
+}
 
 
 function BankDonor() {
@@ -9,18 +66,67 @@ function BankDonor() {
   const { userLoginData } = useContext(UserContext)
   const history = useHistory();
 
+  const [isLoading, setLoading] = useState(true);  //for 1st loading data
+  const [data, setData] = useState([]);
+
+
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
     try {
       if (userLoginData.userData.type !== "BloodBank")
         history.push(`/${userLoginData.userData.type}`)
+
+      const getData = async () => {
+        const userResponse = await Axios.get(`http://localhost:5000/bloodRequest/getDonorsForBloodBank/${userLoginData.userData.user_id}`);
+
+        setData(userResponse.data)
+        setLoading(false);
+      }
+      getData();
     }
     catch {
       history.push('/')
     }
 
   }, [userLoginData])
+
+  //after deleting data not updating thats why
+  const updateState = async () => {
+    const userResponse = await Axios.get(`http://localhost:5000/bloodRequest/getDonorsForBloodBank/${userLoginData.userData.user_id}`);
+    setData(userResponse.data)
+  }
+
+  const showDonors = () => {
+    return (
+      data.map((currentDonor , index) => {
+        //this is returning single donor row
+        return <DonorRow donor={currentDonor} donor_id={currentDonor._id} index = {index + 1} update={updateState} />
+      })
+    )
+  }
+
+
+  if (isLoading) {
+    return (
+      <BankContainer>
+        <div class="box">
+          <div class="loader">
+            <span class="back">
+              <span>L</span>
+              <span>O</span>
+              <span>A</span>
+              <span>D</span>
+              <span>I</span>
+              <span>N</span>
+              <span>G</span>
+            </span>
+          </div>
+        </div>
+      </BankContainer>
+
+    )
+  }
 
   return (
     <BankContainer>
@@ -35,88 +141,13 @@ function BankDonor() {
               <th scope="col">BLOOD GROUP</th>
               <th scope="col">ADDRESS</th>
               <th scope="col">CONTACT NO</th>
-              <th scope="col">DATE DONATED</th>
-              <th scope="col">QUANTITY</th>
+              <th scope="col">EMAIL</th>
               <th scope="col">STATUS</th>
               <th scope="col">ACTION</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>abc</td>
-              <td>20</td>
-              <td>A+</td>
-              <td>22 Street House No 1</td>
-              <td>12345678901</td>
-              <td>20/11/2020</td>
-              <td>1</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-primary">Update</button>
-                <br />
-                <button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>xyz</td>
-              <td>21</td>
-              <td>B+</td>
-              <td>22 Street House No 2</td>
-              <td>12345678900</td>
-              <td>20/12/2020</td>
-              <td>2</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-primary">Update</button>
-                <br />
-                <button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>mln</td>
-              <td>22</td>
-              <td>A-</td>
-              <td>22 Street House No 3</td>
-              <td>12345678908</td>
-              <td>21/12/2020</td>
-              <td>2</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-primary">Update</button>
-                <br />
-                <button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>123</td>
-              <td>25</td>
-              <td>B-</td>
-              <td>22 Street House No 4</td>
-              <td>12345678909</td>
-              <td>23/11/2020</td>
-              <td>2</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-primary">Update</button>
-                <br />
-                <button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>jkl</td>
-              <td>23</td>
-              <td>AB+</td>
-              <td>22 Street House No 5</td>
-              <td>12345678905</td>
-              <td>20/11/2020</td>
-              <td>1</td>
-              <td>Active</td>
-              <td>
-                <button type="button" class="btn btn-primary">Update</button>
-                <br />
-                <button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
+            {showDonors()}
           </tbody>
         </table>
       </div>
@@ -159,5 +190,70 @@ btn-primary
     left: 0px;
     margin-top: -90px;
 }
+
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+ 
+.box{
+    background: none;
+    margin-top: 200px;
+	padding-top:300px;
+}
+
+.loader{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}​
+	.back {
+		margin:1em auto;
+	}
+	.back span {
+		font-size:3em;
+		color:#F2C640;;
+		background: #e02525;
+		display:table-cell;
+		box-shadow:inset 0 0 5px rgba(0,0,0,0.3), 0 5px 0 #ccc;
+		padding: 0 15px;
+		line-height: 100px;
+		animation:jumb 2s infinite;
+	}
+	@keyframes jumb {
+		0% {
+			transform:translateY(0px)
+		}
+		50% {
+			transform:translateY(-30px);
+			box-shadow:0 15px 0 #F2C640;
+		}
+		100% {
+			transform:translateY(0px)	
+		}
+	}
+	.back span:nth-child(1) {
+		animation-delay:0s;
+	}
+	.back span:nth-child(2) {
+		animation-delay:.1s;	
+	}
+	.back span:nth-child(3) {
+		animation-delay:.2s;
+	}
+	.back span:nth-child(4) {
+		animation-delay:.3s;	
+	}
+	.back span:nth-child(5) {
+		animation-delay:.4s;
+	}
+	.back span:nth-child(6) {
+		animation-delay:.5s;	
+	}
+	.back span:nth-child(7) {
+		animation-delay:.6s;
+	}
+
 
 `;
