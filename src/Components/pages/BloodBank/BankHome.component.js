@@ -9,7 +9,6 @@ function BankHome() {
   //to prevent from loading if user is log out
   const { userLoginData } = useContext(UserContext)
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const history = useHistory();
   const [data, setData] = useState([]);
 
