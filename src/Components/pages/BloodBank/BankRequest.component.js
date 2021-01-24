@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
+import ErrorNotice from '../../misc/ErrorNotice';
+
 
 
 function RenderButtons(props) {
   if (props.status === 'Active') {
     return (
       <td>
-        <button type="button" class="btn btn-success">Donate</button>
+        <button type="button" class="btn btn-success" onClick={props.Donate}>Donate</button>
       </td>
     )
   }
@@ -23,18 +25,25 @@ function RenderButtons(props) {
 
 
 function RequestRow(props) {
+  const { userLoginData } = useContext(UserContext);
 
-  const history = useHistory();
-
-  const Donate = async () => {
-    //await Axios.delete(`http://localhost:5000/login/deleteBloodBank/${props.donor_id}`)
-    console.log("Donated");
-    Swal.fire(
-      'Deleted',
-      'Awww! Sad to See You Go.',
-      'success'
-    )
-    //props.update();
+  const Donate = async (e) => {
+    e.preventDefault();
+    try {
+      await Axios.post(`http://localhost:5000/bloodBag/CompleteDonation/${userLoginData.userData.user_id}`, {
+        id: props.request_id,
+        bloodGroup: props.request.bloodGroup,
+        quantity: props.request.quantity
+      });
+      Swal.fire(
+        'Deleted',
+        'Awww! Sad to See You Go.',
+        'success'
+      )
+    } catch (err) {
+      err.response.data.msg && props.setError(err.response.data.msg);
+    }
+    props.update();
   }
 
   return (
@@ -47,7 +56,7 @@ function RequestRow(props) {
       <td>{props.request.contact}</td>
       <td>{props.request.quantity}</td>
       <td>{props.request.status}</td>
-      <RenderButtons status = {props.request.status} />
+      <RenderButtons status={props.request.status} Donate={Donate} />
     </tr>
   )
 }
@@ -59,6 +68,8 @@ function BankRequests() {
   const history = useHistory();
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [error, setErr] = useState();
+
 
   useEffect(() => {
     if (!userLoginData.userData)
@@ -85,11 +96,21 @@ function BankRequests() {
   }, [userLoginData])
 
 
+  const setError = (err) => {
+    setErr(err);
+  }
+
+  //after deleting data not updating thats why
+  const updateState = async () => {
+    const requestResponse = await Axios.get(`http://localhost:5000/bloodRequest/getAllRequests/${userLoginData.userData.user_id}`);
+    setData(requestResponse.data)
+  }
+
   const showRequests = () => {
     return (
       data.map((currentRequest, index) => {
         //this is returning single donor row
-        return <RequestRow request={currentRequest} request_id={currentRequest._id} index={index + 1} />
+        return <RequestRow request={currentRequest} request_id={currentRequest._id} index={index + 1} update={updateState} setError={setError} />
       })
     )
   }
@@ -119,6 +140,9 @@ function BankRequests() {
     <BankContainer>
       <div class="body">
         <h1>Patient Requests</h1>
+        {error && (
+          <ErrorNotice message={error} clearError={() => setError(undefined)} />
+        )}
         <table class="table table-striped">
           <thead class="thead">
             <tr>

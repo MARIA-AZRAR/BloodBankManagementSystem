@@ -123,6 +123,8 @@ router.get("/viewRequests/:id", async (req, res) => {
     });
 });
 
+
+
 //maria code 
 router.get("/getAllRequests/:id", async (req, res) => {
 
@@ -165,7 +167,7 @@ router.get("/getAllRequests/:id", async (req, res) => {
 
 
     } catch (err) {
-        res.status(500).json({ msg: err.msg });
+        return res.status(500).json({ error: err.message });
     }
 });
 
