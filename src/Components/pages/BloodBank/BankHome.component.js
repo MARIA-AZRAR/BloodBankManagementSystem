@@ -19,7 +19,7 @@ function BankHome() {
 try{
         if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
         history.push(`/${userLoginData.userData.type}`)
-         Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
+         Axios.get("http://localhost:5000/bloodBag/getBags")
         .then((response) => {
           setData(response.data);
          // setLoading(false);
