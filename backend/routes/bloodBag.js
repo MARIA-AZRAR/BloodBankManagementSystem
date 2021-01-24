@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+let User = require('../models/user.model');
 let bloodBag = require('../models/bloodBag.model');
 const { findByIdAndDelete } = require('../models/bloodRequest.model');
 const BloodRequest = require('../models/bloodRequest.model');
@@ -9,7 +9,6 @@ router.route('/').get((req, res) => {   //get all the users from the mongodb atl
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Erorr: ' + err));
 });
-
 
 router.post("/addBloodBag", async (req, res) => {   //POST Request and body has all the components async bcz data is saved to mongo
     try {
@@ -26,7 +25,7 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
         const dateNow = new Date()
 
         let exp_date = new Date();
-        exp_date.setMonth(exp_date.getMonth() + 2);
+        //exp_date.setMonth(exp_date.getMonth());
 
 
         const newBloodBag = new bloodBag({
@@ -188,6 +187,25 @@ router.post("/CompleteDonation/:id", async (req, res) => {
 
 
 })
+
+
+//getting expired stock
+// router.get("/getBags", async (req, res) => {
+//   const bloodB = await bloodBag.find();
+//   let bag=[];
+//   let bags=[];
+
+//   for(var i=0;i<bloodB.length;i++)
+//   { 
+//      if(bloodB[i].created_at.getTime()===bloodB[i].expiry_date.getTime()){
+//         bag.push(bloodB[i]);
+//         bags.push( await bloodBag.findOne({_id:bloodB[i].bloodBank_id})) 
+//     }   
+//   }
+// res.json({
+//   bag,
+//       });
+//   });
 
 module.exports = router;
 

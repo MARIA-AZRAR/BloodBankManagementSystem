@@ -99,8 +99,10 @@ function ChildSignupDonor(props) {
                                         <select className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
                                              <option selected disabled hidden>Choose Here</option>
                                             {bloodGroups.map(item => {
+
                                                 return (
-                                                    <option value={item}> {item} </option>
+                                                    
+                                                    <option  value={item}> {item}  </option>
                                                 )
                                             })}
                                         </select>

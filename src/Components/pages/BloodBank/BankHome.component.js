@@ -9,26 +9,42 @@ function BankHome() {
   //to prevent from loading if user is log out
   const { userLoginData } = useContext(UserContext)
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const history = useHistory();
+  const [data, setData] = useState([]);
+
 
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
-
-    if (userLoginData.userData) {
-      if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+try{
+        if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
         history.push(`/${userLoginData.userData.type}`)
-      //get data
-      const getData = async () => {
-        const requestResponse = await Axios.get(`http://localhost:5000/bloodBag/Alerts/${userLoginData.userData.user_id}`);
-        setData(requestResponse.data);
-        setLoading(false);
-      }
-      getData();
-    }
+         Axios.get("http://localhost:5000/bloodBag/getBags")
+        .then((response) => {
+          setData(response.data);
+         // setLoading(false);
+        })
+        Axios.get(`http://localhost:5000/bloodBag/Alerts/${userLoginData.userData.user_id}`)
+       .then((response) => {
+          setData(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
 
+    }
+    catch {
+      history.push('/')
+      //get data
+    //     const getData = async () => {
+    //     const requestResponse = await 
+    //   }
+    //   getData();
+    // }
+    }
   }, [userLoginData])
+
 
   const alerts = () => {
     return (
@@ -60,7 +76,6 @@ function BankHome() {
 
     )
   }
-
   return (
     <HomeContainer>
       <div class="body">
@@ -70,48 +85,22 @@ function BankHome() {
           <thead class="thead">
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">NAME</th>
               <th scope="col">BLOOD GROUP</th>
               <th scope="col">DATE DONATED</th>
               <th scope="col">DATE EXPIRED</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>abc</td>
-              <td>B+</td>
-              <td>11/02/2019</td>
-              <td>11/02/2020</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>xyz</td>
-              <td>A+</td>
-              <td>11/03/2019</td>
-              <td>11/03/2020</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>klm</td>
-              <td>AB+</td>
-              <td>11/04/2019</td>
-              <td>11/04/2020</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>123</td>
-              <td>O-</td>
-              <td>11/05/2019</td>
-              <td>11/05/2020</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>mnh</td>
-              <td>A-</td>
-              <td>11/05/2019</td>
-              <td>11/05/2020</td>
-            </tr>
+                {/* {data.bag.map((result, index) => {
+          return (
+          <tr>
+           <td>{index + 1}</td>
+          <td>{result.bloodGroup}</td>
+          <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
+          <td>{(new Date(result.expiry_date).toLocaleString().split(',')[0])}</td>
+         </tr>
+)
+})} */}
           </tbody>
         </table>
       </div>
@@ -200,7 +189,6 @@ const HomeContainer = styled.div`
 	.back span:nth-child(7) {
 		animation-delay:.6s;
 	}
-
 
 
 `;
