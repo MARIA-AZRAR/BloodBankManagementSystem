@@ -97,6 +97,7 @@ function ChildSignupDonor(props) {
                                     </div>
                                     <div className="input-group form-group">
                                         <select className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
+                                             <option selected disabled hidden>Choose Here</option>
                                             {bloodGroups.map(item => {
                                                 return (
                                                     <option value={item}> {item} </option>
@@ -106,6 +107,7 @@ function ChildSignupDonor(props) {
                                     </div>
                                     <div className="input-group form-group">
                                         <select className="form-control" onChange={(e) => setBloodBank(e.target.value)}>
+                                             <option selected disabled hidden>Choose Here</option>
                                             {props.banksList.map(item => {
                                                 return (
                                                     <option value={item}> {item} </option>
