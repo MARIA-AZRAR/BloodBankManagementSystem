@@ -19,7 +19,7 @@ function BankHome() {
 try{
         if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
         history.push(`/${userLoginData.userData.type}`)
-         Axios.get("http://localhost:5000/bloodBag/getBags")
+         Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
         .then((response) => {
           setData(response.data);
          // setLoading(false);
@@ -91,7 +91,7 @@ try{
             </tr>
           </thead>
           <tbody>
-                {/* {data.bag.map((result, index) => {
+                {data.bag.map((result, index) => {
           return (
           <tr>
            <td>{index + 1}</td>
@@ -100,7 +100,7 @@ try{
           <td>{(new Date(result.expiry_date).toLocaleString().split(',')[0])}</td>
          </tr>
 )
-})} */}
+})}
           </tbody>
         </table>
       </div>
