@@ -11,46 +11,53 @@ function BankHome() {
   const [isLoading, setLoading] = useState(true);
   const history = useHistory();
   const [data, setData] = useState([]);
+  const [alert, setAlert] = useState([]);
 
 
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
-try{
-        if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+    try {
+      if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
         history.push(`/${userLoginData.userData.type}`)
-         Axios.get("http://localhost:5000/bloodBag/getBags")
-        .then((response) => {
-          setData(response.data);
-         // setLoading(false);
-        })
-        Axios.get(`http://localhost:5000/bloodBag/Alerts/${userLoginData.userData.user_id}`)
-       .then((response) => {
-          setData(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+
+      const getData = async () => {
+        await Axios.get("http://localhost:5000/bloodBag/getBags")
+          .then((response) => {
+            setData(response.data);
+            console.log(response.data);
+          })
+        await Axios.get(`http://localhost:5000/bloodBag/Alerts/${userLoginData.userData.user_id}`)
+          .then((response) => {
+            setAlert(response.data);
+
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
+
+      getData();
 
     }
     catch {
       history.push('/')
       //get data
-    //     const getData = async () => {
-    //     const requestResponse = await 
-    //   }
-    //   getData();
-    // }
+      //     const getData = async () => {
+      //     const requestResponse = await 
+      //   }
+      //   getData();
+      // }
     }
   }, [userLoginData])
 
 
   const alerts = () => {
     return (
-      data.map((item) => {
-        return(
-        <p>No Stock of {item} is present</p>
+      alert.map((item) => {
+        return (
+          <p>No Stock of {item} is present</p>
         )
       })
     )
@@ -91,16 +98,16 @@ try{
             </tr>
           </thead>
           <tbody>
-                {/* {data.bag.map((result, index) => {
-          return (
-          <tr>
-           <td>{index + 1}</td>
-          <td>{result.bloodGroup}</td>
-          <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
-          <td>{(new Date(result.expiry_date).toLocaleString().split(',')[0])}</td>
-         </tr>
-)
-})} */}
+            {data.bag.map((result, index) => {
+              return (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{result.bloodGroup}</td>
+                  <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
+                  <td>{(new Date(result.expiry_date).toLocaleString().split(',')[0])}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
