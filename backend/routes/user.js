@@ -15,7 +15,7 @@ router.route('/banksDropDown').get((req, res) => {   //get all the users from th
     } else {
       let banks = []
       result.map(function (item) {
-        if (item.type === "BloodBank")
+        if (item.type === "BloodBank" && item.status === 'Active')
           banks.push(item.name);
       });
       res.send(banks);

@@ -32,7 +32,7 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
             quantity,
             bloodBank_id,
             created_at: dateNow,
-            expiry_date:exp_date
+            expiry_date: exp_date
         })
 
         newBloodBag.save()  //save new user to database
@@ -42,6 +42,25 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
         return res.status(500).json({ error: err.message });
     }
 });
+
+
+//***************************************Maria's Code****************************
+
+router.post("/CompleteDonation", async (req, res) => {
+
+    const allBags = await bloodRequest.find({});
+    let len = allBags.length;
+
+    let flag = true;
+    while (flag) {
+        for (let i = 0; i < len; i++) {
+        
+
+        }
+    }
+
+
+})
 
 module.exports = router;
 
