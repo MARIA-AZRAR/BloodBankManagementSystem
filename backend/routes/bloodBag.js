@@ -207,5 +207,11 @@ res.json({
       });
   });
 
+  router.get("/getBags/:id", async (req, res) => {
+  const bank = await bloodBag.find({bloodBank_id:req.params.id}); 
+  res.json({
+    bank
+        });
+    });
 module.exports = router;
 
