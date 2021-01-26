@@ -46,8 +46,9 @@ import SearchDonor  from './Components/pages/Recipient/SearchDonor.component';
 import RecipientRequests from './Components/pages/Recipient/ViewRequest.component';
 import RecipientProfile from './Components/pages/Recipient/RecipientProfile.component';
 
-
-
+//Admin
+import AdminStock from './Components/pages/Admin/AdminStocks.component';
+import AdminRequest from './Components/pages/Admin/AdminRequests.component';
 function App() {
 
   const [userLoginData, setUserLoginData] = useState({  //this state will store the user data needed in all app like id
@@ -118,6 +119,9 @@ function App() {
           <Route path="/Recipient/Request" exact component={RecipientRequests} />
           <Route path="/Recipient/SearchDonor" exact component={SearchDonor} />
           <Route path="/Recipient/Profile" exact component={RecipientProfile} />
+
+          <Route path="/Admin/Stock" exact component={AdminStock} />
+          <Route path="/Admin/Request" exact component={AdminRequest} />
         </Router>
         <Footer />
       </UserContext.Provider>

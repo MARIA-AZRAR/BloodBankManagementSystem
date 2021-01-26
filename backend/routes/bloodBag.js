@@ -213,5 +213,22 @@ res.json({
     bank
         });
     });
+router.get("/getAdminBags", async (req, res) => {
+    const bags = await bloodBag.find(); 
+    let adminBags=[];
+    for(var i=0;i<bags.length;i++)
+    {
+    
+     const userDonate=await User.findById(bags[i].bloodBank_id);
+     adminBags.push({
+         "name":userDonate.name,
+         "bloodGroup":bags[i].bloodGroup,
+         "dateDonated":bags[i].created_at,
+         "quantity":bags[i].quantity
+     })
+    }
+        res.json(adminBags);
+          });
+
 module.exports = router;
 
