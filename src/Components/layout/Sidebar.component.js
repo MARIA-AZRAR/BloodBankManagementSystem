@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { NavbarDataB } from './SidebarDataBloodBank';
 import { NavbarDataR } from './SidebarDataRecipient';
 import { NavbarDataD } from './SidebarDataDonor';
+import { NavbarDataA } from './SidebarDataAdmin';
+
 import UserContext from "../../context/userDetailContext";
 
 //import './Sidebar.css';
@@ -26,6 +28,7 @@ function Sidebar() {
         if(userLoginData.userData.type === "Recipient") data = NavbarDataR;
         if(userLoginData.userData.type === "Donor") data = NavbarDataD;
         if(userLoginData.userData.type === "BloodBank") data = NavbarDataB;
+        if(userLoginData.userData.type === "Admin") data = NavbarDataA;
     }
 
   return ( 

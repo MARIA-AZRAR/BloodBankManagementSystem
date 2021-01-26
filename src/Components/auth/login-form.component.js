@@ -1,5 +1,5 @@
 
-import React, { Component, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";   //after login we need to change the page
 import styled from 'styled-components';
 import UserContext from '../../context/userDetailContext';  //to save data after registering

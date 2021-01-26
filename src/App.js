@@ -95,7 +95,7 @@ function App() {
           <Route path="/" exact component={AboutUs} />
           <Route path="/signup" exact component={SignupBloodBank} />
 
-          <Route path="/Admin" exact component={LoginAdmin} />
+          <Route path="/AdminLogin" exact component={LoginAdmin} />
           <Route path="/signin" exact component={Login} />
           <Route path="/signup-donor" exact component = {SignupDonor} />
           <Route path="/signup-recipient" exact component = {SignupRecipinet}/>
