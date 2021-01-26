@@ -36,8 +36,8 @@ function RequestRow(props) {
         quantity: props.request.quantity
       });
       Swal.fire(
-        'Donated',
-        'Successfully donated',
+        'Completed',
+        'yayy! Successfully Denoated',
         'success'
       )
     } catch (err) {

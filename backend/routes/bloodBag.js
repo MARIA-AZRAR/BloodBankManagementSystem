@@ -25,7 +25,7 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
         const dateNow = new Date()
 
         let exp_date = new Date();
-        //exp_date.setMonth(exp_date.getMonth());
+        exp_date.setMonth(exp_date.getMonth()+1);
 
 
         const newBloodBag = new bloodBag({
@@ -206,6 +206,29 @@ res.json({
   bag,
       });
   });
+
+  router.get("/getBags/:id", async (req, res) => {
+  const bank = await bloodBag.find({bloodBank_id:req.params.id}); 
+  res.json({
+    bank
+        });
+    });
+router.get("/getAdminBags", async (req, res) => {
+    const bags = await bloodBag.find(); 
+    let adminBags=[];
+    for(var i=0;i<bags.length;i++)
+    {
+    
+     const userDonate=await User.findById(bags[i].bloodBank_id);
+     adminBags.push({
+         "name":userDonate.name,
+         "bloodGroup":bags[i].bloodGroup,
+         "dateDonated":bags[i].created_at,
+         "quantity":bags[i].quantity
+     })
+    }
+        res.json(adminBags);
+          });
 
 module.exports = router;
 

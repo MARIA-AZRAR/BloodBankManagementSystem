@@ -63,6 +63,33 @@ router.post("/addDonation", async (req, res) => {   //POST Request and body has 
 
 
 });
+/*
+router.get("/getBags/:id", async (req, res) => {
+  const bank = await User.findById(req.params.id); 
+  const donors=await Donation.find();
+  let us=[];
+  let name=[];
+  let donate=[];
+  for(var i=0;i<donors.length;i++)
+  { 
+    us.push(await User.findById(donors[i].donation_id));   
+  }
+  for(var i=0;i<us.length;i++)
+  {
+    if(us[i])
+    {
+      if(us[i].bloodBank==bank.name)
+      {
+        donate.push(donors[i]);
+        name.push(us[i].name);
+      }
+    }   
+  }
 
+res.json({
+  donate,
+    name
+      });
+  });*/
 module.exports = router;
 

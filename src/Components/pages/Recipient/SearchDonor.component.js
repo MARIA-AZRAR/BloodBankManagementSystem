@@ -18,7 +18,7 @@ function SearchDonor() {
       if (userLoginData.userData.type !== "Recipient")
         history.push(`/${userLoginData.userData.type}`)
 
-      Axios.get("http://localhost:5000/bloodRequest/getAllDonors") 
+      Axios.get(`http://localhost:5000/bloodRequest/getAllDonors/${userLoginData.userData.user_id}`) 
         .then((response) => {
           setData(response.data);
           setLoading(false);

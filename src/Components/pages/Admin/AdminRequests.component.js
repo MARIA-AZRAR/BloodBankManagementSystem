@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
 import Axios from 'axios';
 import { bloodGroups } from '../../../context/BloodGroupsList';
+import Swal from 'sweetalert2';
 
-function BankStock() {
+function AdminStock() {
   //to prevent from loading if user is log out
   const { userLoginData } = useContext(UserContext)
   const history = useHistory();
@@ -13,35 +14,14 @@ function BankStock() {
   const [data,setData]=useState([]);
   const [search,setSearch]=useState('');
 
-  function countQuantity(){
-    var c=0;
-    for(var i=0;i<data.bank.length;i++)
-    {
-        c=c+data.bank[i].quantity;
-    }
-   return c;
-  }
-  function countAll()
-  {
-    var c=0;
-    for(var i=0;i<data.bank.length;i++)
-    {  if(search=='')
-    {
-    c=0;
-    }
-       if(data.bank[i].bloodGroup==search)
-        {c=c+data.bank[i].quantity;}
-    }
-   return c;
-  }
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
     try {
-      if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
-        history.push(`/${userLoginData.userData.type}`)
-      
-        Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
+     // if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+       // history.push(`/${userLoginData.userData.type}`)
+        history.push("/Admin/Request");
+        Axios.get("http://localhost:5000/bloodRequest/getAdminRequest")
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -55,10 +35,23 @@ function BankStock() {
     }
   }, [userLoginData])
 
+ const deleteRequest = async (del) => {
+   //  alert(`${del}`);
+    await Axios.get(`http://localhost:5000/bloodRequest/deleteRequest/${del}`)
+    console.log("deleted");
+    Swal.fire(
+      'Deleted',
+      'success'
+  ) 
+  await Axios.get("http://localhost:5000/bloodRequest/getAdminRequest")
+  .then((response) => {
+    setData(response.data);})
+
+  }
   if (isLoading) {
     return (
 
-      <BankContainer>
+      <AdminContainer>
         <div class="d-flex justify-content-center">
           <div className="spinnerl">
             <div class="spinner-border text-danger" role="status" >
@@ -66,12 +59,12 @@ function BankStock() {
             </div>
           </div>
         </div>
-      </BankContainer>
+      </AdminContainer>
 
     )
   }
   return (
-    <BankContainer>
+    <AdminContainer>
       <div class="body">
         <h1>Blood Stock</h1>
 
@@ -80,50 +73,43 @@ function BankStock() {
           <thead class="thead">
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">RECIPIENT NAME</th>
               <th scope="col">BLOOD GROUP</th>
               <th scope="col">DATE DONATED</th>
+              <th scope="col">BLOOD BANK</th>
+              <th scope="col">ADDRESS</th>
               <th scope="col">QUANTITY</th>
+              <th scope="col">STATUS</th>
+              <th scope="col">ACTION</th>
             </tr>
           </thead>
           <tbody>
-          {data.bank.map((result, index) => {
+          {data.map((result, index) => {
           return (
           <tr>
            <td>{index + 1}</td>
+           <td>{result.name}</td>
           <td>{result.bloodGroup}</td>
-          <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
+          <td>{(new Date(result.dateDonated).toLocaleString().split(',')[0])}</td>
+          <td>{result.bloodBank}</td>
+          <td>{result.address}</td>
           <td>{result.quantity}</td>
+          <td>{result.status}</td>
+          <td><button type="button" class="btn btn-danger" onClick={()=>deleteRequest(result.id)}>Delete</button></td>
          </tr>
 
 )
 })}
           </tbody>
         </table>
-        <h6>Total Quantity:  <input type="text" id="myText" value={countQuantity()} /></h6>
-        <h2>Blood Quantity</h2>
-        <div className="Bottom">
-          <h5>Select Blood Group:</h5>
-          <select id="blood" className="selectB" name="bloodGroup" onChange={(event) => { setSearch(event.target.value) }}>
-              <option> </option>
-              {bloodGroups.map(item => {
-                return (
-                  <option value={item}>{item}</option>
-                )
-              })}
-            </select>
-          <br />
-          <input type="text"
-            id="myText"
-            value={countAll()} />
-        </div>
       </div>
-    </BankContainer>
+    </AdminContainer>
   )
 }
 
-export default BankStock;
+export default AdminStock;
 
-const BankContainer = styled.div`
+const AdminContainer = styled.div`
 .spinnerl{
   padding-top:150px;
   padding-bottom:150px; 

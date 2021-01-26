@@ -5,7 +5,7 @@ import UserContext from '../../../context/userDetailContext'
 import Axios from 'axios';
 import { bloodGroups } from '../../../context/BloodGroupsList';
 
-function BankStock() {
+function AdminStock() {
   //to prevent from loading if user is log out
   const { userLoginData } = useContext(UserContext)
   const history = useHistory();
@@ -15,22 +15,22 @@ function BankStock() {
 
   function countQuantity(){
     var c=0;
-    for(var i=0;i<data.bank.length;i++)
+    for(var i=0;i<data.length;i++)
     {
-        c=c+data.bank[i].quantity;
+        c=c+data[i].quantity;
     }
    return c;
   }
   function countAll()
   {
     var c=0;
-    for(var i=0;i<data.bank.length;i++)
+    for(var i=0;i<data.length;i++)
     {  if(search=='')
     {
     c=0;
     }
-       if(data.bank[i].bloodGroup==search)
-        {c=c+data.bank[i].quantity;}
+       if(data[i].bloodGroup==search)
+        {c=c+data[i].quantity;}
     }
    return c;
   }
@@ -38,10 +38,10 @@ function BankStock() {
     if (!userLoginData.userData)
       history.push('/')
     try {
-      if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
-        history.push(`/${userLoginData.userData.type}`)
-      
-        Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
+     // if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
+       // history.push(`/${userLoginData.userData.type}`)
+        history.push("/Admin/Stock");
+        Axios.get("http://localhost:5000/bloodBag/getAdminBags")
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -58,7 +58,7 @@ function BankStock() {
   if (isLoading) {
     return (
 
-      <BankContainer>
+      <AdminContainer>
         <div class="d-flex justify-content-center">
           <div className="spinnerl">
             <div class="spinner-border text-danger" role="status" >
@@ -66,12 +66,12 @@ function BankStock() {
             </div>
           </div>
         </div>
-      </BankContainer>
+      </AdminContainer>
 
     )
   }
   return (
-    <BankContainer>
+    <AdminContainer>
       <div class="body">
         <h1>Blood Stock</h1>
 
@@ -82,16 +82,18 @@ function BankStock() {
               <th scope="col">ID</th>
               <th scope="col">BLOOD GROUP</th>
               <th scope="col">DATE DONATED</th>
+              <th scope="col">BLOOD BANK</th>
               <th scope="col">QUANTITY</th>
             </tr>
           </thead>
           <tbody>
-          {data.bank.map((result, index) => {
+          {data.map((result, index) => {
           return (
           <tr>
            <td>{index + 1}</td>
           <td>{result.bloodGroup}</td>
-          <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
+          <td>{(new Date(result.dateDonated).toLocaleString().split(',')[0])}</td>
+          <td>{result.name}</td>
           <td>{result.quantity}</td>
          </tr>
 
@@ -117,13 +119,13 @@ function BankStock() {
             value={countAll()} />
         </div>
       </div>
-    </BankContainer>
+    </AdminContainer>
   )
 }
 
-export default BankStock;
+export default AdminStock;
 
-const BankContainer = styled.div`
+const AdminContainer = styled.div`
 .spinnerl{
   padding-top:150px;
   padding-bottom:150px; 
