@@ -25,7 +25,7 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
         const dateNow = new Date()
 
         let exp_date = new Date();
-        //exp_date.setMonth(exp_date.getMonth());
+        exp_date.setMonth(exp_date.getMonth()+1);
 
 
         const newBloodBag = new bloodBag({
