@@ -3,6 +3,9 @@ import * as FaIcons from "react-icons/fa"
 import * as IoIcons from "react-icons/io"
 import * as RiIcons from "react-icons/ri"
 import * as ImIcons from "react-icons/im"
+import { GrUserManager } from "react-icons/gr";
+import { FcManager } from "react-icons/fc";
+
 
 
 export const NavbarDataA = [
@@ -27,7 +30,8 @@ export const NavbarDataA = [
     {
         title: 'Manage Users',
         path: '/Admin/User',
-        icon: <ImIcons.ImProfile />,
+        // icon: <ImIcons.ImProfile />,
+        icon: <FcManager />,
         cName: 'nav-text'
     },
     {

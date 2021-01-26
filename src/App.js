@@ -49,6 +49,12 @@ import RecipientProfile from './Components/pages/Recipient/RecipientProfile.comp
 //Admin
 import AdminStock from './Components/pages/Admin/AdminStocks.component';
 import AdminRequest from './Components/pages/Admin/AdminRequests.component';
+import AdminBloodBanks from './Components/pages/Admin/AdminManageBloodBanks.component';
+import UpdateBloodBankAdmin from './Components/pages/Admin/updateProfilesAdmin';
+import {AdminDonor, AdminRecipient} from './Components/pages/Admin/AdminManageUsers.component';
+import UpdateUsersProfileAdmin from './Components/pages/Admin/updateProfileUsersAdmin';
+
+
 function App() {
 
   const [userLoginData, setUserLoginData] = useState({  //this state will store the user data needed in all app like id
@@ -122,6 +128,13 @@ function App() {
 
           <Route path="/Admin/Stock" exact component={AdminStock} />
           <Route path="/Admin/Request" exact component={AdminRequest} />
+          <Route path="/Admin/BloodBank" exact component={AdminBloodBanks} />
+          <Route path="/Admin/User" exact component={AdminDonor} />
+          <Route path="/Admin/Recipient" exact component={AdminRecipient} />
+          <Route path="/Admin/BloodBank/ProfileEdit/:id" exact component = {UpdateBloodBankAdmin} />
+          <Route path="/Admin/Users/ProfileEdit/:id" exact component = {UpdateUsersProfileAdmin} />
+
+
         </Router>
         <Footer />
       </UserContext.Provider>

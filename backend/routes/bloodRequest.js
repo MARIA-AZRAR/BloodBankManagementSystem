@@ -80,6 +80,42 @@ router.get("/getRecipientsForBloodBank/:id", async (req, res) => {
     res.json(donors);
 });
 
+
+
+//get all bloodBanks for admin
+router.get("/getAdminBanks", async (req, res) => {
+    try{
+    const donors = await Users.find({type: "BloodBank"})
+    res.json(donors);
+    }catch(err){
+      return res.status(500).json({error : err.message})
+    }
+  });
+  
+  
+  //get all users for admin
+router.get("/getAdminDonor", async (req, res) => {
+    try{
+    const donors = await Users.find({type :"Donor"})
+    res.json(donors);
+    }catch(err){
+      return res.status(500).json({error : err.message})
+    }
+  });
+
+router.get("/getAdminRecipient", async (req, res) => {
+    try{
+    const recipients = await Users.find({type : "Recipient"})
+    res.json(recipients);
+    }catch(err){
+      return res.status(500).json({error : err.message})
+    }
+  });
+  
+  
+
+
+
 router.get("/getAllRec/:id", async (req, res) => {
     const bank=await Users.findById(req.params.id);
     console.log(bank.bloodBank);

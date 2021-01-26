@@ -21,13 +21,13 @@ export const NavbarDataR = [
     {
         title: 'Search Donors',
         path: '/Recipient/SearchDonor',
-icon: <RiIcons.RiUserSearchLine />,
+        icon: <RiIcons.RiUserSearchLine />,
         cName: 'nav-text'
     },
     {
         title: 'View Requests',
         path: '/Recipient/Request',
-icon: <IoIcons.IoIosPaper />,
+        icon: <IoIcons.IoIosPaper />,
         cName: 'nav-text'
     },
     {

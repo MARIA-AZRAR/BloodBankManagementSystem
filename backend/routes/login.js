@@ -178,7 +178,6 @@ router.delete("/deleteBloodBank/:id", async (req, res) => {
     }
 })
 
-
 //Just to check from frontEnd whether user is logged in or not
 router.post("/IsValidToken", async (req, res) => {
     try {

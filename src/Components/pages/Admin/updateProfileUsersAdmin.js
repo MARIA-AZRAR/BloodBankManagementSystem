@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 
 
-function UpdateProfile(props) {
+function UpdateUsersProfileAdmin(props) {
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -30,13 +30,13 @@ function UpdateProfile(props) {
         if (!userLoginData.userData)
             history.push('/')
         try {
-            if (userLoginData.userData.type !== "BloodBank")
+            if (userLoginData.userData.type !== "Admin")
                 history.push(`/${userLoginData.userData.type}`)
 
             const getData = async () => {
-               await Axios.get('http://localhost:5000/user/' + props.match.params.id)
+                console.log(props.match.params.id);
+                await Axios.get('http://localhost:5000/user/' + props.match.params.id)
                     .then(response => {
-
                         setName(response.data.name);
                         setAddress(response.data.address);
                         setEmail(response.data.email);
@@ -47,10 +47,9 @@ function UpdateProfile(props) {
                     })
                     .catch(function (error) {
                         console.log(error);
-                    })        
+                    })
             }
             getData();
-
         }
         catch {
             history.push('/')
@@ -62,9 +61,9 @@ function UpdateProfile(props) {
         e.preventDefault();
 
         if (type === "Donor")
-            history.push('/BloodBank/Donor')
+            history.push('/Admin/User')
         else
-            history.push('/BloodBank/Reciever')
+            history.push('/Admin/Recipient')
     }
 
     const update = async (e) => {
@@ -150,7 +149,7 @@ function UpdateProfile(props) {
 
 }
 
-export default UpdateProfile;
+export default UpdateUsersProfileAdmin;
 
 const RecipientProfileContainer = styled.div`
 
