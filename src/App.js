@@ -46,7 +46,11 @@ import SearchDonor  from './Components/pages/Recipient/SearchDonor.component';
 import RecipientRequests from './Components/pages/Recipient/ViewRequest.component';
 import RecipientProfile from './Components/pages/Recipient/RecipientProfile.component';
 
-
+//Admin
+import AdminStock from './Components/pages/Admin/AdminStocks.component';
+import AdminRequest from './Components/pages/Admin/AdminRequests.component';
+import AdminAlert from './Components/pages/Admin/AdminAlerts.component';
+import AdminManageDonation from './Components/pages/Admin/AdminManageDonation.component';
 
 function App() {
 
@@ -118,6 +122,13 @@ function App() {
           <Route path="/Recipient/Request" exact component={RecipientRequests} />
           <Route path="/Recipient/SearchDonor" exact component={SearchDonor} />
           <Route path="/Recipient/Profile" exact component={RecipientProfile} />
+
+          <Route path="/Admin/Stock" exact component={AdminStock} />
+          <Route path="/Admin/Request" exact component={AdminRequest} />
+           <Route path="/Admin/Alert" exact component={AdminAlert} />
+           <Route path="/Admin/Donation" exact component={AdminManageDonation} />
+       
+
         </Router>
         <Footer />
       </UserContext.Provider>

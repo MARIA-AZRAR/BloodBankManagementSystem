@@ -25,7 +25,7 @@ router.post("/addBloodBag", async (req, res) => {   //POST Request and body has 
         const dateNow = new Date()
 
         let exp_date = new Date();
-        //exp_date.setMonth(exp_date.getMonth());
+        exp_date.setMonth(exp_date.getMonth()+1);
 
 
         const newBloodBag = new bloodBag({
@@ -206,6 +206,95 @@ res.json({
   bag,
       });
   });
+
+  router.get("/getBags/:id", async (req, res) => {
+  const bank = await bloodBag.find({bloodBank_id:req.params.id}); 
+  res.json({
+    bank
+        });
+    });
+
+router.get("/getAdminBags", async (req, res) => {
+    const bags = await bloodBag.find(); 
+    
+    let adminBags=[];
+    for(var i=0;i<bags.length;i++)
+    { 
+    const userDonate=await User.findById(bags[i].bloodBank_id);  
+     adminBags.push({
+         "name":userDonate.name,
+         "bloodGroup":bags[i].bloodGroup,
+         "dateDonated":bags[i].created_at,
+         "quantity":bags[i].quantity
+     })
+    }
+        res.json(adminBags);
+          });
+
+router.get("/getAdminAlerts", async (req, res) => {
+    const bags = await bloodBag.find(); 
+    let adminBags=[];
+    for(var i=0;i<bags.length;i++)
+    {
+    
+     
+     if(bags[i].created_at.getTime()===bags[i].expiry_date.getTime()){
+    const userDonate=await User.findById(bags[i].bloodBank_id);
+     adminBags.push({
+         "name":userDonate.name,
+         "bloodGroup":bags[i].bloodGroup,
+         "dateDonated":bags[i].created_at,
+         "dateExpired":bags[i].expiry_date,
+     })
+    }
+        res.json(adminBags);
+          }});
+
+    // router.get("/getAdminDonation", async (req, res) => {
+    // const donations = await bloodBag.find(); 
+    // let adminRequests=[];
+    // for(var i=0;i<donations.length;i++)
+    // {
+    //  const userReq=await bloodBag.findById(requests[i].bloodBank_id);
+    //  if(requests[i].status=="Active")
+    //  {
+    //     adminRequests.push({
+    //         "name":userReq.name,
+    //         "bloodGroup":requests[i].bloodGroup,
+    //         "dateDonated":requests[i].due_date,
+    //         "quantity":requests[i].quantity,
+    //         "address":requests[i].address,
+    //         "bloodBank":userReq.bloodBank,
+    //         "status":"Pending",
+    //         "id":requests[i]._id
+   
+    //     })
+    //  }
+    //  else{
+    //     adminRequests.push({
+    //         "name":userReq.name,
+    //         "bloodGroup":requests[i].bloodGroup,
+    //         "dateDonated":requests[i].due_date,
+    //         "quantity":requests[i].quantity,
+    //         "address":requests[i].address,
+    //         "bloodBank":userReq.bloodBank,
+    //         "status":requests[i].status,
+    //         "id":requests[i]._id
+   
+    //     })
+
+    //  }
+   
+    // }
+    //     res.json(adminRequests);
+    //       });
+
+
+router.get("/deleteDonation/:id", async (req, res) => {
+    const deleteD= await bloodBag.findByIdAndDelete(req.params.id);
+    res.json(deleteD);
+    });          
+
 
 module.exports = router;
 

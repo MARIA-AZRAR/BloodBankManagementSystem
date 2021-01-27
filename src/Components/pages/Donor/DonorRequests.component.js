@@ -17,7 +17,7 @@ function DonorRequests() {
     try {
       if (userLoginData.userData.type !== "Donor")
         history.push(`/${userLoginData.userData.type}`)
-      Axios.get("http://localhost:5000/bloodRequest/getAllRec")
+      Axios.get(`http://localhost:5000/bloodRequest/getAllRec/${userLoginData.userData.user_id}`)
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -60,15 +60,15 @@ function DonorRequests() {
               </tr>
             </thead>
             <tbody>
-            {data.request.map((result,index) => {
+            {data.map((result,index) => {
             return (
              
                  <tr>
                    <td>{index+1}</td>
-                   <td>{data.recipient[index].name}</td>
-                  <td>{result.bloodGroup}</td>
-                  <td>{(new Date(result.due_date)).toLocaleString().split(',')[0]}</td>
-                  <td>{data.recipient[index].contact}</td>
+                   <td>{result.name}</td>
+                   <td>{result.bloodGroup}</td>
+                  <td>{(new Date(result.dueDate)).toLocaleString().split(',')[0]}</td>
+                  <td>{result.contact}</td>
                   <td>{result.quantity}</td>
                 </tr>
                

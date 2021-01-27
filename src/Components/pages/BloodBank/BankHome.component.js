@@ -57,7 +57,7 @@ function BankHome() {
     return (
       alert.map((item) => {
         return (
-          <p>No Stock of {item} is present</p>
+          <p class="alerts" >No Stock of {item} is present</p>
         )
       })
     )
@@ -136,7 +136,16 @@ const HomeContainer = styled.div`
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
- 
+
+.alerts{
+    font-size:18px;
+    font-style:italic;
+    color:red;
+    font-weight:bold;
+    margin-bottom: 15px;
+    padding:3px;
+
+}
 .box{
     background: none;
     margin-top: 200px;
@@ -150,6 +159,8 @@ const HomeContainer = styled.div`
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }​
+
+
 	.back {
 		margin:1em auto;
 	}

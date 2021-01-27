@@ -42,13 +42,14 @@ router.post("/addBloodRequest", async (req, res) => {   //POST Request and body 
 
 //This should be in user router
 
-router.get("/getAllDonors", async (req, res) => {
-
+router.get("/getAllDonors/:id", async (req, res) => {
+    const bank=await Users.findById(req.params.id);
+    console.log(bank.bloodBank);
     const donors = await Users.find({ type: "Donor" });
     let donor = [];
     for (var i = 0; i < donors.length; i++) {
         //donors[0].status="Disable";
-        if (donors[i].status == "Active") {
+        if (donors[i].status == "Active" && donors[i].bloodBank==bank.bloodBank) {
             donor.push(donors[i]);
         }
     }
@@ -79,27 +80,26 @@ router.get("/getRecipientsForBloodBank/:id", async (req, res) => {
     res.json(donors);
 });
 
-
-
-
-
-router.get("/getAllRec", async (req, res) => {
-    const userDetails = await bloodRequest.find(); //getting user
-    //const userLogin = await Login.findById(req.id); //getting userLogin
-    let request = [];
-    let recipient = [];
+router.get("/getAllRec/:id", async (req, res) => {
+    const bank=await Users.findById(req.params.id);
+    console.log(bank.bloodBank);
+    const userDetails = await bloodRequest.find(); 
+    let donorRequests=[];
     for (var i = 0; i < userDetails.length; i++) {
-        // userDetails[0].status="Disable";
-        if (userDetails[i].status == "Active") {
-            request.push(userDetails[i]);
-            recipient.push(await Users.findOne({ _id: userDetails[i].recipient_id }))
-        } //to find bloodBank id
+        if (userDetails[i].status == "Active" ) {
+           const user=await Users.findOne({ _id: userDetails[i].recipient_id })
+           if(user.bloodBank==bank.bloodBank)
+            {donorRequests.push({
+                name:user.name,
+                bloodGroup:userDetails[i].bloodGroup,
+                dueDate:userDetails[i].due_date,
+                contact:user.contact,
+                quantity:userDetails[i].quantity
+            })}
+        } 
     }
-
-    res.json({
-        request,
-        recipient
-    });
+    
+    res.json(donorRequests );
 });
 
 router.get("/viewRequests/:id", async (req, res) => {
@@ -171,10 +171,50 @@ router.get("/getAllRequests/:id", async (req, res) => {
     }
 });
 
+router.get("/getAdminRequest", async (req, res) => {
+    const requests = await bloodRequest.find(); 
+    let adminRequests=[];
+    for(var i=0;i<requests.length;i++)
+    {
+     const userReq=await Users.findById(requests[i].recipient_id);
+     if(requests[i].status=="Active")
+     {
+        adminRequests.push({
+            "name":userReq.name,
+            "bloodGroup":requests[i].bloodGroup,
+            "dateDonated":requests[i].due_date,
+            "quantity":requests[i].quantity,
+            "address":requests[i].address,
+            "bloodBank":userReq.bloodBank,
+            "status":"Pending",
+            "id":requests[i]._id
+   
+        })
+     }
+     else{
+        adminRequests.push({
+            "name":userReq.name,
+            "bloodGroup":requests[i].bloodGroup,
+            "dateDonated":requests[i].due_date,
+            "quantity":requests[i].quantity,
+            "address":requests[i].address,
+            "bloodBank":userReq.bloodBank,
+            "status":requests[i].status,
+            "id":requests[i]._id
+   
+        })
+
+     }
+   
+    }
+        res.json(adminRequests);
+          });
 
 
-
-
+ router.get("/deleteRequest/:id", async (req, res) => {
+    const deleteReq = await bloodRequest.findByIdAndDelete(req.params.id);
+    res.json(deleteReq);
+    });
 
 module.exports = router;
 
