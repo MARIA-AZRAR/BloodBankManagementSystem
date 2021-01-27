@@ -55,6 +55,38 @@ router.post("/addLogin", async (req, res) => {   //POST Request and body has all
 });
 
 
+router.post("/AdminLogin", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password)
+            return res.status(400).json({ msg: "Enter All fields" });
+
+        const checkUser = await Login.findOne({ username: username });
+        if (!checkUser)
+            return res.status(400).json({ msg: "No Admin account with this username is present" });
+
+        const passwordMatch = await bcrypt.compare(password, checkUser.password);
+        if (!passwordMatch)
+            return res.status(400).json({ msg: "Invalid password." });
+
+        const token = jwt.sign({ id: checkUser._id, type: checkUser.type }, process.env.JWT_TOKEN_SECRET);  //token can be accssed by secret password
+        res.json({
+            token,
+            user: {
+                id: checkUser._id,
+                username: checkUser.username,
+                type: checkUser.type
+            },
+        });
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+
 router.post("/accountLogin", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -70,6 +102,9 @@ router.post("/accountLogin", async (req, res) => {
         if (!passwordMatch)
             return res.status(400).json({ msg: "Invalid password." });
 
+        //to check admin
+        if (checkUser.type === 'Admin')
+            return res.status(400).json({ msg: "This account is restricted" })
 
         //converting bloodbank name to id so that it can be retuened to front end for donation
 
@@ -143,7 +178,6 @@ router.delete("/deleteBloodBank/:id", async (req, res) => {
     }
 })
 
-
 //Just to check from frontEnd whether user is logged in or not
 router.post("/IsValidToken", async (req, res) => {
     try {
@@ -207,35 +241,35 @@ router.get("/profile", authen, async (req, res) => {
 
 router.post('/update/:id', async (req, res) => {
     const password = req.body.password;
-    if(!password){
+    if (!password) {
         Login.findById(req.params.id)
-        .then(users => {
-            users.username = req.body.username;
+            .then(users => {
+                users.username = req.body.username;
 
-            users.save()  //save new user to database
-                .then(() => res.json('user Updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+                users.save()  //save new user to database
+                    .then(() => res.json('user Updated!'))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            })
+            .catch(err => res.status(400).json('Error: ' + err));
 
-    }else {
-    //Generate hash for passwordk2
-    const saltP = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(req.body.password, saltP);
+    } else {
+        //Generate hash for passwordk2
+        const saltP = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash(req.body.password, saltP);
 
-    Login.findById(req.params.id)
-        .then(users => {
-            users.username = req.body.username;
-            users.password = hashPassword;
+        Login.findById(req.params.id)
+            .then(users => {
+                users.username = req.body.username;
+                users.password = hashPassword;
 
-            users.save()  //save new user to database
-                .then(() => res.json('user Updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+                users.save()  //save new user to database
+                    .then(() => res.json('user Updated!'))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            })
+            .catch(err => res.status(400).json('Error: ' + err));
     }
 
-   
+
 });
 
 module.exports = router;

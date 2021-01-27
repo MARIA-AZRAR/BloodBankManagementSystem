@@ -3,36 +3,46 @@ import * as FaIcons from "react-icons/fa"
 import * as IoIcons from "react-icons/io"
 import * as RiIcons from "react-icons/ri"
 import * as ImIcons from "react-icons/im"
+import { GrUserManager } from "react-icons/gr";
+import { FcManager } from "react-icons/fc";
 
 
-export const NavbarDataR = [
+
+export const NavbarDataA = [
     {
         title: 'Home',
-        path: '/Recipient',
-        icon: <FaIcons.FaHome />,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Send Request',
-        path: '/Recipient/SendRequest',
+        path: '/Admin',
         icon: <FaIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
     },
     {
-        title: 'Search Donors',
-        path: '/Recipient/SearchDonor',
+        title: 'Manage Blood Stock',
+        path: '/Admin/Stock',
         icon: <RiIcons.RiUserSearchLine />,
         cName: 'nav-text'
     },
     {
         title: 'View Requests',
-        path: '/Recipient/Request',
+        path: '/Admin/Request',
         icon: <IoIcons.IoIosPaper />,
         cName: 'nav-text'
     },
     {
+        title: 'Manage Users',
+        path: '/Admin/User',
+        // icon: <ImIcons.ImProfile />,
+        icon: <FcManager />,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Manage BloodBanks',
+        path: '/Admin/BloodBank',
+        icon: <ImIcons.ImProfile />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Profile',
-        path: '/Recipient/Profile',
+        path: '/Admin/Profile',
         icon: <ImIcons.ImProfile />,
         cName: 'nav-text'
     }

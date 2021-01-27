@@ -66,7 +66,7 @@ function AdminStock() {
   return (
     <AdminContainer>
       <div class="body">
-        <h1>Blood Stock</h1>
+        <h1>Blood Requests</h1>
 
 
         <table class="table table-striped">
@@ -75,7 +75,7 @@ function AdminStock() {
               <th scope="col">ID</th>
               <th scope="col">RECIPIENT NAME</th>
               <th scope="col">BLOOD GROUP</th>
-              <th scope="col">DATE DONATED</th>
+              <th scope="col">DATE REQUESTED</th>
               <th scope="col">BLOOD BANK</th>
               <th scope="col">ADDRESS</th>
               <th scope="col">QUANTITY</th>

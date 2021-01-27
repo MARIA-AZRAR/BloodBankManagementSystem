@@ -5,7 +5,7 @@ import UserContext from '../../../context/userDetailContext'
 import Axios from 'axios';
 import { bloodGroups } from '../../../context/BloodGroupsList';
 
-function BankStock() {
+export default function BankStock() {
   //to prevent from loading if user is log out
   const { userLoginData } = useContext(UserContext)
   const history = useHistory();
@@ -125,8 +125,6 @@ function BankStock() {
     </BankContainer>
   )
 }
-
-export default BankStock;
 
 const BankContainer = styled.div`
 .spinnerl{

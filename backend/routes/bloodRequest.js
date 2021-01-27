@@ -80,6 +80,42 @@ router.get("/getRecipientsForBloodBank/:id", async (req, res) => {
     res.json(donors);
 });
 
+
+
+//get all bloodBanks for admin
+router.get("/getAdminBanks", async (req, res) => {
+    try{
+    const donors = await Users.find({type: "BloodBank"})
+    res.json(donors);
+    }catch(err){
+      return res.status(500).json({error : err.message})
+    }
+  });
+  
+  
+  //get all users for admin
+router.get("/getAdminDonor", async (req, res) => {
+    try{
+    const donors = await Users.find({type :"Donor"})
+    res.json(donors);
+    }catch(err){
+      return res.status(500).json({error : err.message})
+    }
+  });
+
+router.get("/getAdminRecipient", async (req, res) => {
+    try{
+    const recipients = await Users.find({type : "Recipient"})
+    res.json(recipients);
+    }catch(err){
+      return res.status(500).json({error : err.message})
+    }
+  });
+  
+  
+
+
+
 router.get("/getAllRec/:id", async (req, res) => {
     const bank=await Users.findById(req.params.id);
     console.log(bank.bloodBank);
@@ -101,6 +137,8 @@ router.get("/getAllRec/:id", async (req, res) => {
     
     res.json(donorRequests );
 });
+
+
 
 router.get("/viewRequests/:id", async (req, res) => {
     const userDetails = await bloodRequest.find({ recipient_id: req.params.id }); //getting user
@@ -132,25 +170,27 @@ router.get("/getAllRequests/:id", async (req, res) => {
     try {
 
         const allRequests = await bloodRequest.find({});
-
+        console.log(allRequests)
         let bloodRequests = [];
         let len = allRequests.length;
         let i = 0;
 
+        if(len === 0){
+            res.json([]);
+        }
         const bankName = await Users.findById(req.params.id);  //to get name of bloodbank by id as user table has its name
-
 
         const getData = async (item) => {
             let recipientInfo = "";
             recipientInfo = await Users.findOne({ _id: item.recipient_id })
-            if(recipientInfo.bloodBank === bankName.name){
+            if (recipientInfo.bloodBank === bankName.name) {
                 bloodRequests.push({
                     _id: item._id,
                     bloodGroup: item.bloodGroup,
                     quantity: item.quantity,
                     address: item.address,
                     recipient_id: item.recipient_id,
-                    due_date: item.due_date, 
+                    due_date: item.due_date,
                     status: item.status,
                     recipient_name: recipientInfo.name,
                     age: recipientInfo.age,
@@ -158,13 +198,12 @@ router.get("/getAllRequests/:id", async (req, res) => {
                 })
             }
             ++i;
-            if(i === len){
+            if (i === len) {
                 res.json(bloodRequests);
             }
         }
 
         allRequests.map(getData)
-
 
     } catch (err) {
         return res.status(500).json({ error: err.message });

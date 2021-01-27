@@ -79,11 +79,11 @@ function SearchDonor() {
           </thead>
           <tbody>
             {data.donor.filter((val) => {
-              if (search == "") {
+              if (search === "") {
                 return val;
               } else {
 
-                if (val.bloodGroup == search) {
+                if (val.bloodGroup === search) {
                   return val;
                 }
               }

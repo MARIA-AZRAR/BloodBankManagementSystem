@@ -3,19 +3,16 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
 import Axios from 'axios'
-import { bloodGroups } from '../../../context/BloodGroupsList';
 import ErrorNotice from '../../misc/ErrorNotice';
 import Swal from 'sweetalert2';
 
 
 
-function UpdateProfile(props) {
+function UpdateBloodBankAdmin(props) {
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [contact, setContact] = useState("");
-    const [age, setAge] = useState("");
-    const [bloodGroup, setBloodGroup] = useState("");
     const [email, setEmail] = useState("");
     const [type, setType] = useState("")
 
@@ -30,27 +27,21 @@ function UpdateProfile(props) {
         if (!userLoginData.userData)
             history.push('/')
         try {
-            if (userLoginData.userData.type !== "BloodBank")
+            if (userLoginData.userData.type !== "Admin")
                 history.push(`/${userLoginData.userData.type}`)
 
-            const getData = async () => {
-               await Axios.get('http://localhost:5000/user/' + props.match.params.id)
-                    .then(response => {
+            Axios.get('http://localhost:5000/user/' + props.match.params.id)
+                .then(response => {
 
-                        setName(response.data.name);
-                        setAddress(response.data.address);
-                        setEmail(response.data.email);
-                        setBloodGroup(response.data.bloodGroup);
-                        setAge(response.data.age);
-                        setContact(response.data.contact);
-                        setType(response.data.type)
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })        
-            }
-            getData();
-
+                    setName(response.data.name);
+                    setAddress(response.data.address);
+                    setEmail(response.data.email);
+                    setContact(response.data.contact);
+                    setType(response.data.type)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
         catch {
             history.push('/')
@@ -60,18 +51,14 @@ function UpdateProfile(props) {
 
     const back = async (e) => {
         e.preventDefault();
-
-        if (type === "Donor")
-            history.push('/BloodBank/Donor')
-        else
-            history.push('/BloodBank/Reciever')
+        history.push('/Admin/BloodBank')
     }
 
     const update = async (e) => {
         e.preventDefault();
         try {
 
-            const updatedUser = { name, address, contact, age, bloodGroup, email };
+            const updatedUser = { name, address, contact, email };
             await Axios.post(`http://localhost:5000/user/update/${props.match.params.id}`, updatedUser);  //user and its login data in diff tables
 
             Swal.fire(
@@ -86,9 +73,9 @@ function UpdateProfile(props) {
     };
 
     return (
-        <RecipientProfileContainer>
+        <BloodBankProfileContainer>
             <div>
-                <h1 className="heading">Update Profile:</h1>
+                <h1 className="heading">Update BloodBank</h1>
                 <div className="container container-fluid">
                     <div className="d-flex justify-content-center h-100">
                         <div class="card signupCard">
@@ -104,16 +91,6 @@ function UpdateProfile(props) {
                                             onChange={(e) => setName(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="bloodGroup" >Blood Group: </label>
-                                        <select value={bloodGroup} id="bloodGroup" className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
-                                            {bloodGroups.map(item => {
-                                                return (
-                                                    <option value={item}> {item} </option>
-                                                )
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className="input-group form-group">
                                         <label for="BloodBankAddress" >Address: </label>
                                         <input id="BloodBankAddress" value={address} type="text" className="form-control"
                                             onChange={(e) => setAddress(e.target.value)} />
@@ -122,11 +99,6 @@ function UpdateProfile(props) {
                                         <label for="BloodBankContact" >Contact No: </label>
                                         <input id="BloodBankContact" type="text" className="form-control"
                                             value={contact} onChange={(e) => setContact(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <label for="age" >Age: </label>
-                                        <input id="age" type="text" className="form-control"
-                                            value={age} onChange={(e) => setAge(e.target.value)} />
                                     </div>
                                     <div className="input-group form-group">
                                         <label for="BloodBankEmail" >Email: </label>
@@ -145,14 +117,14 @@ function UpdateProfile(props) {
                     </div>
                 </div>
             </div>
-        </RecipientProfileContainer>
+        </BloodBankProfileContainer>
     )
 
 }
 
-export default UpdateProfile;
+export default UpdateBloodBankAdmin;
 
-const RecipientProfileContainer = styled.div`
+const BloodBankProfileContainer = styled.div`
 
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
@@ -177,7 +149,7 @@ font-family: 'Righteous', cursive;
 }
 
 .signupCard{
-height: 650px;
+height: 410px;
 align-content: center;
 margin: auto;
 width: 500px;

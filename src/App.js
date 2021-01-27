@@ -51,6 +51,11 @@ import AdminStock from './Components/pages/Admin/AdminStocks.component';
 import AdminRequest from './Components/pages/Admin/AdminRequests.component';
 import AdminAlert from './Components/pages/Admin/AdminAlerts.component';
 import AdminManageDonation from './Components/pages/Admin/AdminManageDonation.component';
+import AdminBloodBanks from './Components/pages/Admin/AdminManageBloodBanks.component';
+import UpdateBloodBankAdmin from './Components/pages/Admin/updateProfilesAdmin';
+import {AdminDonor, AdminRecipient} from './Components/pages/Admin/AdminManageUsers.component';
+import UpdateUsersProfileAdmin from './Components/pages/Admin/updateProfileUsersAdmin';
+
 
 function App() {
 
@@ -99,7 +104,7 @@ function App() {
           <Route path="/" exact component={AboutUs} />
           <Route path="/signup" exact component={SignupBloodBank} />
 
-          <Route path="/Admin" exact component={LoginAdmin} />
+          <Route path="/AdminLogin" exact component={LoginAdmin} />
           <Route path="/signin" exact component={Login} />
           <Route path="/signup-donor" exact component = {SignupDonor} />
           <Route path="/signup-recipient" exact component = {SignupRecipinet}/>
@@ -128,6 +133,12 @@ function App() {
            <Route path="/Admin/Alert" exact component={AdminAlert} />
            <Route path="/Admin/Donation" exact component={AdminManageDonation} />
        
+          <Route path="/Admin/BloodBank" exact component={AdminBloodBanks} />
+          <Route path="/Admin/User" exact component={AdminDonor} />
+          <Route path="/Admin/Recipient" exact component={AdminRecipient} />
+          <Route path="/Admin/BloodBank/ProfileEdit/:id" exact component = {UpdateBloodBankAdmin} />
+          <Route path="/Admin/Users/ProfileEdit/:id" exact component = {UpdateUsersProfileAdmin} />
+
 
         </Router>
         <Footer />

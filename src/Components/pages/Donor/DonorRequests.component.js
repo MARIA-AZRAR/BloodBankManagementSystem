@@ -62,7 +62,6 @@ function DonorRequests() {
             <tbody>
             {data.map((result,index) => {
             return (
-             
                  <tr>
                    <td>{index+1}</td>
                    <td>{result.name}</td>
