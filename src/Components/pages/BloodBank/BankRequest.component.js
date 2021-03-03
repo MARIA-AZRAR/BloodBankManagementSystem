@@ -37,7 +37,7 @@ function RequestRow(props) {
       });
       Swal.fire(
         'Completed',
-        'yayy! Successfully Denoated',
+        'yayy! Successfully Donated',
         'success'
       )
     } catch (err) {

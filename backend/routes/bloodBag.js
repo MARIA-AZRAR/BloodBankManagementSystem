@@ -114,6 +114,74 @@ router.get("/Alerts/:id", async (req, res) => {
 
 })
 
+//admin alerts
+
+router.get("/getAdminAlerts", async (req, res) => {
+
+    let BN = false;
+    let BP = false;
+    let AN = false;
+    let AP = false;
+    let ON = false;
+    let OP = false;
+    let ABN = false;
+    let ABP = false;
+
+    try { //get all bags of all banks
+        const allBags = await bloodBag.find({});
+
+        allBags.map((bag) => {
+            if (bag.bloodGroup === 'A+') {
+                AP = true;
+            }
+            if (bag.bloodGroup === 'A-') {
+                AN = true;
+            }
+            if (bag.bloodGroup === 'B-') {
+                BN = true;
+            }
+            if (bag.bloodGroup === 'B+') {
+                BP = true;
+            }
+            if (bag.bloodGroup === 'O-') {
+                ON = true;
+            }
+            if (bag.bloodGroup === 'O+') {
+                OP = true;
+            }
+            if (bag.bloodGroup === 'AB-') {
+                ABN = true;
+            }
+            if (bag.bloodGroup === 'AB+') {
+                ABP = true;
+            }
+        })
+
+        let alerts = [];
+        if (AP === false)
+            alerts.push('A+')
+        if (AN === false)
+            alerts.push('A-')
+        if (BP === false)
+            alerts.push('B+')
+        if (BN === false)
+            alerts.push('B-')
+        if (ABP === false)
+            alerts.push('AB+')
+        if (ABN === false)
+            alerts.push('AB-')
+        if (ON === false)
+            alerts.push('O-')
+        if (OP === false)
+            alerts.push('O+')
+      res.json(alerts)
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+
+
+})
+
 
 
 //make donation
@@ -231,7 +299,7 @@ router.get("/getAdminBags", async (req, res) => {
         res.json(adminBags);
           });
 
-router.get("/getAdminAlerts", async (req, res) => {
+router.get("/getAdminExpiredBags", async (req, res) => {
     const bags = await bloodBag.find(); 
     let adminBags=[];
     for(var i=0;i<bags.length;i++)
@@ -297,4 +365,3 @@ router.get("/deleteDonation/:id", async (req, res) => {
 
 
 module.exports = router;
-

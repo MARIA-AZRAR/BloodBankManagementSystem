@@ -130,7 +130,7 @@ function App() {
 
           <Route path="/Admin/Stock" exact component={AdminStock} />
           <Route path="/Admin/Request" exact component={AdminRequest} />
-           <Route path="/Admin/Alert" exact component={AdminAlert} />
+           <Route path="/Admin" exact component={AdminAlert} />
            <Route path="/Admin/Donation" exact component={AdminManageDonation} />
        
           <Route path="/Admin/BloodBank" exact component={AdminBloodBanks} />

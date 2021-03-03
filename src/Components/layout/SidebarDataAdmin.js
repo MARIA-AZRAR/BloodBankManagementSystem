@@ -28,6 +28,12 @@ export const NavbarDataA = [
         cName: 'nav-text'
     },
     {
+        title: 'View Donations',
+        path: '/Admin/Donation',
+        icon: <IoIcons.IoIosPaper />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Manage Users',
         path: '/Admin/User',
         // icon: <ImIcons.ImProfile />,
@@ -37,12 +43,6 @@ export const NavbarDataA = [
     {
         title: 'Manage BloodBanks',
         path: '/Admin/BloodBank',
-        icon: <ImIcons.ImProfile />,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Profile',
-        path: '/Admin/Profile',
         icon: <ImIcons.ImProfile />,
         cName: 'nav-text'
     }
