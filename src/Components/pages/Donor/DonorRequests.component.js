@@ -34,9 +34,9 @@ function DonorRequests() {
   if (isLoading) {
     return (
       <DonorRequestsContainer>
-        <div class="box">
-          <div class="loader">
-            <span class="back">
+        <div className="box">
+          <div className="loader">
+            <span className="back">
               <span>L</span>
               <span>O</span>
               <span>A</span>
@@ -52,35 +52,37 @@ function DonorRequests() {
   }
   return (
     <DonorRequestsContainer>
-      <div class="body">
+      <div className="body">
         <h1>Requests</h1>
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">RECIPIENT NAME</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">DUE DATE</th>
-              <th scope="col">CONTACT NO</th>
-              <th scope="col">QUANTITY</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((result, index) => {
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{result.name}</td>
-                  <td>{result.bloodGroup}</td>
-                  <td>{(new Date(result.dueDate)).toLocaleString().split(',')[0]}</td>
-                  <td>{result.contact}</td>
-                  <td>{result.quantity}</td>
-                </tr>
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead className="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">RECIPIENT NAME</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">DUE DATE</th>
+                <th scope="col">CONTACT NO</th>
+                <th scope="col">QUANTITY</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((result, index) => {
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{result.name}</td>
+                    <td>{result.bloodGroup}</td>
+                    <td>{(new Date(result.dueDate)).toLocaleString().split(',')[0]}</td>
+                    <td>{result.contact}</td>
+                    <td>{result.quantity}</td>
+                  </tr>
 
-              )
-            })}
-          </tbody>
-        </table>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </DonorRequestsContainer>
   )

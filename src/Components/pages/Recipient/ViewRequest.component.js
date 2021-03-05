@@ -34,9 +34,9 @@ function RecipientRequests() {
   if (isLoading) {
     return (
       <RecipientContainer>
-        <div class="box">
-          <div class="loader">
-            <span class="back">
+        <div className="box">
+          <div className="loader">
+            <span className="back">
               <span>L</span>
               <span>O</span>
               <span>A</span>
@@ -53,41 +53,43 @@ function RecipientRequests() {
   }
   return (
     <RecipientContainer>
-      <div class="body">
+      <div className="body">
         <h1>Patient Requests</h1>
         <br />
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">RECIPIENT NAME</th>
-              <th scope="col">AGE</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">ADDRESS</th>
-              <th scope="col">BLOOD BANK</th>
-              <th scope="col">QUANTITY</th>
-              <th scope="col">STATUS</th>
-              <th scope="col">DUE DATE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.userDetails.map((result, index) => {
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{data.recipient[0].name}</td>
-                  <td>{data.recipient[0].age}</td>
-                  <td>{result.bloodGroup}</td>
-                  <td>{result.address}</td>
-                  <td>{data.recipient[0].bloodBank}</td>
-                  <td>{result.quantity}</td>
-                  <td>{data.status[index]}</td>
-                  <td>{(new Date(result.due_date)).toLocaleString().split(',')[0]}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead className="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">RECIPIENT NAME</th>
+                <th scope="col">AGE</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">ADDRESS</th>
+                <th scope="col">BLOOD BANK</th>
+                <th scope="col">QUANTITY</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">DUE DATE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.userDetails.map((result, index) => {
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{data.recipient[0].name}</td>
+                    <td>{data.recipient[0].age}</td>
+                    <td>{result.bloodGroup}</td>
+                    <td>{result.address}</td>
+                    <td>{data.recipient[0].bloodBank}</td>
+                    <td>{result.quantity}</td>
+                    <td>{data.status[index]}</td>
+                    <td>{(new Date(result.due_date)).toLocaleString().split(',')[0]}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </RecipientContainer>
   )

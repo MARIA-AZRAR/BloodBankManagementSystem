@@ -114,22 +114,24 @@ function AdminBloodBanks() {
         <AdminBankContainer>
             <div class="body">
                 <h1>Blood Banks</h1>
-                <table class="table table-striped">
-                    <thead class="thead">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">BANK NAME</th>
-                            <th scope="col">ADDRESS</th>
-                            <th scope="col">CONTACT NO</th>
-                            <th scope="col">EMAIL</th>
-                            <th scope="col">STATUS</th>
-                            <th scope="col">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {showBanks()}
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">BANK NAME</th>
+                                <th scope="col">ADDRESS</th>
+                                <th scope="col">CONTACT NO</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {showBanks()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </AdminBankContainer>
     )

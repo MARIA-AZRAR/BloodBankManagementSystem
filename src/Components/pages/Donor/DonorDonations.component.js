@@ -45,9 +45,9 @@ function DonorDonations() {
     return (
 
       <DonorDonationsContainer>
-        <div class="box">
-          <div class="loader">
-            <span class="back">
+        <div className="box">
+          <div className="loader">
+            <span className="back">
               <span>L</span>
               <span>O</span>
               <span>A</span>
@@ -64,35 +64,36 @@ function DonorDonations() {
   }
   return (
     <DonorDonationsContainer>
-      <div class="body">
+      <div className="body">
         <h1>Your Donations</h1>
 
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">BANK</th>
-              <th scope="col">DATE</th>
-              <th scope="col">QUANTITY</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.banks.map((result, index) => {
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead className="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">BANK</th>
+                <th scope="col">DATE</th>
+                <th scope="col">QUANTITY</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.banks.map((result, index) => {
 
-              return (
+                return (
 
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{bloodBank.bank}</td>
-                  <td>{(new Date(result.created_at)).toLocaleString().split(',')[0]}</td>
-                  <td>{result.quantity}</td>
-                </tr>
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{bloodBank.bank}</td>
+                    <td>{(new Date(result.created_at)).toLocaleString().split(',')[0]}</td>
+                    <td>{result.quantity}</td>
+                  </tr>
 
-              )
-            })}
-          </tbody>
-        </table>
-
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
 

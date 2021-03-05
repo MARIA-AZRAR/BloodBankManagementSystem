@@ -147,25 +147,27 @@ function AdminDonor() {
                     <button type="button" className="btn btn-rounded btn-info dbtn" onClick={Donor}>Donor</button>
                     <button type="button" className="btn btn-rounded btn-info dbtn" onClick={Recipient}>Recipients</button>
                 </div>
-                <table class="table table-striped">
-                    <thead class="thead">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">DONOR NAME</th>
-                            <th scope="col">AGE</th>
-                            <th scope="col">BLOOD GROUP</th>
-                            <th scope="col">ADDRESS</th>
-                            <th scope="col">CONTACT NO</th>
-                            <th scope="col">EMAIL</th>
-                            <th scope="col">BLOOD BANK</th>
-                            <th scope="col">STATUS</th>
-                            <th scope="col">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {showDonors()}
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">DONOR NAME</th>
+                                <th scope="col">AGE</th>
+                                <th scope="col">BLOOD GROUP</th>
+                                <th scope="col">ADDRESS</th>
+                                <th scope="col">CONTACT NO</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">BLOOD BANK</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {showDonors()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </BankContainer>
     )
@@ -251,30 +253,32 @@ function AdminRecipient() {
     return (
         <BankContainer>
             <div class="body">
-            <h1>Blood Donors</h1>
+                <h1>Blood Donors</h1>
                 <div className="btn-group">
                     <button type="button" className="btn btn-rounded btn-info dbtn" onClick={Donor}>Donor</button>
                     <button type="button" className="btn btn-rounded btn-info dbtn" onClick={Recipient}>Recipients</button>
                 </div>
-                <table class="table table-striped">
-                    <thead class="thead">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">DONOR NAME</th>
-                            <th scope="col">AGE</th>
-                            <th scope="col">BLOOD GROUP</th>
-                            <th scope="col">ADDRESS</th>
-                            <th scope="col">CONTACT NO</th>
-                            <th scope="col">EMAIL</th>
-                            <th scope="col">BLOOD BANK</th>
-                            <th scope="col">STATUS</th>
-                            <th scope="col">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {showRecipients()}
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">DONOR NAME</th>
+                                <th scope="col">AGE</th>
+                                <th scope="col">BLOOD GROUP</th>
+                                <th scope="col">ADDRESS</th>
+                                <th scope="col">CONTACT NO</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">BLOOD BANK</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {showRecipients()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </BankContainer>
     )

@@ -36,9 +36,9 @@ function SearchDonor() {
   if (isLoading) {
     return (
       <RecipientContainer>
-        <div class="box">
-          <div class="loader">
-            <span class="back">
+        <div className="box">
+          <div className="loader">
+            <span className="back">
               <span>L</span>
               <span>O</span>
               <span>A</span>
@@ -54,7 +54,7 @@ function SearchDonor() {
   }
   return (
     <RecipientContainer>
-      <div class="body">
+      <div className="body">
         <h1>Search Donors</h1>
         <div className="search-donor">
           <h5>Search Blood Group:
@@ -71,48 +71,50 @@ function SearchDonor() {
         </div>
         <br />
         <br />
-        <table class="table table-striped" id="myTable">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">DONOR NAME</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">AGE</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">ADDRESS</th>
-              <th scope="col">CONTACT</th>
-              <th scope="col">BLOOD BANK</th>
+        <div className="table-responsive">
+          <table className="table table-striped" id="myTable">
+            <thead className="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">DONOR NAME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">AGE</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">ADDRESS</th>
+                <th scope="col">CONTACT</th>
+                <th scope="col">BLOOD BANK</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            {data.donor.filter((val) => {
-              if (search === "") {
-                return val;
-              } else {
-
-                if (val.bloodGroup === search) {
+              </tr>
+            </thead>
+            <tbody>
+              {data.donor.filter((val) => {
+                if (search === "") {
                   return val;
+                } else {
+
+                  if (val.bloodGroup === search) {
+                    return val;
+                  }
                 }
-              }
-            }).map((result, index) => {
+              }).map((result, index) => {
 
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{result.name}</td>
-                  <td>{result.email}</td>
-                  <td>{result.age}</td>
-                  <td>{result.bloodGroup}</td>
-                  <td>{result.address}</td>
-                  <td>{result.contact}</td>
-                  <td>{result.bloodBank}</td>
-                </tr>
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{result.name}</td>
+                    <td>{result.email}</td>
+                    <td>{result.age}</td>
+                    <td>{result.bloodGroup}</td>
+                    <td>{result.address}</td>
+                    <td>{result.contact}</td>
+                    <td>{result.bloodBank}</td>
+                  </tr>
 
-              )
-            })}
-          </tbody>
-        </table>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </RecipientContainer>
   )

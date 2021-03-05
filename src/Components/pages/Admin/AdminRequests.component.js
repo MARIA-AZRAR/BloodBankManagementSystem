@@ -75,40 +75,41 @@ function AdminStock() {
       <div class="body">
         <h1>Blood Requests</h1>
 
+        <div className="table-responsive">
+          <table class="table table-striped">
+            <thead class="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">RECIPIENT NAME</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">DATE REQUESTED</th>
+                <th scope="col">BLOOD BANK</th>
+                <th scope="col">ADDRESS</th>
+                <th scope="col">QUANTITY</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((result, index) => {
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{result.name}</td>
+                    <td>{result.bloodGroup}</td>
+                    <td>{(new Date(result.dateDonated).toLocaleString().split(',')[0])}</td>
+                    <td>{result.bloodBank}</td>
+                    <td>{result.address}</td>
+                    <td>{result.quantity}</td>
+                    <td>{result.status}</td>
+                    <td><button type="button" class="btn btn-danger" onClick={() => deleteRequest(result.id)}>Delete</button></td>
+                  </tr>
 
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">RECIPIENT NAME</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">DATE REQUESTED</th>
-              <th scope="col">BLOOD BANK</th>
-              <th scope="col">ADDRESS</th>
-              <th scope="col">QUANTITY</th>
-              <th scope="col">STATUS</th>
-              <th scope="col">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((result, index) => {
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{result.name}</td>
-                  <td>{result.bloodGroup}</td>
-                  <td>{(new Date(result.dateDonated).toLocaleString().split(',')[0])}</td>
-                  <td>{result.bloodBank}</td>
-                  <td>{result.address}</td>
-                  <td>{result.quantity}</td>
-                  <td>{result.status}</td>
-                  <td><button type="button" class="btn btn-danger" onClick={() => deleteRequest(result.id)}>Delete</button></td>
-                </tr>
-
-              )
-            })}
-          </tbody>
-        </table>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </AdminContainer>
   )

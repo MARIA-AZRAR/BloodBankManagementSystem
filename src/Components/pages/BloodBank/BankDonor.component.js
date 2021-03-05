@@ -11,13 +11,13 @@ function RenderButtons(props) {
   if (props.status === 'Active') {
     return (
       <td>
-        <button type="button" class="btn btn-primary" onClick = {props.updateD}>Update</button>
+        <button type="button" class="btn btn-primary" onClick={props.updateD}>Update</button>
         <br />
-        <button type="button" class="btn btn-danger" onClick= {props.deleteD}>Delete</button>
+        <button type="button" class="btn btn-danger" onClick={props.deleteD}>Delete</button>
       </td>
     )
   }
-  
+
   return (
     <td>
     </td>
@@ -36,13 +36,13 @@ function DonorRow(props) {
       'Deleted',
       'Awww! Sad to See You Go.',
       'success'
-  ) 
+    )
     props.update();
   }
 
   const updateDonor = (e) => {
     e.preventDefault();
-    history.push('/BloodBank/ProfileEdit/'+props.donor_id);
+    history.push('/BloodBank/ProfileEdit/' + props.donor_id);
   }
 
   return (
@@ -55,7 +55,7 @@ function DonorRow(props) {
       <td>{props.donor.contact}</td>
       <td>{props.donor.email}</td>
       <td>{props.donor.status}</td>
-      <RenderButtons status = {props.donor.status} deleteD = {deleteDonor} updateD ={updateDonor} />
+      <RenderButtons status={props.donor.status} deleteD={deleteDonor} updateD={updateDonor} />
     </tr>
   )
 }
@@ -99,9 +99,9 @@ function BankDonor() {
 
   const showDonors = () => {
     return (
-      data.map((currentDonor , index) => {
+      data.map((currentDonor, index) => {
         //this is returning single donor row
-        return <DonorRow donor={currentDonor} donor_id={currentDonor._id} index = {index + 1} update={updateState} />
+        return <DonorRow donor={currentDonor} donor_id={currentDonor._id} index={index + 1} update={updateState} />
       })
     )
   }
@@ -110,9 +110,9 @@ function BankDonor() {
   if (isLoading) {
     return (
       <BankContainer>
-        <div class="box">
-          <div class="loader">
-            <span class="back">
+        <div className="box">
+          <div className="loader">
+            <span className="back">
               <span>L</span>
               <span>O</span>
               <span>A</span>
@@ -132,24 +132,26 @@ function BankDonor() {
     <BankContainer>
       <div class="body">
         <h1>Blood Donors</h1>
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">DONOR NAME</th>
-              <th scope="col">AGE</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">ADDRESS</th>
-              <th scope="col">CONTACT NO</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">STATUS</th>
-              <th scope="col">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {showDonors()}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead className="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">DONOR NAME</th>
+                <th scope="col">AGE</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">ADDRESS</th>
+                <th scope="col">CONTACT NO</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {showDonors()}
+            </tbody>
+          </table>
+        </div>
       </div>
     </BankContainer>
   )

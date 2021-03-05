@@ -11,13 +11,13 @@ function RenderButtons(props) {
   if (props.status === 'Active') {
     return (
       <td>
-        <button type="button" class="btn btn-primary" onClick = {props.updateD}>Update</button>
+        <button type="button" class="btn btn-primary" onClick={props.updateD}>Update</button>
         <br />
-        <button type="button" class="btn btn-danger" onClick= {props.deleteD}>Delete</button>
+        <button type="button" class="btn btn-danger" onClick={props.deleteD}>Delete</button>
       </td>
     )
   }
-  
+
   return (
     <td>
     </td>
@@ -36,13 +36,13 @@ function RecipientRow(props) {
       'Deleted',
       'Awww! Sad to See You Go.',
       'success'
-  ) 
+    )
     props.update();
   }
 
   const updateRecipient = (e) => {
     e.preventDefault();
-    history.push('/BloodBank/ProfileEdit/'+props.recipient_id);
+    history.push('/BloodBank/ProfileEdit/' + props.recipient_id);
   }
 
   return (
@@ -55,7 +55,7 @@ function RecipientRow(props) {
       <td>{props.recipient.contact}</td>
       <td>{props.recipient.email}</td>
       <td>{props.recipient.status}</td>
-      <RenderButtons status = {props.recipient.status} deleteD = {deleteRecipient} updateD ={updateRecipient} />
+      <RenderButtons status={props.recipient.status} deleteD={deleteRecipient} updateD={updateRecipient} />
     </tr>
   )
 }
@@ -99,9 +99,9 @@ function BankReciever() {
 
   const showRecipients = () => {
     return (
-      data.map((currentRecipient , index) => {
+      data.map((currentRecipient, index) => {
         //this is returning single donor row
-        return <RecipientRow recipient={currentRecipient} recipient_id={currentRecipient._id} index = {index + 1} update={updateState} />
+        return <RecipientRow recipient={currentRecipient} recipient_id={currentRecipient._id} index={index + 1} update={updateState} />
       })
     )
   }
@@ -132,24 +132,26 @@ function BankReciever() {
     <BankContainer>
       <div class="body">
         <h1>Blood Recipients</h1>
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Recipient NAME</th>
-              <th scope="col">AGE</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">ADDRESS</th>
-              <th scope="col">CONTACT NO</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">STATUS</th>
-              <th scope="col">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {showRecipients()}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table class="table table-striped">
+            <thead class="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Recipient NAME</th>
+                <th scope="col">AGE</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">ADDRESS</th>
+                <th scope="col">CONTACT NO</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {showRecipients()}
+            </tbody>
+          </table>
+        </div>
       </div>
     </BankContainer>
   )

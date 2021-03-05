@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
@@ -10,29 +10,25 @@ export default function BankStock() {
   const { userLoginData } = useContext(UserContext)
   const history = useHistory();
   const [isLoading, setLoading] = useState(true);
-  const [data,setData]=useState([]);
-  const [search,setSearch]=useState('');
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState('');
 
-  function countQuantity(){
-    var c=0;
-    for(var i=0;i<data.bank.length;i++)
-    {
-        c=c+data.bank[i].quantity;
+  function countQuantity() {
+    var c = 0;
+    for (var i = 0; i < data.bank.length; i++) {
+      c = c + data.bank[i].quantity;
     }
-   return c;
+    return c;
   }
-  function countAll()
-  {
-    var c=0;
-    for(var i=0;i<data.bank.length;i++)
-    {  if(search=='')
-    {
-    c=0;
+  function countAll() {
+    var c = 0;
+    for (var i = 0; i < data.bank.length; i++) {
+      if (search == '') {
+        c = 0;
+      }
+      if (data.bank[i].bloodGroup == search) { c = c + data.bank[i].quantity; }
     }
-       if(data.bank[i].bloodGroup==search)
-        {c=c+data.bank[i].quantity;}
-    }
-   return c;
+    return c;
   }
   useEffect(() => {
     if (!userLoginData.userData)
@@ -40,8 +36,8 @@ export default function BankStock() {
     try {
       if (userLoginData.userData.type !== "BloodBank")  //to prevent accessing any other type
         history.push(`/${userLoginData.userData.type}`)
-      
-        Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
+
+      Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -56,66 +52,67 @@ export default function BankStock() {
   }, [userLoginData])
 
   if (isLoading) {
-        return (
-            <BankContainer>
-                <div class="box">
-                    <div class="loader">
-                        <span class="back">
-                            <span>L</span>
-                            <span>O</span>
-                            <span>A</span>
-                            <span>D</span>
-                            <span>I</span>
-                            <span>N</span>
-                            <span>G</span>
-                        </span>
-                    </div>
-                </div>
-            </BankContainer>
+    return (
+      <BankContainer>
+        <div class="box">
+          <div class="loader">
+            <span class="back">
+              <span>L</span>
+              <span>O</span>
+              <span>A</span>
+              <span>D</span>
+              <span>I</span>
+              <span>N</span>
+              <span>G</span>
+            </span>
+          </div>
+        </div>
+      </BankContainer>
 
-        )
-    }
+    )
+  }
   return (
     <BankContainer>
       <div class="body">
         <h1>Blood Stock</h1>
 
+        <div className="table-responsive">
+          <table class="table table-striped">
+            <thead class="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">DATE DONATED</th>
+                <th scope="col">QUANTITY</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.bank.map((result, index) => {
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{result.bloodGroup}</td>
+                    <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
+                    <td>{result.quantity}</td>
+                  </tr>
 
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">DATE DONATED</th>
-              <th scope="col">QUANTITY</th>
-            </tr>
-          </thead>
-          <tbody>
-          {data.bank.map((result, index) => {
-          return (
-          <tr>
-           <td>{index + 1}</td>
-          <td>{result.bloodGroup}</td>
-          <td>{(new Date(result.created_at).toLocaleString().split(',')[0])}</td>
-          <td>{result.quantity}</td>
-         </tr>
-
-)
-})}
-          </tbody>
-        </table>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
         <h6>Total Quantity:  <input type="text" id="myText" value={countQuantity()} /></h6>
         <h2>Blood Quantity</h2>
         <div className="Bottom">
           <h5>Select Blood Group:</h5>
           <select id="blood" className="selectB" name="bloodGroup" onChange={(event) => { setSearch(event.target.value) }}>
-              <option> </option>
-              {bloodGroups.map(item => {
-                return (
-                  <option value={item}>{item}</option>
-                )
-              })}
-            </select>
+            <option> </option>
+            {bloodGroups.map(item => {
+              return (
+                <option value={item}>{item}</option>
+              )
+            })}
+          </select>
           <br />
           <input type="text"
             id="myText"

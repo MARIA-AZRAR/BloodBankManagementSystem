@@ -143,24 +143,26 @@ function BankRequests() {
         {error && (
           <ErrorNotice message={error} clearError={() => setError(undefined)} />
         )}
-        <table class="table table-striped">
-          <thead class="thead">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">RECIPIENT NAME</th>
-              <th scope="col">AGE</th>
-              <th scope="col">BLOOD GROUP</th>
-              <th scope="col">ADDRESS</th>
-              <th scope="col">CONTACT NO</th>
-              <th scope="col">QUANTITY</th>
-              <th scope="col">STATUS</th>
-              <th scope="col">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {showRequests()}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table class="table table-striped">
+            <thead class="thead">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">RECIPIENT NAME</th>
+                <th scope="col">AGE</th>
+                <th scope="col">BLOOD GROUP</th>
+                <th scope="col">ADDRESS</th>
+                <th scope="col">CONTACT NO</th>
+                <th scope="col">QUANTITY</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {showRequests()}
+            </tbody>
+          </table>
+        </div>
       </div>
     </BankContainer>
   )
