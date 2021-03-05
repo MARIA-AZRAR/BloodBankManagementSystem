@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext';
 import Axios from 'axios';
+import AlertNotice from '../../misc/AlertNotice';
 
 function BankHome() {
 
@@ -43,12 +44,6 @@ function BankHome() {
     }
     catch {
       history.push('/')
-      //get data
-      //     const getData = async () => {
-      //     const requestResponse = await 
-      //   }
-      //   getData();
-      // }
     }
   }, [userLoginData])
 
@@ -57,7 +52,7 @@ function BankHome() {
     return (
       alert.map((item) => {
         return (
-          <p class="alerts" >No Stock of {item} is present</p>
+          <AlertNotice alert = {item} />
         )
       })
     )

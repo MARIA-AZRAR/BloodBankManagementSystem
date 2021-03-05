@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components';
 import UserContext from '../../../context/userDetailContext'
 import Axios from 'axios';
+import AlertNotice from '../../misc/AlertNotice';
 
 
 function AdminAlert() {
@@ -55,12 +56,11 @@ function AdminAlert() {
     }
   }, [userLoginData])
 
-
   const alerts = () => {
     return (
       alert.map((item) => {
         return (
-          <p class="alerts">No Stock of {item} is present</p>
+          <AlertNotice alert = {item} />
         )
       })
     )
