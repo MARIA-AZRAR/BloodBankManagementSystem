@@ -172,10 +172,7 @@ function BankProfile() {
                                          onChange={(e) => setPassword(e.target.value)}   />
                                     </div>
                                     <div className="form-group">
-                                        <input type="submit" value="Unregister" className="btn float-right unregister_btn" onClick={unregister} />
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="submit" value="Update" className="btn float-right update_btn" onClick={update}  />
+                                        <input type="submit" value="Update" className="btn float-right update_btn" onClick={update} />
                                     </div>
                                 </form>
                             </div>
@@ -243,18 +240,6 @@ margin: 0 40px;
 }
 
 .update_btn:hover{
-color: black;
-background-color: white;
-}
-
-.unregister_btn{
-    color: white;
-    background-color: #e02525;
-    width: 100px;
-    margin: 0 40px;
-}
-    
-.unregister_btn:hover{
 color: black;
 background-color: white;
 }
