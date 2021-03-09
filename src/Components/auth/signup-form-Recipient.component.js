@@ -68,79 +68,98 @@ function ChildSignupRecipient(props) {
 
     return (
         <SignupContainer>
-            <div>
-                <div className="container container-fluid">
-                    <div className="d-flex justify-content-center h-100">
-                        <div class="card signupCard">
-                            <div className="card-header">
-                                <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
-                                    <button type="button" className="btn btn-rounded btn-info" onClick={BloodBank}>BloodBank</button>
-                                    <button type="button" className="btn btn-rounded btn-info"onClick={Donor}>Donor</button>
-                                    <button type="button" className="btn btn-rounded btn-info"onClick={Recipient}>Reciever</button>
+             <div>
+                <div className="container">
+                    <div className="myCard">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="myLeftCtn">
+                                    <div class="btn-group ButtonGroup nav nav-tabs card-header-tabs" role="group" aria-label="Basic example">
+                                        <button type="button" className="btn btn-rounded bt" onClick={BloodBank}>BloodBank</button>
+                                        <button type="button" className="btn btn-rounded bt" onClick={Donor}>Donor</button>
+                                        <button type="button" className="btn btn-rounded bt" onClick={Recipient}>Reciever</button>
+                                    </div>
+
+                                    <form className="myForm text-center">
+                                        <header>Registeration</header>
+                                        {error && (
+                                            <ErrorNotice message={error} clearError={() => setError(undefined)} />
+                                        )}
+                                        <div className="form-group">
+                                            <i class="fas fa-id-badge icon"></i>
+                                            <input type="text" className="myInput"
+                                                placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                                        </div>
+                                        <div className="form-group">
+                                            <i class="fas fa-map-pin icon"></i>
+                                            <input type="text" className="myInput"
+                                                placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
+                                        </div>
+                                        <div className="form-group">
+                                            <i class="fas fa-file-alt icon"></i>
+                                            <input type="text" className="myInput"
+                                                placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+                                        </div>
+                                        <div className="form-group">
+                                        <i class="fas fa-tint icon"></i>                                         
+                                        <select className="myInput" onChange={(e) => setBloodGroup(e.target.value)}>
+                                                <option selected disabled hidden>Choose Here</option>
+                                                {bloodGroups.map(item => {
+
+                                                    return (
+
+                                                        <option value={item}> {item}  </option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </div>
+                                        <div className="form-group">
+                                        <i class="fas fa-university icon"></i>
+                                            <select className="myInput" onChange={(e) => setBloodBank(e.target.value)}>
+                                                <option selected disabled hidden>Choose Here</option>
+                                                {props.banksList.map(item => {
+                                                    return (
+                                                        <option value={item}> {item} </option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </div>
+                                        <div className="form-group">
+                                            <i class="fas fa-address-card icon"></i>
+                                            <input type="text" className="myInput"
+                                                placeholder="Contact No" onChange={(e) => setContact(e.target.value)} />
+                                        </div>
+                                        <div className="form-group">
+                                            <i className="fas fa-user icon"></i>
+                                            <input type="text" className="myInput" placeholder="Username" id="username" onChange={(e) => { setUserName(e.target.value) }} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <i class="fas fa-envelope icon"></i>
+                                            <input type="email" className="myInput"
+                                                placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                                        </div>
+                                        <div className="form-group">
+                                            <i className="fas fa-lock icon"></i>
+                                            <input type="password" className="myInput" placeholder="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <i className="fas fa-lock icon"></i>
+                                            <input type="password" className="myInput"
+                                                placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="submit" value="Sign Up" className="butt" onClick={submit} />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div className="card-body">
-                                <h3>Registeration</h3>
-                                {error && (
-                                    <ErrorNotice message={error} clearError={() => setError(undefined)} />
-                                )}
-                                <form>
-                                    <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                            <div class="col-md-6">
+                                <div class="myRightCtn">
+                                    <div class="box">
+                                        <h3>“There is no exercise better for the heart than reaching down and lifting people up.” </h3>
+                                        <p class="name">-John Holmes</p>
                                     </div>
-                                    <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Age" onChange={(e) => setAge(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <select className="form-control" onChange={(e) => setBloodGroup(e.target.value)}>
-                                             <option selected disabled hidden>Choose Here</option>
-                                            {bloodGroups.map(item => {
-                                                return (
-                                                    <option value={item}> {item} </option>
-                                                )
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <select className="form-control" onChange={(e) => setBloodBank(e.target.value)}>
-                                             <option selected disabled hidden>Choose Here</option>
-                                            {props.banksList.map(item => {
-                                                return (
-                                                    <option value={item}> {item} </option>
-                                                )
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Contact No" onChange={(e) => setContact(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <input type="text" className="form-control"
-                                            placeholder="Username" onChange={(e) => setUserName(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <input type="email" className="form-control"
-                                            placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <input type="password" className="form-control"
-                                            placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                                    </div>
-                                    <div className="input-group form-group">
-                                        <input type="password" className="form-control"
-                                            placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="submit" value="Sign up" className="btn float-right login_btn" onClick={submit} />
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -177,45 +196,111 @@ const SignupContainer = styled.div`
 
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-html,body{
-height: 100%;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:160vh;  
+    max-width: 940px;
 }
 
-label {
-padding-right: 20px;
-}
-.container{
-height: 100%;
-align-content: center;
-padding-top: 150px;
-font-family: 'Righteous', cursive;
+.myRightCtn {
+    position: relative;
+    background-image: linear-gradient(45deg, #cb2d3e, #ef473a);
+    border-radius: 25px;
+    height: 100%;
+    padding: 25px;
+    color: rgb(255, 249, 249);
+    font-size: 12px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+  
+  .myLeftCtn {
+    position: relative;
+    background: rgb(247, 236, 236);
+    border-radius: 25px;
+    height: 100%;
+    padding: 25px;
+    padding-left: 50px;
+  }
+  
+  
+  .myLeftCtn header {
+    color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .row{
+    height: 100%;
+} 
+
+.myCard {
+    
+    background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+} 
+
+.box {
+position: relative;
+margin: 20px;
+]  } 
+
+.box .name {
+  text-align: right;
+  font-style: italic;
 }
 
-.signupCard{
-height: 765px;
-align-content: center;
-margin: auto;
-width: 500px;
-background-color: rgba(15, 74, 92, 0.473) ;
-}
+.myLeftCtn .myInput {
+    width: 270px;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 50px;
+    border: none;
+    -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+  }
+  .myLeftCtn .myInput:focus {
+    outline: none;
+  } 
+  .myForm {
+    position: relative;
+    margin-top: 50px;
+  } 
+  .myLeftCtn .butt {
+    background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    color: #fff;
+    width: 100px;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+  } 
+  .myLeftCtn .butt:hover {
+    background: linear-gradient(45deg, #ef473a, #ef473a);
+  }
+  .myLeftCtn .butt:focus {
+    outline: none;
+  } 
 
-.card-header {
-background-color: white;
-}
-.card-body h3{
-color: white;
-}
-
-
-.login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
-}
-
-.login_btn:hover{
-color: black;
-background-color: white;
+  .myLeftCtn .icon {
+    position: relative;
+    color: #ef473a;
+    left: 36px;
+  } 
+ 
+.Signup {
+    margin-top: 12px;
 }
 
 .ButtonGroup {
@@ -223,8 +308,15 @@ background-color: white;
     justify-content: center;
 }
 
+.ButtonGroup .bt{
+    background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    color: #fff;
+    border: none;
+}
 
+.ButtonGroup .bt:hover {
+    background: linear-gradient(45deg, #ef473a, #ef473a);
 
-
+}
 
 `

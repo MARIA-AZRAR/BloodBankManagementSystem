@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-
+import logo from '../../img/logosd.png';
 //<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"></link>
 
 class Footer extends Component {
@@ -11,6 +11,7 @@ class Footer extends Component {
           <div className="container-fluid padding">
             <div className="row text-center">
               <div className="col-md-4">
+                <img src={logo}/>
                 <hr className="light" />
                 <h5>About</h5>
                 <hr className="light" />
