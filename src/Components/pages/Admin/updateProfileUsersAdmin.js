@@ -87,7 +87,7 @@ function UpdateUsersProfileAdmin(props) {
     return (
         <RecipientProfileContainer>
             <div>
-                <h1 className="heading">Update Profile:</h1>
+                <h1 className="heading">Update Profile</h1>
                 <div className="container container-fluid">
                     <div className="d-flex justify-content-center h-100">
                         <div class="card signupCard">

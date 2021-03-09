@@ -83,6 +83,7 @@ function BankHome() {
       <div class="body">
         <h1>Alerts</h1>
         {alerts()}
+         <h1>Expired Bags</h1>
         <table class="table table-striped">
           <thead class="thead">
             <tr>

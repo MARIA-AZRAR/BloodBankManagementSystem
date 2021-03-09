@@ -57,7 +57,7 @@ function SearchDonor() {
       <div className="body">
         <h1>Search Donors</h1>
         <div className="search-donor">
-          <h5>Search Blood Group:
+          <h5>Search Blood Group
             <select id="blood" className="selectB" name="bloodGroup" onChange={(event) => { setSearch(event.target.value) }} >
               <option></option>
               {bloodGroups.map(item => {
@@ -123,13 +123,20 @@ function SearchDonor() {
 export default SearchDonor;
 
 const RecipientContainer = styled.div`
+
+.table{
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
 .thead{
-    background-color:Black;
+    background-color:black;
     color:white;
     font-weight:bold;
     font-size:15px;
     width:50%;
 }
+
 .table table-striped{
     width:50%;
 }
@@ -143,6 +150,9 @@ const RecipientContainer = styled.div`
   padding-left:50%; 
 }
 
+tbody tr:last-of-type{
+  border-bottom:2px solid black;
+}
 
 #blood{
     space-between:evenly;
@@ -164,7 +174,6 @@ input{
     text-align:center;
     width:40%;
 }
-
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 

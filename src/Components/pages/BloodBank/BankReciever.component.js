@@ -160,6 +160,11 @@ function BankReciever() {
 export default BankReciever;
 
 const BankContainer = styled.div`
+.table{
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
 .thead{
     background-color:Black;
     color:white;
@@ -174,6 +179,9 @@ const BankContainer = styled.div`
     padding-left:20%;
     padding-right:10%;
     padding-top:3%;
+}
+tbody tr:last-of-type{
+  border-bottom:2px solid black;
 }
 
 .btn,

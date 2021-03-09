@@ -12,7 +12,7 @@ export const NavbarDataA = [
     {
         title: 'Home',
         path: '/Admin',
-        icon: <FaIcons.FaEnvelopeOpenText />,
+        icon: <FaIcons.FaHome />,
         cName: 'nav-text'
     },
     {

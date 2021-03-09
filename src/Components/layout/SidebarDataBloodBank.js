@@ -9,7 +9,7 @@ export const NavbarDataB = [
     {
         title: 'Home',
         path: '/BloodBank',
-        icon: <FaIcons.FaEnvelopeOpenText />,
+         icon: <FaIcons.FaHome />,
         cName: 'nav-text'
     },
     {
