@@ -101,23 +101,29 @@ export default function BankStock() {
             </tbody>
           </table>
         </div>
-        <h6>Total Quantity:  <input type="text" id="myText" value={countQuantity()} /></h6>
-        <h2>Blood Quantity</h2>
-        <div className="Bottom">
-          <h5>Select Blood Group:</h5>
-          <select id="blood" className="selectB" name="bloodGroup" onChange={(event) => { setSearch(event.target.value) }}>
-            <option> </option>
+        <div className="bottomHeader">
+        <span class="label danger">Check Blood Quantity</span>
+        </div>
+        <div className="flex-container">
+       
+          <select className="browser-default custom-select" onChange={(event) => { setSearch(event.target.value) }}>
+            <option>Select Blood Group </option>
             {bloodGroups.map(item => {
               return (
                 <option value={item}>{item}</option>
               )
             })}
+              
+          
           </select>
-          <br />
+          <div className="bCount">
           <input type="text"
             id="myText"
-            value={countAll()} />
-        </div>
+            value={countAll()} /></div>
+            <div className="totalQuantity">
+        <span class="label info">Total Blood Quantity</span> <input type="text"  value={countQuantity()} />
+        </div> 
+            </div>
       </div>
     </BankContainer>
   )
@@ -125,10 +131,55 @@ export default function BankStock() {
 
 const BankContainer = styled.div`
 
-.table{
-  border-radius: 5px 5px 0 0;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+.flex-container {
+  display: flex;
+ 
+}
+
+select{
+  width:27%;
+  height:20%;
+  border-color: #8886BB;
+  border-width:0.2em
+}
+input{
+  
+  text-align:center;
+  width:30%;
+  height:100%;
+  border: 3px solid #441423;
+  border-radius: 4px;
+}
+.bCount{
+  padding-left:1%;
+ 
+}
+.spinnerl{
+  padding-top:150px;
+  padding-bottom:150px; 
+}
+}
+.totalQuantity{
+  padding-left:30%;
+  
+}
+
+.label {
+  color: white;
+  padding: 8px;
+}
+.info {background-color: #450A38;}
+.danger{
+  color: #473633;
+  font-weight:bolder;
+  font-size:25px;
+  font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
+  text-shadow: 1px 1px #FF0000
+  
+}
+.bottomHeader{
+  padding-bottom:1%;
+
 }
 .spinnerl{
   padding-top:150px;
@@ -150,25 +201,7 @@ const BankContainer = styled.div`
     padding-top:3%;
 }
 
-tbody tr:last-of-type{
-  border-bottom:2px solid black;
-}
 
-.Bottom{
-  padding-left:70%;  
-}
-h2{
-    color:#6B1A08;
-    padding-left:65%;
-    font-weight:bold;
-}
-h6{
-    padding-left:60%;   
-}
-input{
-    text-align:center;
-    width:40%;
-}
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 

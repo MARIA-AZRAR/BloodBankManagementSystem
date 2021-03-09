@@ -56,21 +56,21 @@ function SearchDonor() {
     <RecipientContainer>
       <div className="body">
         <h1>Search Donors</h1>
-        <div className="search-donor">
-          <h5>Search Blood Group
-            <select id="blood" className="selectB" name="bloodGroup" onChange={(event) => { setSearch(event.target.value) }} >
-              <option></option>
-              {bloodGroups.map(item => {
-                return (
-                  <option value={item}>{item}</option>
-                )
-              })}
-            </select>
-          </h5>
-          <p id="demo"></p>
-        </div>
-        <br />
-        <br />
+       
+        <div className="flex-container">
+       
+          <select className="browser-default custom-select" onChange={(event) => { setSearch(event.target.value) }}>
+            <option>Select Blood Group </option>
+            {bloodGroups.map(item => {
+              return (
+                <option value={item}>{item}</option>
+              )
+            })}
+              
+          
+          </select>
+            </div>
+        
         <div className="table-responsive">
           <table className="table table-striped" id="myTable">
             <thead className="thead">
@@ -88,7 +88,7 @@ function SearchDonor() {
             </thead>
             <tbody>
               {data.donor.filter((val) => {
-                if (search === "") {
+                if (search === "Select Blood Group") {
                   return val;
                 } else {
 
@@ -124,19 +124,31 @@ export default SearchDonor;
 
 const RecipientContainer = styled.div`
 
-.table{
-  border-radius: 5px 5px 0 0;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+.flex-container {
+  padding-left:75%;
+  padding-bottom:20px
 }
+
+select{
+  width:90%;
+  height:20%;
+  border-color: #151883;
+  border-width:0.2em
+}
+
+.spinnerl{
+  padding-top:150px;
+  padding-bottom:150px; 
+}
+
 .thead{
-    background-color:black;
+    background-color:Black;
     color:white;
-    font-weight:bold;
+    font-weight:bol
+    d;
     font-size:15px;
     width:50%;
 }
-
 .table table-striped{
     width:50%;
 }
@@ -146,34 +158,15 @@ const RecipientContainer = styled.div`
     padding-top:3%;
 }
 
-.search-donor{
-  padding-left:50%; 
-}
 
-tbody tr:last-of-type{
-  border-bottom:2px solid black;
-}
 
 #blood{
     space-between:evenly;
 }
-h2{
-    color:#6B1A08;
-    padding-left:65%;
-    font-weight:bold;
-}
 
-h5{
-  padding-right: 5rem;
-}
 
-h6{
-    padding-left:60%;   
-}
-input{
-    text-align:center;
-    width:40%;
-}
+
+
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
