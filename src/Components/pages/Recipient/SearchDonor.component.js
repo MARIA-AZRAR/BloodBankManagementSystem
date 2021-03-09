@@ -10,7 +10,7 @@ function SearchDonor() {
   const [isLoading, setLoading] = useState(true);
   const history = useHistory();
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('Select Blood Group');
   useEffect(() => {
     if (!userLoginData.userData)
       history.push('/')
