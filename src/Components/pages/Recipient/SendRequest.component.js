@@ -61,6 +61,7 @@ export default function RecipientSendRequest() {
                 <div className="container container-fluid">
                     <div className="d-flex justify-content-center h-100">
                         <div class="card signupCard">
+                            
 
                             <div className="card-body">
                                 <h3>Request For Blood</h3>
@@ -69,7 +70,7 @@ export default function RecipientSendRequest() {
                                 )}
                                 <form>
                                     <div className="input-group form-group">
-                                        <label for="bloodBankName" >Blood Group: </label>
+                                        <label for="bloodBankName" >Blood Group </label>
                                         <select id="blood" name="bloodGroup" onChange={(e) => { setBloodGroup(e.target.value) }}>
                                             {bloodGroups.map(item => {
                                                 return (
@@ -79,15 +80,15 @@ export default function RecipientSendRequest() {
                                         </select>
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankAddress" >Due Date: </label>
+                                        <label for="BloodBankAddress" >Due Date </label>
                                         <input id="BloodBankAddress" type="date" className="form-control" onChange={(e) => { setDate(e.target.value) }} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankContact" >Address: </label>
+                                        <label for="BloodBankContact" >Address </label>
                                         <input id="BloodBankContact" type="text" className="form-control" onChange={(e) => { setAddress(e.target.value) }} />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankUsername" >Quantity: </label>
+                                        <label for="BloodBankUsername" >Quantity </label>
                                         <input id="BloodBankUsername" type="text" className="form-control" onChange={(e) => { setQuantity(e.target.value) }} />
                                     </div>
 
@@ -112,50 +113,114 @@ html,body{
 height: 100%;
 }
 
+.spinnerl{
+    padding-top:150px;
+    padding-bottom:150px;
+    
+}
+
 label {
 padding-right: 20px;
 }
-
 .container{
+    
 height: 100%;
-align-content: center;
-padding-top: 40px;
-font-family: 'Righteous', cursive;
+// align-content: center;
+padding-top: 50px;
+// font-family: 'Righteous', cursive;
+// justify-content: center;
+    align-items: center;
+    // height:160vh;  
+    max-width: 900px;
 }
 
+.myLeftCtn {
+    position: relative;
+    background: rgb(247, 236, 236);
+    border-radius: 25px;
+    height: 100%;
+    padding: 35px;
+    padding-left: 50px;
+  }
+  .myLeftCtn header {
+    color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+.card-body {
+    
+    background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+} 
 .signupCard{
-height: 370px;
+height: 400px;
 align-content: center;
 margin: auto;
 width: 500px;
-background-color: rgba(15, 74, 92, 0.473) ;
+background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
 }
 
+.myLeftCtn .myInput {
+    width: 230px;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 50px;
+    border: none;
+    -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+  }
+  .myLeftCtn .myInput:focus {
+    outline: none;
+  } 
+.card-header {
+background-color: white;
+}
 .card-body h3{
-color: white;
+color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align:center;
 }
-
+ .myForm {
+    position: relative;
+    margin-top: 50px;
+  } 
 #blood{
     width:75%;
     border:none;
 }
 
-
-.login_btn{
-color: black;
-background-color: #FFC312;
+.btn{
 width: 100px;
+margin: 0px 40px;
+background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    color: #fff;
+    border: none;
 }
 
-.login_btn:hover{
-color: black;
-background-color: white;
+.btn:hover{
+background: linear-gradient(45deg, #ef473a, #ef473a);
 }
+
 
 .ButtonGroup {
     margin: auto;
     justify-content: center;
 }
-
+.heading{
+    padding-top:5%;
+    padding-left:30%
+}
 
 `

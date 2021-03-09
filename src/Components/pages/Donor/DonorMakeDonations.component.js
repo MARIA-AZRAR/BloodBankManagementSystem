@@ -55,13 +55,13 @@ export default function DonorMakeDonations() {
                                 )}
                                 <form>
                                     <div className="input-group form-group">
-                                        <label className="col-sm-4" for="bloodQuantity" >Blood Group: </label>
+                                        <label className="col-sm-4" for="bloodQuantity" >Blood Group</label>
                                         {userLoginData.userData ? 
                                          <p>{userLoginData.userData.bloodGroup}</p> : <p></p>
                                         }   
                                     </div>
                                     <div className="input-group form-group">
-                                        <label className="col-sm-4" for="bloodQuantity" >Quantity: </label>
+                                        <label className="col-sm-4" for="bloodQuantity" >Quantity </label>
                                         <input id="BloodQuantity" type="text" className="form-control"  onChange={(e) => setQuantity(e.target.value)}/>
                                     </div>
                                     <div className="form-group">
@@ -86,45 +86,106 @@ html,body{
 height: 100%;
 }
 
+.spinnerl{
+    padding-top:150px;
+    padding-bottom:150px;
+    
+}
+
 label {
 padding-right: 20px;
 }
-
 .container{
+    
 height: 100%;
-align-content: center;
-padding-top: 40px;
-font-family: 'Righteous', cursive;
+// align-content: center;
+padding-top: 50px;
+// font-family: 'Righteous', cursive;
+// justify-content: center;
+    align-items: center;
+    // height:160vh;  
+    max-width: 900px;
 }
 
+.myLeftCtn {
+    position: relative;
+    background: rgb(247, 236, 236);
+    border-radius: 25px;
+    height: 100%;
+    padding: 35px;
+    padding-left: 50px;
+  }
+  .myLeftCtn header {
+    color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+.card-body {
+    
+    background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+} 
 .signupCard{
-height: 300px;
+height: 340px;
 align-content: center;
 margin: auto;
 width: 500px;
-background-color: rgba(15, 74, 92, 0.473) ;
+background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
 }
 
+.myLeftCtn .myInput {
+    width: 230px;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 50px;
+    border: none;
+    -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+  }
+  .myLeftCtn .myInput:focus {
+    outline: none;
+  } 
+.card-header {
+background-color: white;
+}
 .card-body h3{
-color: white;
+color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align:center;
 }
-
+ .myForm {
+    position: relative;
+    margin-top: 50px;
+  } 
 #blood{
     width:75%;
     border:none;
 }
 
-
-.login_btn{
-color: black;
-background-color: #FFC312;
+.btn{
 width: 100px;
+margin: 25px 50px;
+background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    color: #fff;
+    border: none;
 }
 
-.login_btn:hover{
-color: black;
-background-color: white;
+.btn:hover{
+background: linear-gradient(45deg, #ef473a, #ef473a);
 }
+
 
 .ButtonGroup {
     margin: auto;
@@ -134,7 +195,6 @@ background-color: white;
     padding-top:5%;
     padding-left:30%
 }
-
 @media (max-width: 635px) {
     .signupCard
     {

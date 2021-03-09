@@ -136,40 +136,42 @@ function BankProfile() {
                     <div className="d-flex justify-content-center h-100">
                         <div class="card signupCard">
                             <div className="card-body">
+                                <div className="col-md-12">
+                                <div className="myLeftCtn"></div>
                                 <h3>Profile</h3>
                                 {error && (
                                     <ErrorNotice message={error} clearError={() => setError(undefined)} />
                                 )}
-                                <form>
+                                <form className="myForm text-center">
                                     <div className="input-group form-group">
-                                        <label for="bloodBankName" >Name: </label>
-                                        <input id="bloodBankName" type="text" value={name} className="form-control"
-                                          onChange={(e) => setName(e.target.value)}    />
+                                        
+                                        <input id="bloodBankName" type="text" className="myInput" value={name} className="form-control"
+                                         placeholder="Name" onChange={(e) => setName(e.target.value)}    />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankAddress" >Address: </label>
-                                        <input id="BloodBankAddress"  value={address}  type="text" className="form-control"
-                                           onChange={(e) => setAddress(e.target.value)}  />
+                         
+                                        <input id="BloodBankAddress"  value={address}  type="text" className="myInput" className="form-control"
+                                          placeholder="Address" onChange={(e) => setAddress(e.target.value)}  />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankContact" >Contact No: </label>
-                                        <input id="BloodBankContact"  value={contact}  type="text" className="form-control"
-                                          onChange={(e) => setContact(e.target.value)}   />
+                                        
+                                        <input id="BloodBankContact"  value={contact}  type="text" className="myInput" className="form-control"
+                                         placeholder="Contact" onChange={(e) => setContact(e.target.value)}   />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankUsername" >Username: </label>
-                                        <input id="BloodBankUsername"  value={username}  type="text" className="form-control"
-                                          onChange={(e) => setUserName(e.target.value)}  />
+                                        
+                                        <input id="BloodBankUsername"  value={username}  type="text" className="myInput" className="form-control"
+                                         placeholder="Username" onChange={(e) => setUserName(e.target.value)}  />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankEmail" >Email: </label>
-                                        <input id="BloodBankEmail"  value={email}  type="text" className="form-control"
-                                         onChange={(e) => setEmail(e.target.value)}    />
+                                        
+                                        <input id="BloodBankEmail"  value={email}  type="text" className="myInput" className="form-control"
+                                       placeholder="Email"  onChange={(e) => setEmail(e.target.value)}    />
                                     </div>
                                     <div className="input-group form-group">
-                                        <label for="BloodBankPassword" >Password: </label>
-                                        <input id="BloodBankPassword"  type="password" className="form-control"
-                                         onChange={(e) => setPassword(e.target.value)}   />
+                                        
+                                        <input id="BloodBankPassword"  type="password" className="myInput" className="form-control"
+                                        placeholder="Password" onChange={(e) => setPassword(e.target.value)}   />
                                     </div>
                                     <div className="form-group">
                                         <input type="submit" value="Update" className="btn float-right update_btn" onClick={update} />
@@ -180,6 +182,7 @@ function BankProfile() {
                     </div>
                 </div>
             </div>
+              </div>
         </BankProfileContainer>
     )
 
@@ -205,43 +208,95 @@ label {
 padding-right: 20px;
 }
 .container{
+    
 height: 100%;
-align-content: center;
+// align-content: center;
 padding-top: 50px;
-font-family: 'Righteous', cursive;
+// font-family: 'Righteous', cursive;
+// justify-content: center;
+    align-items: center;
+    // height:160vh;  
+    max-width: 900px;
 }
 
+.myLeftCtn {
+    position: relative;
+    background: rgb(247, 236, 236);
+    border-radius: 25px;
+    height: 100%;
+    padding: 35px;
+    padding-left: 50px;
+  }
+  .myLeftCtn header {
+    color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+.card-body {
+    
+    background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+} 
 .signupCard{
-height: 500px;
+height: 650px;
 align-content: center;
 margin: auto;
 width: 500px;
-background-color: rgba(15, 74, 92, 0.473) ;
+background: rgb(247, 236, 236);;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
 }
 
+.myLeftCtn .myInput {
+    width: 230px;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 50px;
+    border: none;
+    -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+  }
+  .myLeftCtn .myInput:focus {
+    outline: none;
+  } 
 .card-header {
 background-color: white;
 }
 .card-body h3{
-color: white;
-text-align:center;
-padding-bottom:5px;
+color: #cb2d3e;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align:center;
 }
+ .myForm {
+    position: relative;
+    margin-top: 50px;
+  } 
 #blood{
     width:75%;
     border:none;
 }
 
 .update_btn{
-color: black;
-background-color: #FFC312;
+
 width: 100px;
-margin: 0 40px;
+margin: 20px 40px;
+background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    color: #fff;
+    border: none;
 }
 
 .update_btn:hover{
-color: black;
-background-color: white;
+background: linear-gradient(45deg, #ef473a, #ef473a);
 }
 
 .ButtonGroup {
