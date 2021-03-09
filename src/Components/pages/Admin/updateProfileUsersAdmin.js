@@ -87,7 +87,6 @@ function UpdateUsersProfileAdmin(props) {
     return (
         <RecipientProfileContainer>
             <div>
-                <h1 className="heading">Update Profile</h1>
                 <div className="container container-fluid">
                     <div className="d-flex justify-content-center h-100">
                         <div class="card signupCard">
@@ -236,7 +235,7 @@ background-color: white;
 }
 .card-body h3{
 color: #cb2d3e;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 700;
     margin-bottom: 20px;
     text-align:center;

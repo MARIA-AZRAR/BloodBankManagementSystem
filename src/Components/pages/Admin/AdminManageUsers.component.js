@@ -253,7 +253,7 @@ function AdminRecipient() {
     return (
         <BankContainer>
             <div class="body">
-                <h1>Blood Donors</h1>
+                <h1>Blood Recipient</h1>
                 <div className="btn-group">
                     <button type="button" className="btn btn-rounded btn-info dbtn" onClick={Donor}>Donor</button>
                     <button type="button" className="btn btn-rounded btn-info dbtn" onClick={Recipient}>Recipients</button>
@@ -263,7 +263,7 @@ function AdminRecipient() {
                         <thead class="thead">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">DONOR NAME</th>
+                                <th scope="col">RECIPIENT NAME</th>
                                 <th scope="col">AGE</th>
                                 <th scope="col">BLOOD GROUP</th>
                                 <th scope="col">ADDRESS</th>
@@ -290,7 +290,7 @@ const BankContainer = styled.div`
 .table{
   border-radius: 5px 5px 0 0;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  box-shadow: 0 0 40px rgba(0,0,0,0.15);
 }
 .thead{
     background-color:Black;
@@ -322,8 +322,18 @@ tbody tr:last-of-type{
     float: right; 
   }
 
-.btn,
-btn-primary
+  .btn-group .dbtn{
+    background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    color: #fff;
+    border: none;
+}
+
+.btn-group .dbtn:hover {
+    background: linear-gradient(45deg, #ef473a, #ef473a);
+
+}
+
+.btn
  {
     margin-top: 10px;
     margin-bottom: 25px;
