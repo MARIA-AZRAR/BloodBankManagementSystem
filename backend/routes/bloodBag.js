@@ -278,7 +278,7 @@ router.post("/CompleteDonation/:id", async (req, res) => {
 
 //Correct Expired bags
 
-router.get("/getBags/:id", async (req, res) => {
+router.get("/getExpiredBags/:id", async (req, res) => {
     const bloodB = await bloodBag.find({ bloodBank_id: req.params.id });
     let bag = [];
     let today = new Date;
