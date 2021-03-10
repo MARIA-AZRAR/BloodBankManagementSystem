@@ -202,11 +202,7 @@ input{
     padding-left:20%;
     padding-right:10%;
     padding-top:3%;
-
-
-
-
-
+}
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
  
