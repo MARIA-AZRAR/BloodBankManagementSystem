@@ -260,21 +260,39 @@ router.post("/CompleteDonation/:id", async (req, res) => {
 
 
 //getting expired stock
-router.get("/getBags", async (req, res) => {
-    const bloodB = await bloodBag.find();
-    let bag = [];
-    let bags = [];
+// router.get("/getBags", async (req, res) => {
+//     const bloodB = await bloodBag.find();
+//     let bag = [];
+//     let bags = [];
 
+//     for (var i = 0; i < bloodB.length; i++) {
+//         if (bloodB[i].created_at.getTime() === bloodB[i].expiry_date.getTime()) {
+//             bag.push(bloodB[i]);
+//             bags.push(await bloodBag.findOne({ _id: bloodB[i].bloodBank_id }))
+//         }
+//     }
+//     res.json({
+//         bag,
+//     });
+// });
+
+//Correct Expired bags
+
+router.get("/getBags/:id", async (req, res) => {
+    const bloodB = await bloodBag.find({ bloodBank_id: req.params.id });
+    let bag = [];
+    let today = new Date;
     for (var i = 0; i < bloodB.length; i++) {
-        if (bloodB[i].created_at.getTime() === bloodB[i].expiry_date.getTime()) {
+        if (today >= bloodB[i].expiry_date) {
             bag.push(bloodB[i]);
-            bags.push(await bloodBag.findOne({ _id: bloodB[i].bloodBank_id }))
         }
     }
     res.json({
         bag,
     });
 });
+
+
 
 router.get("/getBags/:id", async (req, res) => {
     const bank = await bloodBag.find({ bloodBank_id: req.params.id });

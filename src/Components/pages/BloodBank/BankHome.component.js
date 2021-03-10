@@ -23,7 +23,7 @@ function BankHome() {
         history.push(`/${userLoginData.userData.type}`)
 
       const getData = async () => {
-        await Axios.get("http://localhost:5000/bloodBag/getBags")
+        await Axios.get(`http://localhost:5000/bloodBag/getBags/${userLoginData.userData.user_id}`)
           .then((response) => {
             setData(response.data);
             console.log(response.data);

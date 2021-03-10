@@ -8,7 +8,11 @@ import ErrorNotice from '../misc/ErrorNotice'
 import Axios from "axios"
 
 import "bootstrap/dist/css/bootstrap.min.css";
+// import Background from "../../img/watercolor.png"
 
+// var sectionStyle = {
+//     backgroundImage: `url(${ Background })`
+//   }
 
 export default function Login() {
 
@@ -41,6 +45,8 @@ export default function Login() {
             err.response.data.msg && setError(err.response.data.msg);
         }
     };
+
+    //style={ sectionStyle }
 
     return (
         <UserLoginContainer>

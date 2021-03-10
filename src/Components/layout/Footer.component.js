@@ -51,6 +51,7 @@ class Footer extends Component {
 //
 
 
+
 export default Footer;
 // #A72509;
 const FooterContainer = styled.div`
@@ -80,10 +81,10 @@ color: #d5d5d5;
 footer {
 background-color:#e02525;
 color: #ffffff;
-padding-top: 2em;
 bottom: 0;
 width:100%;
-margin-top:5%;
+padding-top: 2em;
+margin-top:2%;
 }
 
 hr.light {
